@@ -28,8 +28,10 @@
     <symbol id="i-compare" viewBox="0 0 24 24"><rect x="3.5" y="4" width="7" height="16" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="4" width="7" height="16" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6 9h2M6 12h2M16 9h2M16 12h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
     <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><rect x="4" y="8" width="16" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="16" cy="13.5" r="1.3" fill="currentColor"/></symbol>
     <symbol id="i-support" viewBox="0 0 24 24"><path d="M5 13v-1a7 7 0 0 1 14 0v1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="3.5" y="13" width="4" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="16.5" y="13" width="4" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
-    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
-    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-house" viewBox="0 0 24 24"><path d="M3.5 11 12 4l8.5 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 9.5V20h13V9.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M10 20v-5h4v5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+    <symbol id="i-video-chat" viewBox="0 0 24 24"><path d="M4 5.5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M10.5 8.5v5l4-2.5z" fill="currentColor"/></symbol>
+    <symbol id="i-google" viewBox="0 0 48 48"><path fill="#4285F4" d="M43.6 20.1H42V20H24v8h11.3a12 12 0 0 1-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"/><path fill="#34A853" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2A12 12 0 0 1 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#FBBC05" d="M12.7 28.1A12 12 0 0 1 12 24c0-1.4.2-2.8.7-4.1l-6.4-5.2A20 20 0 0 0 4 24c0 3.2.8 6.3 2.2 9z"/><path fill="#EA4335" d="M24 12c3.1 0 5.8 1.2 8 3l5.6-5.6A20 20 0 0 0 6.3 14.7l6.5 5.2C14.4 15.3 18.8 12 24 12z"/></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 6h16v12H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M11 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
     <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
@@ -45,24 +47,26 @@
       </a>
 
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-        <svg class="nav-toggle__open" aria-hidden="true"><use href="#i-menu"/></svg>
-        <svg class="nav-toggle__close" aria-hidden="true"><use href="#i-close"/></svg>
+        <span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
         <span class="visually-hidden">Menu</span>
       </button>
 
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul class="site-nav__list">
-          <li><a href="#top">Home</a></li>
-          <li><a href="#how-it-works">How It Works</a></li>
-          <li><a href="#homeowners">For Homeowners</a></li>
-          <li><a href="#installers">For Installers</a></li>
-          <li><a href="#financing">Financing</a></li>
-          <li><a href="#about">About</a></li>
+          <li><a href="#top"><span>Home</span><svg class="site-nav__arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#how-it-works"><span>How It Works</span><svg class="site-nav__arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#homeowners"><span>For Homeowners</span><svg class="site-nav__arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#installers"><span>For Installers</span><svg class="site-nav__arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#financing"><span>Financing</span><svg class="site-nav__arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#about"><span>About</span><svg class="site-nav__arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
         </ul>
-        <a class="btn btn--dark btn--sm site-nav__cta" href="get-started.html">
-          Get Started
-          <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
-        </a>
+        <div class="site-nav__actions">
+          <a class="btn btn--dark btn--sm site-nav__cta" href="get-started.html">
+            Get Started
+            <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
+          </a>
+          <p class="site-nav__note">Free quotes from COREN&#8209;accredited installers</p>
+        </div>
       </nav>
     </div>
   </header>
@@ -84,7 +88,7 @@
 
           <div class="hero__content">
             <p class="eyebrow eyebrow--light">Solar installation, made simple</p>
-            <h1 class="hero__title" id="hero-title">Compare Solar Quotes from <span class="hl">COREN&#8209;Accredited</span> Installers in Your Region</h1>
+            <h1 class="hero__title" id="hero-title"><span class="hero__line">Compare Solar Quotes</span> <span class="hero__line">from <span class="hl">COREN&#8209;Accredited</span></span> <span class="hero__line">Installers in Your Region</span></h1>
             <p class="hero__lead">Tell us about your home once. Get side-by-side quotes with clear pricing, warranties and instalment options, then choose with confidence.</p>
             <div class="btn-row">
               <a class="btn btn--accent" href="get-started.html">
@@ -99,24 +103,24 @@
             TRUST STATS — sample figures. Confirm each one against your records
             before going live, and keep them updated.
           -->
-          <dl class="hero__stats">
-            <div class="hero-stat">
-              <dt>Homes powered</dt>
-              <dd>500+</dd>
-            </div>
-            <div class="hero-stat">
-              <dt>kVA installed</dt>
-              <dd>3,000+</dd>
-            </div>
-            <div class="hero-stat">
-              <dt>Customer testimonials</dt>
-              <dd>200+</dd>
-            </div>
-            <div class="hero-stat">
-              <dt>Google rating</dt>
-              <dd>4.8 <svg class="hero-stat__star" aria-hidden="true"><use href="#i-star"/></svg></dd>
-            </div>
-          </dl>
+          <ul class="hero__stats">
+            <li class="hero-stat">
+              <span class="hero-stat__icon" aria-hidden="true"><svg><use href="#i-house"/></svg></span>
+              <p><strong class="hero-stat__num">500+</strong><span class="hero-stat__label">Homes powered</span></p>
+            </li>
+            <li class="hero-stat">
+              <span class="hero-stat__icon" aria-hidden="true"><svg><use href="#i-bolt"/></svg></span>
+              <p><strong class="hero-stat__num">3,000+</strong><span class="hero-stat__label">kVA installed</span></p>
+            </li>
+            <li class="hero-stat">
+              <span class="hero-stat__icon" aria-hidden="true"><svg><use href="#i-video-chat"/></svg></span>
+              <p><strong class="hero-stat__num">200+</strong><span class="hero-stat__label">Customer testimonials</span></p>
+            </li>
+            <li class="hero-stat">
+              <span class="hero-stat__icon hero-stat__icon--google" aria-hidden="true"><svg><use href="#i-google"/></svg></span>
+              <p><strong class="hero-stat__num">4.8 <svg class="hero-stat__star" aria-hidden="true"><use href="#i-star"/></svg></strong><span class="hero-stat__label">Google rating</span></p>
+            </li>
+          </ul>
         </div>
       </div>
     </section>

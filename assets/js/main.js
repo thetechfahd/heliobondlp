@@ -11,6 +11,7 @@
     if (!toggle || !nav) return;
     toggle.setAttribute('aria-expanded', String(open));
     nav.classList.toggle('is-open', open);
+    document.documentElement.classList.toggle('nav-open', open);
   }
 
   if (toggle && nav) {
