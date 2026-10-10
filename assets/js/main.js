@@ -98,6 +98,59 @@
     });
   });
 
+  /* ---------- Press and partner logos ---------- */
+  // Show the text name when a logo file hasn't been added yet.
+  document.querySelectorAll('.logo-strip__img').forEach(function (img) {
+    var fallback = function () { img.closest('.logo-strip__item').classList.add('no-logo'); };
+    if (img.complete && img.naturalWidth === 0) fallback();
+    else img.addEventListener('error', fallback);
+    img.loading = 'eager';
+  });
+
+  // Turn each strip into a continuous slider unless the visitor prefers reduced motion.
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    document.querySelectorAll('.logo-strip').forEach(function (strip) {
+      var list = strip.querySelector('.logo-strip__list');
+      if (!list) return;
+      var track = document.createElement('div');
+      track.className = 'logo-strip__track';
+      list.parentNode.insertBefore(track, list);
+      track.appendChild(list);
+
+      // Repeat the logos so a short list still fills wide screens, then duplicate the
+      // whole set once so the -50% animation loops seamlessly.
+      var originals = Array.prototype.slice.call(list.children);
+      for (var i = 0; i < 2; i++) {
+        originals.forEach(function (li) {
+          var copy = li.cloneNode(true);
+          copy.setAttribute('aria-hidden', 'true');
+          var copyImg = copy.querySelector('img');
+          if (copyImg) {
+            copyImg.alt = '';
+            copyImg.addEventListener('error', function () { copy.classList.add('no-logo'); });
+          }
+          list.appendChild(copy);
+        });
+      }
+      var clone = list.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.querySelectorAll('li').forEach(function (li) {
+        li.setAttribute('aria-hidden', 'true');
+        var im = li.querySelector('img');
+        if (im) {
+          im.alt = '';
+          im.addEventListener('error', function () { li.classList.add('no-logo'); });
+          if (im.complete && im.naturalWidth === 0) li.classList.add('no-logo');
+        }
+      });
+      track.appendChild(clone);
+
+      strip.style.setProperty('--slide-duration', (originals.length * 6) + 's');
+      strip.classList.add('is-sliding');
+    });
+  }
+
   /* ---------- Footer year ---------- */
   document.querySelectorAll('[data-year]').forEach(function (el) {
     el.textContent = new Date().getFullYear();

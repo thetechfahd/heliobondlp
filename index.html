@@ -12,10 +12,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/css/styles.css?v=202610102257">
+  <link rel="stylesheet" href="assets/css/styles.css?v=202610102303">
 
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
-  <script src="assets/js/main.js?v=202610102257" defer></script>
+  <script src="assets/js/main.js?v=202610102303" defer></script>
 </head>
 <body>
   <!-- Icon sprite -->
@@ -127,33 +127,72 @@
 
     <!-- ============ As seen on / Partners ============ -->
     <!--
-      LOGOS: the names below are text placeholders. To use official logos, save each
-      file in assets/img/logos/ and replace the <span class="wordmark"> with, e.g.:
-        <img src="assets/img/logos/punch.svg" alt="Punch" height="28">
+      LOGOS: each item loads assets/img/logos/<name>.png (e.g. punch.png, vanguard.png,
+      techcrunch.png, techcabal.png, premium-times.png, thisday.png, rivy.png, sunfi.png,
+      creditdirect.png, coren.png, rea.png). Until a file exists, its name shows as text.
+      Use transparent PNGs about 80px tall. The strips scroll automatically (main.js);
+      they pause on hover and stay still for visitors who prefer reduced motion.
       Only list outlets that have covered Heliobond and organisations you formally partner with.
     -->
     <section class="logos" aria-label="Press and partners">
       <div class="container">
         <div class="logo-strip">
           <h2 class="logo-strip__title">As seen on</h2>
-          <ul class="logo-strip__list">
-            <li class="logo-strip__item" data-logo="punch"><span class="wordmark wordmark--serif-heavy" role="img" aria-label="Punch">PUNCH</span></li>
-            <li class="logo-strip__item" data-logo="vanguard"><span class="wordmark wordmark--serif-italic" role="img" aria-label="Vanguard">Vanguard</span></li>
-            <li class="logo-strip__item" data-logo="techcrunch"><span class="wordmark wordmark--sans-heavy" role="img" aria-label="TechCrunch">TechCrunch</span></li>
-            <li class="logo-strip__item" data-logo="techcabal"><span class="wordmark wordmark--sans" role="img" aria-label="TechCabal">TechCabal</span></li>
-            <li class="logo-strip__item" data-logo="premium-times"><span class="wordmark wordmark--serif" role="img" aria-label="Premium Times">PREMIUM TIMES</span></li>
-            <li class="logo-strip__item" data-logo="thisday"><span class="wordmark wordmark--serif-heavy" role="img" aria-label="ThisDay Live">THISDAY LIVE</span></li>
-          </ul>
+          <div class="logo-strip__viewport">
+            <ul class="logo-strip__list">
+              <li class="logo-strip__item">
+                <img class="logo-strip__img" src="assets/img/logos/punch.png" alt="Punch" loading="lazy" decoding="async">
+                <span class="wordmark wordmark--serif-heavy" aria-hidden="true">PUNCH</span>
+              </li>
+              <li class="logo-strip__item">
+                <img class="logo-strip__img" src="assets/img/logos/vanguard.png" alt="Vanguard" loading="lazy" decoding="async">
+                <span class="wordmark wordmark--serif-italic" aria-hidden="true">Vanguard</span>
+              </li>
+              <li class="logo-strip__item">
+                <img class="logo-strip__img" src="assets/img/logos/techcrunch.png" alt="TechCrunch" loading="lazy" decoding="async">
+                <span class="wordmark wordmark--sans-heavy" aria-hidden="true">TechCrunch</span>
+              </li>
+              <li class="logo-strip__item">
+                <img class="logo-strip__img" src="assets/img/logos/techcabal.png" alt="TechCabal" loading="lazy" decoding="async">
+                <span class="wordmark wordmark--sans" aria-hidden="true">TechCabal</span>
+              </li>
+              <li class="logo-strip__item">
+                <img class="logo-strip__img" src="assets/img/logos/premium-times.png" alt="Premium Times" loading="lazy" decoding="async">
+                <span class="wordmark wordmark--serif" aria-hidden="true">PREMIUM TIMES</span>
+              </li>
+              <li class="logo-strip__item">
+                <img class="logo-strip__img" src="assets/img/logos/thisday.png" alt="ThisDay Live" loading="lazy" decoding="async">
+                <span class="wordmark wordmark--serif-heavy" aria-hidden="true">THISDAY LIVE</span>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="logo-strip" id="partners">
+        <div class="logo-strip logo-strip--reverse" id="partners">
           <h2 class="logo-strip__title">Our partners</h2>
-          <ul class="logo-strip__list">
-            <li class="logo-strip__item" data-logo="rivy"><span class="wordmark wordmark--sans-heavy" role="img" aria-label="Rivy">Rivy</span></li>
-            <li class="logo-strip__item" data-logo="sunfi"><span class="wordmark wordmark--sans" role="img" aria-label="SunFi">SunFi</span></li>
-            <li class="logo-strip__item" data-logo="creditdirect"><span class="wordmark wordmark--sans-heavy" role="img" aria-label="CreditDirect">CreditDirect</span></li>
-            <li class="logo-strip__item" data-logo="coren"><span class="wordmark wordmark--serif-heavy" role="img" aria-label="COREN (Council for the Regulation of Engineering in Nigeria)">COREN</span></li>
-            <li class="logo-strip__item" data-logo="rea"><span class="wordmark wordmark--sans-heavy" role="img" aria-label="REA (Rural Electrification Agency)">REA</span></li>
-          </ul>
+          <div class="logo-strip__viewport">
+            <ul class="logo-strip__list">
+              <li class="logo-strip__item">
+                <img class="logo-strip__img" src="assets/img/logos/rivy.png" alt="Rivy" loading="lazy" decoding="async">
+                <span class="wordmark wordmark--sans-heavy" aria-hidden="true">Rivy</span>
+              </li>
+              <li class="logo-strip__item">
+                <img class="logo-strip__img" src="assets/img/logos/sunfi.png" alt="SunFi" loading="lazy" decoding="async">
+                <span class="wordmark wordmark--sans" aria-hidden="true">SunFi</span>
+              </li>
+              <li class="logo-strip__item">
+                <img class="logo-strip__img" src="assets/img/logos/creditdirect.png" alt="CreditDirect" loading="lazy" decoding="async">
+                <span class="wordmark wordmark--sans-heavy" aria-hidden="true">CreditDirect</span>
+              </li>
+              <li class="logo-strip__item">
+                <img class="logo-strip__img" src="assets/img/logos/coren.png" alt="COREN" loading="lazy" decoding="async">
+                <span class="wordmark wordmark--serif-heavy" aria-hidden="true">COREN</span>
+              </li>
+              <li class="logo-strip__item">
+                <img class="logo-strip__img" src="assets/img/logos/rea.png" alt="Rural Electrification Agency" loading="lazy" decoding="async">
+                <span class="wordmark wordmark--sans-heavy" aria-hidden="true">REA</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
