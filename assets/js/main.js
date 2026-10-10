@@ -1,4 +1,4 @@
-/* Helio Bond — progressive enhancements. The page is fully usable without this file. */
+/* Heliobond — progressive enhancements. The page is fully usable without this file. */
 (function () {
   'use strict';
 

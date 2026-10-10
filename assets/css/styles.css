@@ -1,10 +1,10 @@
 /* ==========================================================================
-   Helio Bond — landing page styles
+   Heliobond — landing page styles
    ========================================================================== */
 
 /* ---------- Design tokens ---------- */
 :root {
-  /* Colour — taken from the Helio Bond logo */
+  /* Colour — taken from the Heliobond logo */
   --c-navy: #042439;
   --c-navy-2: #0c3552;
   --c-amber: #feb204;
@@ -337,7 +337,7 @@ button { font: inherit; color: inherit; }
   z-index: -1;
   border-radius: 0;
 }
-.hero__media img { object-position: 60% 35%; }
+.hero__media img { object-position: 65% 40%; }
 .hero__media::after {
   content: "";
   position: absolute;
@@ -399,7 +399,7 @@ button { font: inherit; color: inherit; }
 .hero-stat dt { font-size: var(--fs-sm); color: rgba(255, 255, 255, 0.75); }
 .hero-stat__star { width: 0.8em; height: 0.8em; color: var(--c-amber); }
 
-/* ---------- Why Helio Bond ---------- */
+/* ---------- Why Heliobond ---------- */
 .why__grid {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
@@ -477,9 +477,11 @@ button { font: inherit; color: inherit; }
 .video-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--s-5);
+  gap: var(--s-7) var(--s-5);
 }
-.video-card__media { aspect-ratio: 4 / 5; border-radius: var(--r-lg); }
+.video-grid > li { display: flex; }
+.video-card { display: flex; flex-direction: column; width: 100%; }
+.video-card__media { aspect-ratio: 4 / 4.4; border-radius: var(--r-lg); }
 .video-card__media::after {
   content: "";
   position: absolute;
@@ -536,6 +538,27 @@ button { font: inherit; color: inherit; }
 .video-card__caption { display: grid; margin-top: var(--s-4); padding-inline: var(--s-1); }
 .video-card__caption strong { font-weight: 600; }
 .video-card__caption span { font-size: var(--fs-sm); color: var(--c-muted); }
+
+.case-note {
+  flex: 1;
+  margin-top: var(--s-4);
+  padding: var(--s-4) var(--s-5);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+}
+.case-note__label {
+  margin-bottom: var(--s-2);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-amber-2);
+}
+.case-note dl { display: grid; gap: var(--s-2); }
+.case-note dl > div { display: grid; grid-template-columns: 7.5rem 1fr; gap: var(--s-3); font-size: var(--fs-sm); }
+.case-note dt { color: var(--c-muted); }
+.case-note dd { color: var(--c-ink); font-weight: 500; }
 
 /* ---------- About ---------- */
 .about__grid {
@@ -768,7 +791,7 @@ button { font: inherit; color: inherit; }
   .video-grid {
     grid-auto-flow: column;
     grid-template-columns: none;
-    grid-auto-columns: minmax(240px, 42%);
+    grid-auto-columns: minmax(280px, 44%);
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     padding-bottom: var(--s-3);
@@ -792,7 +815,8 @@ button { font: inherit; color: inherit; }
   .steps__media { aspect-ratio: 4 / 3.4; }
   .step-list { gap: var(--s-6); }
 
-  .video-grid { grid-auto-columns: 78%; }
+  .video-grid { grid-auto-columns: 85%; }
+  .case-note dl > div { grid-template-columns: 1fr; gap: 0; }
 
   .installers__panel { padding: var(--s-6) var(--s-5); }
 
