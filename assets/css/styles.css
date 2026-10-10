@@ -154,6 +154,7 @@ button { font: inherit; color: inherit; }
 .lead { font-size: var(--fs-md); line-height: 1.55; }
 .text-muted { color: var(--c-muted); }
 .small { font-size: var(--fs-sm); }
+.nowrap { white-space: nowrap; }
 
 .pill {
   display: inline-block;
