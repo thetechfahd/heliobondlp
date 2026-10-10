@@ -431,6 +431,55 @@ button { font: inherit; color: inherit; }
 .hero-stat__label { font-size: var(--fs-sm); color: rgba(255, 255, 255, 0.72); }
 .hero-stat__star { width: 0.7em; height: 0.7em; color: var(--c-amber); }
 
+/* ---------- As seen on / Partners ---------- */
+.logos { padding-top: clamp(2.5rem, 1.5rem + 3vw, 4rem); }
+.logo-strip {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  align-items: center;
+  gap: var(--s-6);
+  padding-block: var(--s-5);
+}
+.logo-strip + .logo-strip { border-top: 1px solid var(--c-line); }
+.logo-strip__title {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+.logo-strip__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4) var(--s-6);
+}
+.logo-strip__item { display: flex; align-items: center; min-height: 40px; }
+.logo-strip__item img {
+  width: auto;
+  height: 28px;
+  filter: grayscale(1);
+  opacity: 0.7;
+  transition: filter 0.2s var(--ease), opacity 0.2s var(--ease);
+}
+.logo-strip__item:hover img { filter: none; opacity: 1; }
+
+/* Text stand-ins until the official logo files are added */
+.wordmark {
+  font-size: 1.375rem;
+  line-height: 1;
+  white-space: nowrap;
+  color: #7b8892;
+  transition: color 0.2s var(--ease);
+}
+.logo-strip__item:hover .wordmark { color: var(--c-navy); }
+.wordmark--serif { font-family: Georgia, "Times New Roman", serif; font-weight: 700; letter-spacing: 0.02em; font-size: 1.2rem; }
+.wordmark--serif-heavy { font-family: Georgia, "Times New Roman", serif; font-weight: 900; letter-spacing: 0.01em; }
+.wordmark--serif-italic { font-family: Georgia, "Times New Roman", serif; font-weight: 700; font-style: italic; }
+.wordmark--sans { font-family: var(--f-display); font-weight: 600; letter-spacing: -0.02em; }
+.wordmark--sans-heavy { font-family: var(--f-display); font-weight: 700; letter-spacing: -0.03em; }
+
 /* ---------- Why Heliobond ---------- */
 .why__grid {
   display: grid;
@@ -915,6 +964,10 @@ button { font: inherit; color: inherit; }
   .hero-stat:nth-child(3) { border-left: 0; }
   .hero-stat:nth-child(n + 3) { border-top: 1px solid rgba(255, 255, 255, 0.14); }
 
+  .logo-strip { grid-template-columns: 1fr; gap: var(--s-4); }
+  .logo-strip__title { text-align: center; }
+  .logo-strip__list { justify-content: center; gap: var(--s-4) var(--s-7); }
+
   .why__grid,
   .about__grid,
   .installers__grid,
@@ -936,6 +989,10 @@ button { font: inherit; color: inherit; }
 }
 
 @media (max-width: 640px) {
+  .logo-strip__list { display: grid; grid-template-columns: repeat(2, 1fr); justify-items: center; gap: var(--s-5) var(--s-4); }
+  .logo-strip__item:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .wordmark { font-size: 1.125rem; }
+  .wordmark--serif { font-size: 1rem; }
   .hero__media { aspect-ratio: 4 / 3.2; }
   .hero__content { padding: var(--s-4) var(--s-5) var(--s-6); }
   .hero .btn-row .btn { flex: 1 1 100%; }
