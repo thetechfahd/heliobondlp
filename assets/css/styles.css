@@ -473,6 +473,8 @@ button { font: inherit; color: inherit; }
   transition: filter 0.2s var(--ease), opacity 0.2s var(--ease);
 }
 .logo-strip__item:hover .logo-strip__img { filter: none; opacity: 1; }
+/* Round badge logos need more height to read at the same visual size. */
+.logo-strip__img[src$="rea.png"] { height: 44px; }
 .logo-strip__item .wordmark { display: none; }
 .logo-strip__item.no-logo .logo-strip__img,
 .no-js .logo-strip__img { display: none; }
