@@ -20,6 +20,7 @@ python3 -m http.server 8000
 | `assets/img/heliobond-logo.png` | Heliobond logo on a transparent background, for light backgrounds |
 | `assets/img/heliobond-logo-light.png` | Logo with "Helio" and the right ring in white, for the dark footer |
 | `assets/img/heliobond-mark.png` | Icon only, used as the favicon |
+| `assets/img/hero-family.webp`, `hero-family-800.webp` | Hero photo (full size and a smaller version for phones) |
 | `get-started.html` | **Placeholder route** for homeowner onboarding (`#homeowners`) and installer applications (`#installers`) |
 | `legal.html` | **Placeholder** Privacy Policy (`#privacy`) and Terms of Service (`#terms`) |
 
@@ -28,7 +29,6 @@ python3 -m http.server 8000
 - **Photography.** The images are Unsplash URLs (`images.unsplash.com/photo-…`) and can be replaced. Swap them for licensed or owned photos, ideally of Nigerian homes and installations, and host them locally (for example in `assets/img/`). If an image fails to load, its frame shows a styled gradient instead of a broken-image icon.
 - **Hero statistics.** The four hero figures (500+ homes, 3,000+ kVA, 200+ testimonials, 4.8 Google rating) are sample figures. Confirm them against your records in `index.html` (search for `TRUST STATS`).
 - **Video testimonials.** Each card in the Testimonials section takes a `data-video` value: an `.mp4` path (for example `assets/video/customer-1.mp4`) or a YouTube link. Also set the poster image, customer name and city. Cards without a video show "Video coming soon". There are six cards, each with a case-study note (system installed, quotes compared, result). The notes are sample content, so replace them with real project details.
-- **Hero photo.** It currently loads Unsplash photo `mwJ6ODUt5FY` ("Happy African family"). For best results, use your own photo of a Nigerian family at home with the lights on, saved as `assets/img/hero-family.jpg`.
 - **Logo files.** The PNGs were cut from the supplied JPG. An SVG or high-resolution original from the designer would be sharper.
 - **Onboarding flows.** All homeowner CTAs point to `get-started.html`. The installer CTA points to `get-started.html#installers`.
 - **Contact details.** The footer has placeholder text for phone, email and office address.

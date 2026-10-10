@@ -73,20 +73,18 @@
       <div class="container">
         <div class="hero__frame">
           <div class="media hero__media">
-            <!--
-              Hero photo: an African family at home with the lights on.
-              Currently loaded from Unsplash (photo mwJ6ODUt5FY). For best results,
-              save your own photo as assets/img/hero-family.jpg and point src to it.
-            -->
             <img
-              src="https://unsplash.com/photos/mwJ6ODUt5FY/download?w=2000"
-              alt="A happy African family together in their brightly lit home"
+              src="assets/img/hero-family.webp"
+              srcset="assets/img/hero-family-800.webp 800w, assets/img/hero-family.webp 1200w"
+              sizes="(min-width: 961px) 55vw, 100vw"
+              width="1200" height="800"
+              alt="A Nigerian family cheering together in their brightly lit living room"
               fetchpriority="high">
           </div>
 
           <div class="hero__content">
             <p class="eyebrow eyebrow--light">Solar installation, made simple</p>
-            <h1 class="hero__title" id="hero-title">Compare Solar Quotes from <span class="hl">COREN-Accredited</span> Installers in Your Region</h1>
+            <h1 class="hero__title" id="hero-title">Compare Solar Quotes from <span class="hl">COREN&#8209;Accredited</span> Installers in Your Region</h1>
             <p class="hero__lead">Tell us about your home once. Get side-by-side quotes with clear pricing, warranties and instalment options, then choose with confidence.</p>
             <div class="btn-row">
               <a class="btn btn--accent" href="get-started.html">
