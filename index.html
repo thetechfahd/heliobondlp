@@ -12,10 +12,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/css/styles.css?v=202610110009">
+  <link rel="stylesheet" href="assets/css/styles.css?v=202610110015">
 
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
-  <script src="assets/js/main.js?v=202610110009" defer></script>
+  <script src="assets/js/main.js?v=202610110015" defer></script>
 </head>
 <body>
   <!-- Icon sprite -->
@@ -31,6 +31,8 @@
     <symbol id="i-x" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
     <symbol id="i-shield-alert" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4.3 3 8 7 9.5 4-1.5 7-5.2 7-9.5V6l-7-3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 8v4.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="12" cy="15.6" r="1.1" fill="currentColor"/></symbol>
     <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 8h6M9 12h6M9 16h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24"><rect x="3" y="7" width="16" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M21 10.5v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M6.5 10v4M9.5 10v4M12.5 10v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-panel" viewBox="0 0 24 24"><path d="M5 5h14l2 10H3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 5v10M4 10h16M8.5 5 8 15M15.5 5l.5 10M12 15v4M8.5 19h7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
     <symbol id="i-house" viewBox="0 0 24 24"><path d="M3.5 11 12 4l8.5 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 9.5V20h13V9.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M10 20v-5h4v5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
     <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
     <symbol id="i-video-chat" viewBox="0 0 24 24"><path d="M4 5.5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M10.5 8.5v5l4-2.5z" fill="currentColor"/></symbol>
@@ -419,7 +421,7 @@
             data-video  → an .mp4 path (e.g. assets/video/customer-1.mp4) or a YouTube link
             poster img  → a still frame from the video
             caption     → home type and area (add the customer's name with their permission)
-            case-note   → the system installed, quotes compared and the result achieved
+            case-note   → the result achieved, then the system installed (inverter · battery · panels)
           Cards without data-video show "Video coming soon".
           SAMPLE CONTENT: the six case-study notes below are illustrative.
           Replace each one with the real project details before going live.
@@ -441,12 +443,13 @@
                 <span>Lekki, Lagos</span>
               </figcaption>
               <div class="case-note">
-                <p class="case-note__label">Case study</p>
-                <dl>
-                  <div><dt>System</dt><dd>10 kVA hybrid inverter · 15 kWh battery · 16 panels</dd></div>
-                  <div><dt>Quotes compared</dt><dd>3</dd></div>
-                  <div><dt>Result</dt><dd>24/7 power. The generator has been retired.</dd></div>
-                </dl>
+                <p class="case-note__label">Case study · Result</p>
+                <p class="case-note__result">24/7 power. The generator has been retired.</p>
+                <ul class="case-note__specs" aria-label="System installed">
+                  <li><svg aria-hidden="true"><use href="#i-bolt"/></svg><strong>10 kVA</strong><span>Inverter</span></li>
+                  <li><svg aria-hidden="true"><use href="#i-battery"/></svg><strong>15 kWh</strong><span>Battery</span></li>
+                  <li><svg aria-hidden="true"><use href="#i-panel"/></svg><strong>16</strong><span>Panels</span></li>
+                </ul>
               </div>
             </figure>
           </li>
@@ -466,12 +469,13 @@
                 <span>Gwarinpa, Abuja</span>
               </figcaption>
               <div class="case-note">
-                <p class="case-note__label">Case study</p>
-                <dl>
-                  <div><dt>System</dt><dd>5 kVA inverter · 10 kWh battery · 8 panels</dd></div>
-                  <div><dt>Quotes compared</dt><dd>4</dd></div>
-                  <div><dt>Result</dt><dd>Lights, fans and fridge run through every outage.</dd></div>
-                </dl>
+                <p class="case-note__label">Case study · Result</p>
+                <p class="case-note__result">Lights, fans and fridge run through every outage.</p>
+                <ul class="case-note__specs" aria-label="System installed">
+                  <li><svg aria-hidden="true"><use href="#i-bolt"/></svg><strong>5 kVA</strong><span>Inverter</span></li>
+                  <li><svg aria-hidden="true"><use href="#i-battery"/></svg><strong>10 kWh</strong><span>Battery</span></li>
+                  <li><svg aria-hidden="true"><use href="#i-panel"/></svg><strong>8</strong><span>Panels</span></li>
+                </ul>
               </div>
             </figure>
           </li>
@@ -491,12 +495,13 @@
                 <span>GRA, Port Harcourt</span>
               </figcaption>
               <div class="case-note">
-                <p class="case-note__label">Case study</p>
-                <dl>
-                  <div><dt>System</dt><dd>7.5 kVA hybrid · 10 kWh battery · 12 panels</dd></div>
-                  <div><dt>Quotes compared</dt><dd>3</dd></div>
-                  <div><dt>Result</dt><dd>Generator use cut by around 80%.</dd></div>
-                </dl>
+                <p class="case-note__label">Case study · Result</p>
+                <p class="case-note__result">Generator use cut by around 80%.</p>
+                <ul class="case-note__specs" aria-label="System installed">
+                  <li><svg aria-hidden="true"><use href="#i-bolt"/></svg><strong>7.5 kVA</strong><span>Inverter</span></li>
+                  <li><svg aria-hidden="true"><use href="#i-battery"/></svg><strong>10 kWh</strong><span>Battery</span></li>
+                  <li><svg aria-hidden="true"><use href="#i-panel"/></svg><strong>12</strong><span>Panels</span></li>
+                </ul>
               </div>
             </figure>
           </li>
@@ -516,12 +521,13 @@
                 <span>Bodija, Ibadan</span>
               </figcaption>
               <div class="case-note">
-                <p class="case-note__label">Case study</p>
-                <dl>
-                  <div><dt>System</dt><dd>5 kVA inverter · 7.5 kWh battery · 8 panels</dd></div>
-                  <div><dt>Quotes compared</dt><dd>3</dd></div>
-                  <div><dt>Result</dt><dd>Paid in 12 monthly instalments.</dd></div>
-                </dl>
+                <p class="case-note__label">Case study · Result</p>
+                <p class="case-note__result">Paid in 12 monthly instalments.</p>
+                <ul class="case-note__specs" aria-label="System installed">
+                  <li><svg aria-hidden="true"><use href="#i-bolt"/></svg><strong>5 kVA</strong><span>Inverter</span></li>
+                  <li><svg aria-hidden="true"><use href="#i-battery"/></svg><strong>7.5 kWh</strong><span>Battery</span></li>
+                  <li><svg aria-hidden="true"><use href="#i-panel"/></svg><strong>8</strong><span>Panels</span></li>
+                </ul>
               </div>
             </figure>
           </li>
@@ -541,12 +547,13 @@
                 <span>Independence Layout, Enugu</span>
               </figcaption>
               <div class="case-note">
-                <p class="case-note__label">Case study</p>
-                <dl>
-                  <div><dt>System</dt><dd>15 kVA hybrid · 20 kWh battery · 24 panels</dd></div>
-                  <div><dt>Quotes compared</dt><dd>5</dd></div>
-                  <div><dt>Result</dt><dd>Air conditioning runs on solar through the day.</dd></div>
-                </dl>
+                <p class="case-note__label">Case study · Result</p>
+                <p class="case-note__result">Air conditioning runs on solar through the day.</p>
+                <ul class="case-note__specs" aria-label="System installed">
+                  <li><svg aria-hidden="true"><use href="#i-bolt"/></svg><strong>15 kVA</strong><span>Inverter</span></li>
+                  <li><svg aria-hidden="true"><use href="#i-battery"/></svg><strong>20 kWh</strong><span>Battery</span></li>
+                  <li><svg aria-hidden="true"><use href="#i-panel"/></svg><strong>24</strong><span>Panels</span></li>
+                </ul>
               </div>
             </figure>
           </li>
@@ -566,12 +573,13 @@
                 <span>Yaba, Lagos</span>
               </figcaption>
               <div class="case-note">
-                <p class="case-note__label">Case study</p>
-                <dl>
-                  <div><dt>System</dt><dd>3.5 kVA inverter · 5 kWh battery · 6 panels</dd></div>
-                  <div><dt>Quotes compared</dt><dd>3</dd></div>
-                  <div><dt>Result</dt><dd>Works from home without losing power.</dd></div>
-                </dl>
+                <p class="case-note__label">Case study · Result</p>
+                <p class="case-note__result">Works from home without losing power.</p>
+                <ul class="case-note__specs" aria-label="System installed">
+                  <li><svg aria-hidden="true"><use href="#i-bolt"/></svg><strong>3.5 kVA</strong><span>Inverter</span></li>
+                  <li><svg aria-hidden="true"><use href="#i-battery"/></svg><strong>5 kWh</strong><span>Battery</span></li>
+                  <li><svg aria-hidden="true"><use href="#i-panel"/></svg><strong>6</strong><span>Panels</span></li>
+                </ul>
               </div>
             </figure>
           </li>

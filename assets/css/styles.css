@@ -805,24 +805,54 @@ button { font: inherit; color: inherit; }
 
 .case-note {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   margin-top: var(--s-4);
-  padding: var(--s-4) var(--s-5);
+  padding: var(--s-5);
   border-radius: var(--r-md);
   background: var(--c-surface);
   border: 1px solid var(--c-line);
 }
 .case-note__label {
-  margin-bottom: var(--s-2);
   font-size: var(--fs-xs);
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--c-amber-2);
 }
-.case-note dl { display: grid; gap: var(--s-2); }
-.case-note dl > div { display: grid; grid-template-columns: 7.5rem 1fr; gap: var(--s-3); font-size: var(--fs-sm); }
-.case-note dt { color: var(--c-muted); }
-.case-note dd { color: var(--c-ink); font-weight: 500; }
+.case-note__result {
+  margin: var(--s-2) 0 var(--s-4);
+  font-family: var(--f-display);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--c-ink);
+}
+.case-note__specs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: auto;
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--c-line);
+}
+.case-note__specs li {
+  display: grid;
+  justify-items: start;
+  gap: 2px;
+  padding-inline: var(--s-3);
+}
+.case-note__specs li:first-child { padding-left: 0; }
+.case-note__specs li + li { border-left: 1px solid var(--c-line); }
+.case-note__specs svg { width: 18px; height: 18px; margin-bottom: 4px; color: var(--c-amber-2); }
+.case-note__specs strong {
+  font-family: var(--f-display);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--c-ink);
+  white-space: nowrap;
+}
+.case-note__specs span { font-size: var(--fs-xs); color: var(--c-muted); }
 
 /* ---------- About ---------- */
 .about__grid {
@@ -1196,7 +1226,6 @@ a.contact-item:hover .contact-item__icon { border-color: var(--c-amber); color: 
   .timeline__title { font-size: var(--fs-md); }
 
   .video-grid { grid-auto-columns: 85%; }
-  .case-note dl > div { grid-template-columns: 1fr; gap: 0; }
 
   .installers__panel { padding: var(--s-6) var(--s-5); }
 
