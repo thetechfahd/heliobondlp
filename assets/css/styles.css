@@ -1359,13 +1359,18 @@ a.contact-item:hover .contact-item__icon { border-color: var(--c-amber); color: 
   .pain-card--feature .btn { align-self: stretch; min-height: 52px; font-size: var(--fs-sm); }
   .steps__cta--center { justify-items: stretch; }
 
-  /* Keep the hero headline inside the screen on small phones. */
-  .hero__title { font-size: clamp(1.875rem, 8.4vw, 2.25rem); }
+  /* Hero headline: same three phrases as desktop, sized so the longest
+     line ("Installers in Your Region") fills the width on any phone. */
+  .hero__line { display: block; white-space: nowrap; }
+  .hero__title { font-size: min(calc(9.2vw - 6.6px), 2.75rem); line-height: 1.1; text-wrap: nowrap; }
+
+  /* About: the roof photo adds length without adding meaning on phones. */
+  .about__image { display: none; }
 
   .wordmark { font-size: 1.125rem; }
   .wordmark--serif { font-size: 1rem; }
   .hero__media { aspect-ratio: 4 / 3.2; }
-  .hero__content { padding: var(--s-4) var(--s-5) var(--s-6); }
+  .hero__content { padding: var(--s-4) 20px var(--s-6); }
   .hero .btn-row .btn { flex: 1 1 100%; }
   .hero-stat { flex-direction: column; align-items: flex-start; gap: var(--s-3); padding: var(--s-4); }
   .hero-stat__icon { width: 40px; height: 40px; border-radius: 12px; }
