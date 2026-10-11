@@ -76,6 +76,17 @@
   var ABOVE_PLAN = "This is above what I'm planning to spend";
   var TIMELINE_OPTIONS = ['Immediately', 'In 14 days', 'In 1 month', 'In 2 months', 'In 3 months', 'Not sure yet'];
   var TITLES = ['Mr', 'Mrs', 'Miss', 'Dr', 'Prof'];
+  var OWNERSHIP_OPTIONS = [
+    { value: 'Owner', label: 'I own it' },
+    { value: 'Family house', label: 'It belongs to my family' },
+    { value: 'Renting', label: 'I rent it', sub: "We'll check with you that your landlord is happy for panels to be installed." }
+  ];
+  var SHADE_OPTIONS = [
+    { value: 'No shade', label: 'No, the roof gets sun for most of the day' },
+    { value: 'Some shade', label: 'Yes, part of the roof is shaded for some of the day' },
+    { value: 'Heavy shade', label: 'Yes, the roof is in shade for most of the day' },
+    { value: 'Not sure', label: "I'm not sure" }
+  ];
 
   /* ---------- Appliance load calculator ----------
      Typical ratings for Nigerian homes. "night" is the default number of
@@ -142,7 +153,9 @@
   var META = {
     zone: ['i-pin', "Let's find installers near you", 'We use your zone to match you with COREN-accredited installers in your area.'],
     state: ['i-pin', 'Which state are you in?', 'We match you with installers who work in your state, for faster responses and easier site visits.'],
-    property: ['i-house', 'What type of home is it?', 'Select all that apply. This helps us understand the size of the installation.'],
+    property: ['i-house', 'What type of home is it?', 'Choose the option that best describes the home. This helps us understand the size of the installation.'],
+    ownership: ['i-house', 'Do you own this home or rent it?', 'Installers need the owner\'s go-ahead before fixing panels to a roof.'],
+    shading: ['i-sun', 'Does anything block the sun from your roof?', 'For example, a tall tree, a taller building next door or a water tank that casts a shadow on the roof. Panels need direct sunlight to work well.'],
     power: ['i-bolt', 'How do you power your home today?', 'This helps size and price the right solar system for you.'],
     spend: ['i-wallet', 'What do you spend on fuel and maintenance each week?', 'We use this to show how quickly solar can pay for itself.'],
     generator: ['i-bolt', 'What size is your generator?', 'It tells us your current power demand, so we can recommend the right capacity.'],
@@ -162,7 +175,7 @@
   var form, current, busy, error, lastFocus;
   function reset() {
     form = {
-      zone: '', state: '', propertyTypes: [], otherProperty: '',
+      zone: '', state: '', propertyType: '', propertyTypes: [], otherProperty: '', ownership: '', roofShade: '',
       electricitySource: '', weeklySpend: '', generatorSize: '', decisionRole: '',
       kva: '', systemTier: '', budgetRange: '', budgetInput: '',
       timeline: '', consent: '', title: '', firstName: '', lastName: '', phone: '', otp: '',
@@ -182,7 +195,7 @@
 
   // The ordered list of steps for the answers given so far.
   function path() {
-    var p = ['zone', 'state', 'property', 'power', 'spend'];
+    var p = ['zone', 'state', 'property', 'ownership', 'shading', 'power', 'spend'];
     if (usesGenerator()) p.push('generator');
     p.push('decision', 'appliances', 'kva');
     if (!kvaOut()) {
@@ -196,7 +209,6 @@
   function canNext(step) {
     var f = form;
     switch (step) {
-      case 'property': return f.propertyTypes.length > 0;
       case 'budgetInput': return f.budgetInput.trim() !== '' && !isNaN(parseFloat(f.budgetInput));
       case 'contact': return !!f.title && f.firstName.trim() && f.lastName.trim() && f.phone.replace(/\D/g, '').length >= 9;
       case 'otp': return f.otp.trim().length === 6;
@@ -246,6 +258,7 @@
       phone: f.phone.trim(), otp: f.otp.trim(),
       zone: f.zone, state: f.state,
       propertyTypes: f.propertyTypes, otherProperty: f.otherProperty,
+      ownership: f.ownership, roofShade: f.roofShade,
       electricitySource: f.electricitySource, weeklySpend: f.weeklySpend,
       generatorSize: f.generatorSize, decisionRole: f.decisionRole,
       kva: f.kva, systemTier: f.systemTier,
@@ -323,11 +336,11 @@
         }).join('') + '</div>';
       case 'state': return choice('state', ZONES[f.zone] || [], { grid: true }) + backBtn();
       case 'property':
-        return '<div class="qm-options qm-options--grid">' + PROPERTY_TYPES.map(function (t) {
-          var on = f.propertyTypes.indexOf(t) > -1;
-          return '<button type="button" class="qm-option qm-option--check' + (on ? ' is-selected' : '') + '" aria-pressed="' + on + '" data-toggle="' + esc(t) + '">' +
-            '<span class="qm-check" aria-hidden="true">' + icon('i-check') + '</span><span class="qm-option__label">' + esc(t.replace(/^Residential\s*/, '').replace(/^\((.*)\)$/, '$1')) + '</span></button>';
-        }).join('') + '</div>' + primary('Continue', 'next', !canNext('property')) + backBtn();
+        return choice('propertyType', PROPERTY_TYPES.map(function (t) {
+          return { value: t, label: t.replace(/^Residential\s*/, '').replace(/^\((.*)\)$/, '$1') };
+        }), { grid: true }) + backBtn();
+      case 'ownership': return choice('ownership', OWNERSHIP_OPTIONS) + backBtn();
+      case 'shading': return choice('roofShade', SHADE_OPTIONS) + backBtn();
       case 'power': return choice('electricitySource', ELECTRICITY_SOURCES) + backBtn();
       case 'spend': return choice('weeklySpend', SPEND_OPTIONS) + backBtn();
       case 'generator': return choice('generatorSize', GENERATOR_SIZES, { grid: true }) + backBtn();
@@ -476,6 +489,7 @@
     if (t.hasAttribute('data-set')) {
       var field = t.getAttribute('data-set'), value = t.getAttribute('data-value');
       if (field === 'zone' && form.zone !== value) form.state = '';
+      if (field === 'propertyType') form.propertyTypes = [value];   // the API expects a list
       if (field === 'kva' && form.kva !== value) { form.systemTier = ''; form.budgetRange = ''; form.budgetInput = ''; }
       if (field === 'electricitySource' && !/generator/i.test(value)) form.generatorSize = '';
       form[field] = value;
