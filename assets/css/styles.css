@@ -907,7 +907,15 @@ button { font: inherit; color: inherit; }
   border-radius: var(--r-lg);
 }
 .installers__media img { object-position: 40% 35%; }
-.installers__copy { max-width: 480px; }
+.installers__copy { container-type: inline-size; }
+.installers__copy > :not(.h2) { max-width: 480px; }
+/* Keep "Are you a COREN-accredited installer?" on one line: the size
+   follows the column width (the sentence is ~17x its font size wide). */
+#installers-title {
+  max-width: none;
+  white-space: nowrap;
+  font-size: min(var(--fs-h2), calc(100cqi / 17.4));
+}
 .installers__copy .lead { margin-top: var(--s-5); }
 
 .tick-list { display: grid; gap: var(--s-3); margin: var(--s-6) 0 var(--s-7); color: var(--c-ink-2); }
