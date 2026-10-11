@@ -171,6 +171,18 @@
     otp: ['i-shield', 'Enter your Application ID', 'We sent it to your WhatsApp number. Enter it to confirm your request.']
   };
 
+  /* The four stages shown in the journey panel. */
+  var STAGES = [
+    { name: 'Your home', steps: ['zone', 'state', 'property', 'ownership', 'shading'] },
+    { name: 'Your energy', steps: ['power', 'spend', 'generator', 'appliances'] },
+    { name: 'Your system', steps: ['decision', 'kva', 'tier', 'budget', 'budgetInput', 'timeline'] },
+    { name: 'Your details', steps: ['consent', 'contact', 'otp'] }
+  ];
+  function stageOf(step) {
+    for (var i = 0; i < STAGES.length; i++) if (STAGES[i].steps.indexOf(step) > -1) return i;
+    return STAGES.length;
+  }
+
   /* ---------- State ---------- */
   var form, current, busy, error, lastFocus;
   function reset() {
@@ -311,6 +323,7 @@
       var label = typeof o === 'string' ? o : o.label;
       var on = form[field] === value;
       return '<button type="button" class="qm-option' + (on ? ' is-selected' : '') + '" aria-pressed="' + on + '" data-set="' + field + '" data-value="' + esc(value) + '">' +
+        '<span class="qm-radio" aria-hidden="true"></span>' +
         '<span class="qm-option__label">' + esc(label) + '</span>' +
         (opts.recommended && value === opts.recommended ? '<span class="qm-badge qm-badge--green">Recommended</span>' : '') +
         (obj.price ? '<span class="qm-option__meta">' + esc(obj.price) + '</span>' : '') +
@@ -322,7 +335,7 @@
     return '<button type="button" class="btn btn--accent qm-primary" data-action="' + action + '"' + (disabled ? ' disabled' : '') + '>' +
       esc(label) + '<span class="btn__icon" aria-hidden="true">' + ARROW + '</span></button>';
   }
-  function backBtn(label) { return '<button type="button" class="qm-back" data-action="back">← ' + esc(label || 'Back') + '</button>'; }
+  function backBtn(label) { return '<button type="button" class="qm-back" data-action="back"><svg aria-hidden="true"><use href="#i-arrow"/></svg>' + esc(label || 'Back') + '</button>'; }
   function errorBox() { return error ? '<p class="qm-error" role="alert">' + esc(error) + '</p>' : ''; }
 
   function stepHtml(step) {
@@ -332,7 +345,7 @@
         return '<div class="qm-zones">' + Object.keys(ZONES).map(function (z) {
           var on = f.zone === z;
           return '<button type="button" class="qm-zone' + (on ? ' is-selected' : '') + '" aria-pressed="' + on + '" data-set="zone" data-value="' + esc(z) + '">' +
-            '<span class="qm-zone__name">' + esc(z) + '</span><span class="qm-zone__states">' + esc(ZONES[z].join(' · ')) + '</span></button>';
+            '<span class="qm-radio" aria-hidden="true"></span><span class="qm-zone__name">' + esc(z) + '</span><span class="qm-zone__states">' + esc(ZONES[z].join(' · ')) + '</span></button>';
         }).join('') + '</div>';
       case 'state': return choice('state', ZONES[f.zone] || [], { grid: true }) + backBtn();
       case 'property':
@@ -398,7 +411,7 @@
         return '<div class="qm-options">' + SYSTEM_TIERS.map(function (t) {
           var on = f.systemTier === t.value;
           return '<button type="button" class="qm-option qm-tier' + (on ? ' is-selected' : '') + '" aria-pressed="' + on + '" data-set="systemTier" data-value="' + t.value + '">' +
-            '<span class="qm-tier__top"><span class="qm-option__label">' + esc(t.label) + '</span><span class="qm-badge qm-badge--' + t.tone + '">' + esc(t.badge) + '</span></span>' +
+            '<span class="qm-radio" aria-hidden="true"></span><span class="qm-tier__top"><span class="qm-option__label">' + esc(t.label) + '</span><span class="qm-badge qm-badge--' + t.tone + '">' + esc(t.badge) + '</span></span>' +
             '<span class="qm-tier__warranty">' + esc(t.warranty) + '</span><span class="qm-option__sub">' + esc(t.desc) + '</span></button>';
         }).join('') + '</div>' + backBtn();
       case 'budget':
@@ -457,13 +470,30 @@
     var total = p.length;
     modal.classList.toggle('is-done', done);
     progressBar.style.width = (done ? 100 : Math.round((i / total) * 100)) + '%';
-    progressText.textContent = done ? 'Complete' : 'Step ' + (i + 1) + ' of ' + total;
+    progressText.textContent = done ? 'Complete' : 'Question ' + (i + 1) + ' of ' + total;
+
+    // Journey: which stage we're in and how far through it.
+    var stage = done ? STAGES.length : stageOf(current);
+    var inStage = [], pos = 0;
+    if (!done) {
+      inStage = p.filter(function (st) { return STAGES[stage].steps.indexOf(st) > -1; });
+      pos = inStage.indexOf(current);
+    }
+    Array.prototype.forEach.call(modal.querySelectorAll('.qa-stages li'), function (li, n) {
+      li.classList.toggle('is-done', n < stage);
+      li.classList.toggle('is-current', n === stage);
+      if (n === stage) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+    });
+    Array.prototype.forEach.call(modal.querySelectorAll('.qa-segments i'), function (bar, n) {
+      bar.style.width = (n < stage ? 100 : n === stage ? Math.round((pos / Math.max(inStage.length, 1)) * 100) : 0) + '%';
+    });
 
     var head = '';
     if (!done) {
       var m = META[current];
-      head = '<div class="qm-head"><span class="qm-head__icon" aria-hidden="true">' + icon(m[0]) + '</span>' +
-        '<div><h2 class="qm-head__title" tabindex="-1">' + esc(m[1]) + '</h2><p class="qm-head__sub">' + esc(m[2]) + '</p></div></div>';
+      head = '<div class="qm-head">' +
+        '<p class="qm-eyebrow">' + esc(STAGES[stage].name) + '<span aria-hidden="true">·</span>Question ' + (pos + 1) + ' of ' + inStage.length + '</p>' +
+        '<h2 class="qm-head__title" tabindex="-1">' + esc(m[1]) + '</h2><p class="qm-head__sub">' + esc(m[2]) + '</p></div>';
     }
     // Keep the caret where it is while typing.
     var active = document.activeElement;
@@ -471,9 +501,21 @@
     var caret = activeField && active.selectionStart;
 
     body.innerHTML = '<div class="qm-step' + (stepChanged ? ' is-entering' : '') + '">' + head + stepHtml(current) + '</div>';
-    body.scrollTop = stepChanged ? 0 : body.scrollTop;
+
+    // Gather Back and the main button into one action bar at the end of the step.
+    var step = body.firstChild;
+    var back = step.querySelector(':scope > .qm-back');
+    var main = step.querySelector(':scope > .qm-primary');
+    if (back || main) {
+      var bar = document.createElement('div');
+      bar.className = 'qm-actions' + (main ? '' : ' qm-actions--back-only');
+      if (back) bar.appendChild(back);
+      if (main) bar.appendChild(main);
+      step.appendChild(bar);
+    }
 
     if (stepChanged) {
+      (pageMode ? window : body).scrollTo(0, 0);
       var t = body.querySelector('.qm-head__title, .qm-done__title');
       if (t) t.focus({ preventScroll: true });
     } else if (activeField) {
