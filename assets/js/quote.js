@@ -77,6 +77,67 @@
   var TIMELINE_OPTIONS = ['Immediately', 'In 14 days', 'In 1 month', 'In 2 months', 'In 3 months', 'Not sure yet'];
   var TITLES = ['Mr', 'Mrs', 'Miss', 'Dr', 'Prof'];
 
+  /* ---------- Appliance load calculator ----------
+     Typical ratings for Nigerian homes. "hours" is the default daily use. */
+  var APPLIANCES = [
+    { id: 'bulb', group: 'Lighting', name: 'LED bulb', watts: 10, hours: 6 },
+    { id: 'security', group: 'Lighting', name: 'Security / outdoor light', watts: 30, hours: 12 },
+    { id: 'ceilingfan', group: 'Cooling', name: 'Ceiling fan', watts: 75, hours: 8 },
+    { id: 'standfan', group: 'Cooling', name: 'Standing / table fan', watts: 60, hours: 8 },
+    { id: 'ac1', group: 'Cooling', name: 'Air conditioner (1 HP)', watts: 900, hours: 6 },
+    { id: 'ac15', group: 'Cooling', name: 'Air conditioner (1.5 HP)', watts: 1300, hours: 6 },
+    { id: 'ac2', group: 'Cooling', name: 'Air conditioner (2 HP)', watts: 1800, hours: 6 },
+    { id: 'fridge', group: 'Kitchen', name: 'Refrigerator', watts: 150, hours: 12 },
+    { id: 'freezer', group: 'Kitchen', name: 'Chest / deep freezer', watts: 200, hours: 12 },
+    { id: 'microwave', group: 'Kitchen', name: 'Microwave', watts: 1200, hours: 1 },
+    { id: 'kettle', group: 'Kitchen', name: 'Electric kettle', watts: 1500, hours: 1 },
+    { id: 'blender', group: 'Kitchen', name: 'Blender', watts: 400, hours: 1 },
+    { id: 'tv', group: 'Entertainment & work', name: 'LED TV', watts: 100, hours: 6 },
+    { id: 'decoder', group: 'Entertainment & work', name: 'Decoder (DStv / GOtv)', watts: 25, hours: 6 },
+    { id: 'sound', group: 'Entertainment & work', name: 'Sound system', watts: 100, hours: 3 },
+    { id: 'router', group: 'Entertainment & work', name: 'Wi-Fi router', watts: 15, hours: 24 },
+    { id: 'laptop', group: 'Entertainment & work', name: 'Laptop', watts: 65, hours: 6 },
+    { id: 'desktop', group: 'Entertainment & work', name: 'Desktop computer', watts: 200, hours: 6 },
+    { id: 'charger', group: 'Entertainment & work', name: 'Phone charger', watts: 10, hours: 3 },
+    { id: 'iron', group: 'Household', name: 'Pressing iron', watts: 1000, hours: 1 },
+    { id: 'washer', group: 'Household', name: 'Washing machine', watts: 500, hours: 1 },
+    { id: 'pump', group: 'Household', name: 'Water pump (1 HP)', watts: 750, hours: 1 },
+    { id: 'cctv', group: 'Household', name: 'CCTV / security system', watts: 40, hours: 24 }
+  ];
+  var HOUR_OPTIONS = [1, 2, 3, 4, 6, 8, 10, 12, 16, 24];
+  var BACKUP_OPTIONS = [4, 6, 8, 10, 12];
+  var KVA_SIZES = [3.5, 5, 7.5, 10, 15, 20, 25, 30];
+
+  /* Sizing assumptions (an estimate; the installer confirms during the audit):
+     - Inverter: total running load / 0.8 power factor, plus 25% headroom for
+       motor start-up surges, rounded up to the next standard size.
+     - Battery: energy used during the backup window, divided by 80% usable
+       depth of discharge and 90% inverter efficiency, rounded up to 2.5 kWh. */
+  function sizing() {
+    var watts = 0, daily = 0, backupWh = 0, items = [];
+    var backup = form.backupHours || 8;
+    APPLIANCES.forEach(function (a) {
+      var row = form.appliances[a.id];
+      if (!row || !row.qty) return;
+      var w = a.watts * row.qty;
+      watts += w;
+      daily += w * row.hours;
+      backupWh += w * Math.min(row.hours, backup);
+      items.push(row.qty + ' x ' + a.name + ' (' + a.watts + 'W, ' + row.hours + 'h/day)');
+    });
+    var kvaNeeded = watts / 1000 / 0.8 * 1.25;
+    var kva = null;
+    for (var i = 0; i < KVA_SIZES.length; i++) { if (KVA_SIZES[i] >= kvaNeeded) { kva = KVA_SIZES[i]; break; } }
+    var batteryRaw = backupWh / 1000 / 0.8 / 0.9;
+    var battery = batteryRaw ? Math.ceil(batteryRaw / 2.5) * 2.5 : 0;
+    return {
+      watts: watts, dailyKwh: Math.round(daily / 100) / 10,
+      kva: watts ? (kva === null ? '30+' : String(kva)) : '',
+      batteryKwh: battery, items: items, backupHours: backup
+    };
+  }
+  function fmtKva(v) { return v === '30+' ? 'Over 30 kVA' : v + ' kVA'; }
+
   var META = {
     zone: ['i-pin', "Let's find installers near you", 'We use your zone to match you with COREN-accredited installers in your area.'],
     state: ['i-pin', 'Which state are you in?', 'We match you with installers who work in your state, for faster responses and easier site visits.'],
@@ -85,6 +146,7 @@
     spend: ['i-wallet', 'What do you spend on fuel and maintenance each week?', 'We use this to show how quickly solar can pay for itself.'],
     generator: ['i-bolt', 'What size is your generator?', 'It tells us your current power demand, so we can recommend the right capacity.'],
     decision: ['i-handshake', 'Are you making the decision?', "So we can prepare the right level of detail, whether that's a full proposal or a quick overview."],
+    appliances: ['i-house', 'Which appliances do you want to power?', 'Add each appliance and how many you have. We will work out the inverter and battery size your home needs.'],
     kva: ['i-bolt', 'Choose your system size', 'Not sure? Your installer will confirm the best size during the free home audit.'],
     tier: ['i-badge', 'What quality of system do you want?', 'Your installer will explain each option in detail during the free audit.'],
     budget: ['i-wallet', "What's your investment range?", 'This helps your installer prepare an accurate proposal.'],
@@ -102,7 +164,8 @@
       zone: '', state: '', propertyTypes: [], otherProperty: '',
       electricitySource: '', weeklySpend: '', generatorSize: '', decisionRole: '',
       kva: '', systemTier: '', budgetRange: '', budgetInput: '',
-      timeline: '', consent: '', title: '', firstName: '', lastName: '', phone: '', otp: ''
+      timeline: '', consent: '', title: '', firstName: '', lastName: '', phone: '', otp: '',
+      appliances: {}, backupHours: 8
     };
     current = 'zone'; busy = false; error = '';
   }
@@ -120,7 +183,7 @@
   function path() {
     var p = ['zone', 'state', 'property', 'power', 'spend'];
     if (usesGenerator()) p.push('generator');
-    p.push('decision', 'kva');
+    p.push('decision', 'appliances', 'kva');
     if (!kvaOut()) {
       p.push('tier', 'budget');
       if (form.budgetRange === ABOVE_PLAN) p.push('budgetInput');
@@ -176,6 +239,7 @@
     if (busy && form.otp !== '000000') return;
     busy = true; error = ''; render();
     var f = form;
+    var loadSummary = sizing();
     post('submit.php', {
       title: f.title, firstName: f.firstName.trim(), lastName: f.lastName.trim(),
       phone: f.phone.trim(), otp: f.otp.trim(),
@@ -187,10 +251,26 @@
       budgetRange: f.budgetRange, budgetInput: f.budgetInput,
       timeline: f.timeline, consent: f.consent,
       disqualified: disqualified(),
+      appliances: loadSummary.items,
+      loadWatts: loadSummary.watts,
+      dailyKwh: loadSummary.dailyKwh,
+      backupHours: loadSummary.backupHours,
+      recommendedKva: loadSummary.kva,
+      recommendedBatteryKwh: loadSummary.batteryKwh,
       source: SOURCE
     }).then(function (data) {
       busy = false;
-      if (data && data.success) { current = 'done'; render(true); return; }
+      if (data && data.success) {
+        var held = disqualified() || form.consent === 'no';
+        try {
+          sessionStorage.setItem('hb-quote', JSON.stringify({
+            name: form.firstName.trim(), state: form.state, held: held,
+            kva: loadSummary.kva, batteryKwh: loadSummary.batteryKwh, dailyKwh: loadSummary.dailyKwh
+          }));
+        } catch (e) {}
+        window.location.href = 'thank-you.html' + (held ? '?status=saved' : '');
+        return;
+      }
       error = (data && data.message) || 'Something went wrong. Please try again.'; render();
     }).catch(function () {
       busy = false; error = 'Network error. Please check your connection and try again.'; render();
@@ -218,6 +298,7 @@
       var on = form[field] === value;
       return '<button type="button" class="qm-option' + (on ? ' is-selected' : '') + '" aria-pressed="' + on + '" data-set="' + field + '" data-value="' + esc(value) + '">' +
         '<span class="qm-option__label">' + esc(label) + '</span>' +
+        (opts.recommended && value === opts.recommended ? '<span class="qm-badge qm-badge--green">Recommended</span>' : '') +
         (obj.price ? '<span class="qm-option__meta">' + esc(obj.price) + '</span>' : '') +
         (obj.sub ? '<span class="qm-option__sub">' + esc(obj.sub) + '</span>' : '') +
         '</button>';
@@ -250,7 +331,45 @@
       case 'spend': return choice('weeklySpend', SPEND_OPTIONS) + backBtn();
       case 'generator': return choice('generatorSize', GENERATOR_SIZES, { grid: true }) + backBtn();
       case 'decision': return choice('decisionRole', DECISION_ROLES) + backBtn();
-      case 'kva': return choice('kva', KVA_OPTIONS) + backBtn();
+      case 'kva':
+        var rec = sizing();
+        var recNote = rec.kva
+          ? '<p class="qm-note qm-note--ok">' + icon('i-check') + '<span>Based on your appliances, we recommend about <strong>' + esc(fmtKva(rec.kva)) + '</strong> with a <strong>' + esc(rec.batteryKwh) + ' kWh</strong> battery.</span></p>'
+          : '';
+        return recNote + choice('kva', KVA_OPTIONS, { recommended: rec.kva }) + backBtn();
+      case 'appliances':
+        var sz = sizing(), groups = {}, order = [];
+        APPLIANCES.forEach(function (a) { if (!groups[a.group]) { groups[a.group] = []; order.push(a.group); } groups[a.group].push(a); });
+        var list = order.map(function (g) {
+          return '<p class="qm-group">' + esc(g) + '</p><ul class="qm-appliances">' + groups[g].map(function (a) {
+            var row = f.appliances[a.id] || { qty: 0, hours: a.hours };
+            var on = row.qty > 0;
+            return '<li class="qm-appl' + (on ? ' is-on' : '') + '">' +
+              '<div class="qm-appl__info"><span class="qm-appl__name">' + esc(a.name) + '</span><span class="qm-appl__rating">' + a.watts + ' W</span></div>' +
+              '<div class="qm-stepper" role="group" aria-label="' + esc(a.name) + ' quantity">' +
+                '<button type="button" data-qty="' + a.id + '" data-delta="-1" data-key="m-' + a.id + '" aria-label="Remove one ' + esc(a.name) + '"' + (on ? '' : ' disabled') + '>−</button>' +
+                '<span aria-live="polite">' + row.qty + '</span>' +
+                '<button type="button" data-qty="' + a.id + '" data-delta="1" data-key="p-' + a.id + '" aria-label="Add one ' + esc(a.name) + '">+</button>' +
+              '</div>' +
+              (on ? '<label class="qm-appl__hours">Hours used per day <select data-hours="' + a.id + '">' + HOUR_OPTIONS.map(function (h) {
+                return '<option value="' + h + '"' + (h === row.hours ? ' selected' : '') + '>' + h + (h === 1 ? ' hour' : ' hours') + '</option>';
+              }).join('') + '</select></label>' : '') +
+              '</li>';
+          }).join('') + '</ul>';
+        }).join('');
+        var backupSel = '<label class="qm-label" for="qm-backup">How long should your battery last without sun or grid power?</label>' +
+          '<select id="qm-backup" class="qm-input qm-select" data-backup>' + BACKUP_OPTIONS.map(function (h) {
+            return '<option value="' + h + '"' + (h === f.backupHours ? ' selected' : '') + '>' + h + ' hours</option>';
+          }).join('') + '</select>';
+        var summary = '<div class="qm-calc" aria-live="polite">' +
+          '<div><span>Total load</span><strong>' + (sz.watts ? sz.watts.toLocaleString() + ' W' : '–') + '</strong></div>' +
+          '<div><span>Daily energy</span><strong>' + (sz.watts ? sz.dailyKwh + ' kWh' : '–') + '</strong></div>' +
+          '<div class="qm-calc__hl"><span>Inverter</span><strong>' + (sz.kva ? esc(fmtKva(sz.kva)) : '–') + '</strong></div>' +
+          '<div class="qm-calc__hl"><span>Battery</span><strong>' + (sz.batteryKwh ? sz.batteryKwh + ' kWh' : '–') + '</strong></div>' +
+          '</div><p class="qm-hint">An estimate based on typical ratings. Your installer confirms the final size during the free home audit.</p>';
+        return list + backupSel + summary +
+          primary('Continue', 'next', !sz.watts) +
+          '<p class="qm-hint qm-center"><button type="button" class="qm-link" data-action="skipAppliances">Skip, I\'m not sure what I use</button></p>' + backBtn();
       case 'tier':
         return '<div class="qm-options">' + SYSTEM_TIERS.map(function (t) {
           var on = f.systemTier === t.value;
@@ -359,15 +478,35 @@
       return;
     }
     if (t.hasAttribute('data-title')) { form.title = t.getAttribute('data-title'); render(); return; }
+    if (t.hasAttribute('data-qty')) {
+      var id = t.getAttribute('data-qty'), delta = +t.getAttribute('data-delta');
+      var a = APPLIANCES.filter(function (x) { return x.id === id; })[0];
+      var row = form.appliances[id] || { qty: 0, hours: a.hours };
+      row.qty = Math.max(0, Math.min(50, row.qty + delta));
+      form.appliances[id] = row;
+      var key = t.getAttribute('data-key');
+      render();
+      var again = body.querySelector('[data-key="' + key + '"]');
+      if (again && !again.disabled) again.focus({ preventScroll: true });
+      else { var plus = body.querySelector('[data-key="p-' + id + '"]'); if (plus) plus.focus({ preventScroll: true }); }
+      return;
+    }
     switch (t.getAttribute('data-action')) {
       case 'next': if (canNext(current)) next(); break;
       case 'back': back(); break;
       case 'sendOtp': sendOtp(); break;
       case 'submit': if (canNext('otp')) submit(); break;
       case 'close': close(); break;
+      case 'skipAppliances': form.appliances = {}; next(); break;
     }
   }
   function onInput(e) {
+    if (e.target.hasAttribute('data-hours')) {
+      var row = form.appliances[e.target.getAttribute('data-hours')];
+      if (row) row.hours = +e.target.value;
+      refreshCalc(); return;
+    }
+    if (e.target.hasAttribute('data-backup')) { form.backupHours = +e.target.value; refreshCalc(); return; }
     var field = e.target.getAttribute('data-field');
     if (!field) return;
     var v = e.target.value;
@@ -379,6 +518,16 @@
     if (btn) btn.disabled = !canNext(current) || busy;
     if (v !== e.target.value) e.target.value = v;
   }
+  // Update only the totals box so the open dropdown keeps focus.
+  function refreshCalc() {
+    var sz = sizing(), cells = body.querySelectorAll('.qm-calc strong');
+    if (cells.length !== 4) return;
+    cells[0].textContent = sz.watts ? sz.watts.toLocaleString() + ' W' : '–';
+    cells[1].textContent = sz.watts ? sz.dailyKwh + ' kWh' : '–';
+    cells[2].textContent = sz.kva ? fmtKva(sz.kva) : '–';
+    cells[3].textContent = sz.batteryKwh ? sz.batteryKwh + ' kWh' : '–';
+  }
+
   function onKey(e) {
     if (!modal.classList.contains('is-open')) return;
     if (e.key === 'Escape') { close(); return; }

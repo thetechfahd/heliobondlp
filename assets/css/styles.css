@@ -1848,3 +1848,125 @@ html.qm-open { overflow: hidden; }
   .qm--page { padding: 0; }
   .qm--page .qm__panel { height: auto; min-height: 100dvh; border: 0; border-radius: 0; box-shadow: none; }
 }
+
+/* ---------- Appliance calculator (quote form) ---------- */
+.qm-group {
+  margin: var(--s-5) 0 var(--s-2);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+.qm-group:first-child { margin-top: 0; }
+.qm-appliances { display: grid; gap: var(--s-2); }
+.qm-appl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-2) var(--s-3);
+  padding: 12px var(--s-4);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+  transition: border-color 0.15s var(--ease), background-color 0.15s var(--ease);
+}
+.qm-appl.is-on { border-color: var(--c-amber); background: #fffaf0; }
+.qm-appl__info { display: grid; }
+.qm-appl__name { font-size: var(--fs-sm); font-weight: 600; }
+.qm-appl__rating { font-size: var(--fs-xs); color: var(--c-muted); }
+.qm-stepper { display: inline-flex; align-items: center; border: 1px solid var(--c-line); border-radius: var(--r-pill); background: var(--c-surface); }
+.qm-stepper button {
+  display: grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--c-ink);
+  cursor: pointer;
+}
+.qm-stepper button:hover:not(:disabled) { background: var(--c-surface-2); }
+.qm-stepper button:disabled { color: #c3c7cb; cursor: default; }
+.qm-stepper span { min-width: 24px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.qm-appl__hours {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding-top: var(--s-2);
+  border-top: 1px dashed #ecd9a6;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--c-ink-2);
+}
+.qm-appl__hours select,
+.qm-select {
+  min-height: 36px;
+  padding: 0 var(--s-6) 0 var(--s-3);
+  border: 1px solid #d5d8d3;
+  border-radius: var(--r-sm);
+  background: var(--c-surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='m1 1.5 5 5 5-5' fill='none' stroke='%235b6b77' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") right 10px center / 10px no-repeat;
+  font: inherit;
+  font-size: var(--fs-sm);
+  color: var(--c-ink);
+  -webkit-appearance: none;
+          appearance: none;
+}
+.qm-select { width: 100%; min-height: 50px; }
+.qm-calc {
+  position: sticky;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  margin-top: var(--s-5);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--c-line);
+  border: 1px solid var(--c-line);
+  box-shadow: 0 -12px 24px -18px rgba(4, 36, 57, 0.35);
+}
+.qm-calc > div { display: grid; gap: 2px; padding: var(--s-3); background: var(--c-surface); }
+.qm-calc span { font-size: var(--fs-xs); color: var(--c-muted); }
+.qm-calc strong { font-family: var(--f-display); font-size: var(--fs-md); font-weight: 700; color: var(--c-ink); }
+.qm-calc__hl { background: var(--c-navy) !important; }
+.qm-calc__hl span { color: var(--c-on-dark-muted); }
+.qm-calc__hl strong { color: var(--c-amber); }
+.qm-option .qm-badge { margin-left: auto; margin-right: var(--s-2); }
+
+/* Thank-you page */
+.ty { padding-bottom: 0; }
+.ty .qm-done__title { font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2rem); }
+.ty__estimate { position: static; width: 100%; grid-template-columns: repeat(3, 1fr); margin-top: var(--s-2); box-shadow: none; text-align: left; }
+.ty__next { display: grid; gap: var(--s-3); width: 100%; margin-top: var(--s-3); padding: 0; counter-reset: ty; text-align: left; }
+.ty__next li {
+  counter-increment: ty;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: var(--s-3);
+  font-size: var(--fs-sm);
+  color: var(--c-ink-2);
+}
+.ty__next li::before {
+  content: counter(ty);
+  display: grid;
+  place-items: center;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #fff6dd;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: #7a5200;
+}
+.ty .qm-primary { margin-top: var(--s-4); }
+
+@media (max-width: 640px) {
+  .qm-calc { grid-template-columns: 1fr 1fr; }
+  .ty__estimate { grid-template-columns: repeat(3, 1fr); }
+  .ty__estimate strong { font-size: var(--fs-base); }
+}

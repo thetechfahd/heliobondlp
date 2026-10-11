@@ -16,7 +16,8 @@ python3 -m http.server 8000
 | --- | --- |
 | `index.html` | The landing page |
 | `assets/css/styles.css` | All styles. Design tokens (colours, type, spacing, radii, container) are defined in `:root` |
-| `get-quotes.html` | The quote request page |
+| `get-quotes.html` | The quote request page, including the appliance calculator |
+| `thank-you.html` | Where visitors land after a successful request (`?status=saved` for requests kept on file) |
 | `assets/js/quote.js` | The quote request form |
 | `assets/js/main.js` | Mobile menu, header scroll state, video testimonial player, image-failure fallback and footer year. The page also works without it |
 | `assets/img/heliobond-logo.png` | Heliobond logo on a transparent background, for light backgrounds |
@@ -34,6 +35,7 @@ python3 -m http.server 8000
 - **Logo permissions.** Both sliders now use official logo files in `assets/img/logos/` (press: Punch, Vanguard, TechCrunch, TechCabal, Premium Times, ThisDay; partners: Rivy, SunFi, CreditDirect, COREN, REA). Only list outlets that have covered Heliobond and organisations you formally partner with, and get permission before using a partner's logo — especially COREN and REA, which are government bodies.
 - **Logo files.** The PNGs were cut from the supplied JPG. An SVG or high-resolution original from the designer would be sharper.
 - **Quote form.** Every homeowner button opens `get-quotes.html`, a step-by-step request form for homes only (`assets/js/quote.js`). It sends leads to the Heliobond quote API at `https://solar.heliobond.com/api/` (`send_otp.php`, then `submit.php`), the same system as solar.heliobond.com, tagged `source: "landing-page"`. The same script can also run as a popup if needed: give any element a `data-quote` attribute and include the popup markup.
+- **Appliance calculator data.** Each request now also sends `appliances` (a list like "10 x LED bulb (10W, 6h/day)"), `loadWatts`, `dailyKwh`, `backupHours`, `recommendedKva` and `recommendedBatteryKwh`. The quote API at solar.heliobond.com must be updated to save these fields; until then it will likely ignore them. Sizing rule: inverter = load ÷ 0.8 power factor × 1.25 surge margin, rounded up to the next standard size; battery = energy used during the backup window ÷ 0.8 usable capacity ÷ 0.9 inverter efficiency, rounded up to 2.5 kWh.
 - **Installer applications.** "Apply as an Installer" still points to the placeholder `get-started.html#installers`.
 - **Phone number.** The footer shows `028137890976` as supplied. Double-check it; a Nigerian mobile number is usually 11 digits (e.g. `0813 789 0976`).
 - **Social links.** None are shown. There is a comment in the footer where they should go.

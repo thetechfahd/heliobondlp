@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en-NG">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Request received | Heliobond</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#042439">
+  <link rel="icon" href="assets/img/heliobond-mark.png?v=202610111610" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/css/styles.css?v=202610111610">
+</head>
+<body class="quote-page">
+  <svg width="0" height="0" class="visually-hidden" aria-hidden="true" focusable="false">
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <main class="qm qm--page is-open">
+    <div class="qm__panel">
+      <div class="qm__top">
+        <a href="index.html" class="qm__home"><img class="qm__logo" src="assets/img/heliobond-logo.png?v=202610111610" alt="Heliobond home" width="720" height="123"></a>
+      </div>
+      <div class="qm-body">
+        <div class="qm-done ty">
+          <span class="qm-done__icon" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
+          <h1 class="qm-done__title" id="ty-title">Request received!</h1>
+          <p id="ty-text">We're matching you with COREN-accredited installers in your region. Your quotes will be sent to your WhatsApp.</p>
+
+          <div class="qm-calc ty__estimate" id="ty-estimate" hidden>
+            <div class="qm-calc__hl"><span>Inverter</span><strong id="ty-kva"></strong></div>
+            <div class="qm-calc__hl"><span>Battery</span><strong id="ty-battery"></strong></div>
+            <div><span>Daily energy</span><strong id="ty-daily"></strong></div>
+          </div>
+
+          <ol class="ty__next" id="ty-next">
+            <li><span><strong>Matching.</strong> We shortlist COREN-verified installers who work in your state.</span></li>
+            <li><span><strong>Quotes.</strong> You receive comparable quotes on WhatsApp.</span></li>
+            <li><span><strong>Free home audit.</strong> Your chosen installer confirms the system size on site.</span></li>
+          </ol>
+
+          <a class="btn btn--dark qm-primary" href="index.html">
+            Back to the website
+            <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var held = /status=saved/.test(location.search), d = {};
+      try { d = JSON.parse(sessionStorage.getItem('hb-quote') || '{}'); } catch (e) {}
+      var name = d.name ? ', ' + d.name : '';
+      if (held) {
+        document.getElementById('ty-title').textContent = 'Thank you' + name + '.';
+        document.getElementById('ty-text').textContent = "We've saved your project details. Our team will reach out on WhatsApp when a suitable option is available.";
+        document.getElementById('ty-next').hidden = true;
+      } else {
+        document.getElementById('ty-title').textContent = 'Request received' + name + '!';
+        if (d.state) document.getElementById('ty-text').textContent = "We're matching you with COREN-accredited installers in " + d.state + '. Your quotes will be sent to your WhatsApp.';
+      }
+      if (d.kva) {
+        document.getElementById('ty-kva').textContent = d.kva === '30+' ? 'Over 30 kVA' : d.kva + ' kVA';
+        document.getElementById('ty-battery').textContent = d.batteryKwh + ' kWh';
+        document.getElementById('ty-daily').textContent = d.dailyKwh + ' kWh';
+        document.getElementById('ty-estimate').hidden = false;
+      }
+    })();
+  </script>
+</body>
+</html>
