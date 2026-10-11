@@ -32,7 +32,7 @@ python3 -m http.server 8000
 - **Logo permissions.** Both sliders now use official logo files in `assets/img/logos/` (press: Punch, Vanguard, TechCrunch, TechCabal, Premium Times, ThisDay; partners: Rivy, SunFi, CreditDirect, COREN, REA). Only list outlets that have covered Heliobond and organisations you formally partner with, and get permission before using a partner's logo — especially COREN and REA, which are government bodies.
 - **Logo files.** The PNGs were cut from the supplied JPG. An SVG or high-resolution original from the designer would be sharper.
 - **Onboarding flows.** All homeowner CTAs point to `get-started.html`. The installer CTA points to `get-started.html#installers`.
-- **Contact details.** The footer has placeholder text for phone, email and office address.
+- **Phone number.** The footer shows `028137890976` as supplied. Double-check it; a Nigerian mobile number is usually 11 digits (e.g. `0813 789 0976`).
 - **Social links.** None are shown. There is a comment in the footer where they should go.
 - **Articles.** The resources section shows planned guide titles marked "Coming soon". Link each card once the article is published.
 - **Legal copy.** Privacy Policy and Terms of Service.

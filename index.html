@@ -12,10 +12,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/css/styles.css?v=202610102336">
+  <link rel="stylesheet" href="assets/css/styles.css?v=202610110009">
 
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
-  <script src="assets/js/main.js?v=202610102336" defer></script>
+  <script src="assets/js/main.js?v=202610110009" defer></script>
 </head>
 <body>
   <!-- Icon sprite -->
@@ -28,6 +28,9 @@
     <symbol id="i-compare" viewBox="0 0 24 24"><rect x="3.5" y="4" width="7" height="16" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="4" width="7" height="16" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6 9h2M6 12h2M16 9h2M16 12h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
     <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><rect x="4" y="8" width="16" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="16" cy="13.5" r="1.3" fill="currentColor"/></symbol>
     <symbol id="i-support" viewBox="0 0 24 24"><path d="M5 13v-1a7 7 0 0 1 14 0v1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="3.5" y="13" width="4" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="16.5" y="13" width="4" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-shield-alert" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4.3 3 8 7 9.5 4-1.5 7-5.2 7-9.5V6l-7-3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 8v4.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="12" cy="15.6" r="1.1" fill="currentColor"/></symbol>
+    <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 8h6M9 12h6M9 16h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
     <symbol id="i-house" viewBox="0 0 24 24"><path d="M3.5 11 12 4l8.5 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 9.5V20h13V9.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M10 20v-5h4v5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
     <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
     <symbol id="i-video-chat" viewBox="0 0 24 24"><path d="M4 5.5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M10.5 8.5v5l4-2.5z" fill="currentColor"/></symbol>
@@ -87,7 +90,7 @@
           </div>
 
           <div class="hero__content">
-            <p class="eyebrow eyebrow--light">Solar installation, made simple</p>
+            <p class="eyebrow eyebrow--light">Home solar, made simple</p>
             <h1 class="hero__title" id="hero-title"><span class="hero__line">Compare Solar Quotes</span> <span class="hero__line">from <span class="hl nowrap">COREN-Accredited</span></span> <span class="hero__line">Installers in Your Region</span></h1>
             <p class="hero__lead">Tell us about your home once. Get side-by-side quotes with clear pricing, warranties and instalment options, then choose with confidence.</p>
             <div class="btn-row">
@@ -199,86 +202,203 @@
 
     <!-- ============ Why Heliobond ============ -->
     <section class="section why" id="homeowners" aria-labelledby="why-title">
-      <div class="container why__grid">
-        <div class="why__copy">
+      <div class="container">
+        <div class="section-head section-head--center">
           <p class="eyebrow">Why Heliobond</p>
-          <h2 class="h2" id="why-title">One request. Several trusted quotes. One clear choice.</h2>
-          <p class="lead text-muted">Stop calling installers one by one. We match you with accredited professionals near you and put their offers side by side.</p>
-          <a class="btn btn--dark btn--sm" href="get-started.html">
-            Compare Quotes
-            <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
-          </a>
+          <h2 class="h2" id="why-title">Every headache of going solar, solved.</h2>
+          <p class="lead text-muted">Going solar shouldn't mean finding the money upfront, guessing who to trust, or chasing an installer who has stopped picking up. We take those problems off your plate.</p>
         </div>
 
-        <ul class="value-grid">
-          <li class="value-card">
-            <span class="value-card__icon" aria-hidden="true"><svg><use href="#i-badge"/></svg></span>
-            <h3 class="value-card__title">COREN-accredited installers</h3>
-            <p>Every installer is checked before they can quote.</p>
+        <ul class="pain-grid">
+          <li class="pain-card pain-card--feature" id="financing">
+            <p class="pain-card__problem">Can't pay for solar all at once?</p>
+            <p class="pain-card__big"><span>20%</span> down</p>
+            <h3 class="pain-card__title">Pay the rest in monthly instalments</h3>
+            <p class="pain-card__text">Start with just 20% of the cost and spread the balance over affordable monthly payments, so your family gets steady power now, not after years of saving.</p>
+            <a class="btn btn--accent btn--sm" href="get-started.html">
+              Check my instalment plan
+              <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
+            </a>
           </li>
-          <li class="value-card">
-            <span class="value-card__icon" aria-hidden="true"><svg><use href="#i-compare"/></svg></span>
-            <h3 class="value-card__title">Side-by-side quotes</h3>
-            <p>Equipment, price and warranty in one format.</p>
+          <li class="pain-card">
+            <span class="pain-card__icon" aria-hidden="true"><svg><use href="#i-badge"/></svg></span>
+            <p class="pain-card__problem">Don't know which installer to trust?</p>
+            <h3 class="pain-card__title">Only COREN-verified installers</h3>
+            <p class="pain-card__text">Every installer is checked for COREN registration and a track record before they can quote for your home.</p>
           </li>
-          <li class="value-card" id="financing">
-            <span class="value-card__icon" aria-hidden="true"><svg><use href="#i-wallet"/></svg></span>
-            <h3 class="value-card__title">Instalment options</h3>
-            <p>See which offers let you spread the cost.</p>
+          <li class="pain-card">
+            <span class="pain-card__icon" aria-hidden="true"><svg><use href="#i-shield-alert"/></svg></span>
+            <p class="pain-card__problem">Worried they'll vanish when something breaks?</p>
+            <h3 class="pain-card__title">We hold installers accountable</h3>
+            <p class="pain-card__text">If anything goes wrong with your installation, we step in and make sure the installer puts it right.</p>
           </li>
-          <li class="value-card">
-            <span class="value-card__icon" aria-hidden="true"><svg><use href="#i-support"/></svg></span>
-            <h3 class="value-card__title">Support to installation</h3>
-            <p>We stay with you until the system is running.</p>
+          <li class="pain-card">
+            <span class="pain-card__icon" aria-hidden="true"><svg><use href="#i-compare"/></svg></span>
+            <p class="pain-card__problem">Quotes all over the place?</p>
+            <h3 class="pain-card__title">Several quotes, one place</h3>
+            <p class="pain-card__text">Compare multiple offers side by side and pick the best deal for your home, without calling around.</p>
+          </li>
+          <li class="pain-card">
+            <span class="pain-card__icon" aria-hidden="true"><svg><use href="#i-receipt"/></svg></span>
+            <p class="pain-card__problem">Afraid of hidden costs or fake equipment?</p>
+            <h3 class="pain-card__title">Itemised, transparent pricing</h3>
+            <p class="pain-card__text">Panels, batteries, inverter and labour are listed clearly, with brands, sizes and warranties in writing.</p>
+          </li>
+          <li class="pain-card">
+            <span class="pain-card__icon" aria-hidden="true"><svg><use href="#i-bolt"/></svg></span>
+            <p class="pain-card__problem">Not sure what size system you need?</p>
+            <h3 class="pain-card__title">Right-sized for your home</h3>
+            <p class="pain-card__text">Installers size the system to your appliances and budget, so you don't overpay or run out of power at night.</p>
+          </li>
+          <li class="pain-card">
+            <span class="pain-card__icon" aria-hidden="true"><svg><use href="#i-support"/></svg></span>
+            <p class="pain-card__problem">Left on your own after you pay?</p>
+            <h3 class="pain-card__title">Support from start to after-sales</h3>
+            <p class="pain-card__text">We guide you from your first question to long after installation, so you always know who to call.</p>
           </li>
         </ul>
+
+        <p class="homes-note">
+          <svg aria-hidden="true"><use href="#i-house"/></svg>
+          <span>Heliobond currently serves <strong>homes only</strong>: houses, duplexes, bungalows and flats.</span>
+        </p>
       </div>
     </section>
 
-    <!-- ============ How it works ============ -->
-    <section class="section steps" id="how-it-works" aria-labelledby="steps-title">
-      <div class="container steps__grid">
-        <div class="steps__intro">
-          <p class="eyebrow">How it works</p>
-          <h2 class="h2" id="steps-title">Solar quotes in three simple steps.</h2>
-          <div class="steps__cta">
-            <p class="small text-muted">Free to request. No obligation.</p>
-            <a class="btn btn--dark btn--sm" href="get-started.html">
+    <!-- ============ Going it alone vs Heliobond ============ -->
+    <section class="section alone" id="compare" aria-labelledby="alone-title">
+      <div class="container">
+        <div class="section-head section-head--center">
+          <p class="eyebrow">The difference</p>
+          <h2 class="h2" id="alone-title">What usually happens when you go it alone.</h2>
+          <p class="lead text-muted">Most homeowners who buy solar without help run into at least one of these.</p>
+        </div>
+
+        <div class="alone__grid">
+          <div class="alone__col alone__col--without">
+            <h3 class="alone__heading"><span class="alone__badge alone__badge--bad" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Without Heliobond</h3>
+            <ul class="alone__list">
+              <li><svg aria-hidden="true"><use href="#i-x"/></svg>You call installer after installer and chase callbacks for weeks.</li>
+              <li><svg aria-hidden="true"><use href="#i-x"/></svg>Every quote looks different, so you can't tell which is fair.</li>
+              <li><svg aria-hidden="true"><use href="#i-x"/></svg>You're asked to pay 100% before anything is installed.</li>
+              <li><svg aria-hidden="true"><use href="#i-x"/></svg>An unverified installer fits an undersized system or substandard batteries.</li>
+              <li><svg aria-hidden="true"><use href="#i-x"/></svg>Something breaks and the installer stops answering your calls.</li>
+              <li><svg aria-hidden="true"><use href="#i-x"/></svg>The warranty turns out to be verbal, and nobody honours it.</li>
+            </ul>
+          </div>
+          <div class="alone__col alone__col--with">
+            <h3 class="alone__heading"><span class="alone__badge alone__badge--good" aria-hidden="true"><svg><use href="#i-check"/></svg></span>With Heliobond</h3>
+            <ul class="alone__list">
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Fill one short form and the quotes come to you.</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Every quote is laid out the same way, side by side.</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Pay 20% down and the rest in monthly instalments.</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Only COREN-verified installers, with equipment specs in writing.</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>We hold the installer accountable and step in if anything goes wrong.</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Warranties are documented before you commit.</li>
+            </ul>
+            <a class="btn btn--accent" href="get-started.html">
               Get My Free Quotes
               <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
             </a>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="media steps__media">
-          <img src="https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?auto=format&fit=crop&w=900&q=72"
-               alt="Solar installer fitting panels on a home's roof"
-               loading="lazy" decoding="async" width="900" height="900">
+    <!-- ============ How it works ============ -->
+    <section class="section steps" id="how-it-works" aria-labelledby="steps-title">
+      <div class="container">
+        <div class="section-head section-head--center">
+          <p class="pill-label">How it works</p>
+          <h2 class="h2 steps__title" id="steps-title">Two minutes of your time. We handle everything else.</h2>
+          <p class="lead text-muted">No chasing callbacks. No decoding inconsistent quotes. No pressure. You deal with us until you're completely ready to decide.</p>
         </div>
 
-        <ol class="step-list">
-          <li class="step">
-            <span class="step__num" aria-hidden="true">01</span>
-            <div>
-              <h3 class="step__title">Tell us about your home</h3>
-              <p>Location, power needs, preferred system and budget.</p>
+        <ol class="timeline">
+          <li class="timeline__step">
+            <span class="timeline__num" aria-hidden="true">1</span>
+            <div class="timeline__body">
+              <div class="timeline__head">
+                <h3 class="timeline__title">Tell us your power needs</h3>
+                <ul class="timeline__tags" aria-label="Who does this">
+                  <li class="tag-chip tag-chip--you">You</li>
+                </ul>
+              </div>
+              <p>Fill out one short form: your location, type of home, what you want to power and your budget. It takes under 2 minutes, with no commitment or payment.</p>
             </div>
           </li>
-          <li class="step">
-            <span class="step__num" aria-hidden="true">02</span>
-            <div>
-              <h3 class="step__title">Compare your quotes</h3>
-              <p>Review offers from accredited installers, side by side.</p>
+          <li class="timeline__step">
+            <span class="timeline__num" aria-hidden="true">2</span>
+            <div class="timeline__body">
+              <div class="timeline__head">
+                <h3 class="timeline__title">We find your best COREN matches</h3>
+                <ul class="timeline__tags" aria-label="Who does this">
+                  <li class="tag-chip tag-chip--us">Heliobond</li>
+                </ul>
+              </div>
+              <p>We identify the strongest COREN-verified installers in your state or region, matched to your home and requirements.</p>
             </div>
           </li>
-          <li class="step">
-            <span class="step__num" aria-hidden="true">03</span>
-            <div>
-              <h3 class="step__title">Choose and get installed</h3>
-              <p>Pick your installer, agree the scope and payment plan.</p>
+          <li class="timeline__step">
+            <span class="timeline__num" aria-hidden="true">3</span>
+            <div class="timeline__body">
+              <div class="timeline__head">
+                <h3 class="timeline__title">We gather and compare quotes for you</h3>
+                <ul class="timeline__tags" aria-label="Who does this">
+                  <li class="tag-chip tag-chip--us">Heliobond</li>
+                  <li class="tag-chip tag-chip--save">Saves you hours</li>
+                </ul>
+              </div>
+              <p>We collect quotes from verified installers and present them in a clear side-by-side comparison. No chasing, no confusion, no wasted hours.</p>
+            </div>
+          </li>
+          <li class="timeline__step">
+            <span class="timeline__num" aria-hidden="true">4</span>
+            <div class="timeline__body">
+              <div class="timeline__head">
+                <h3 class="timeline__title">We stay with you until you're confident</h3>
+                <ul class="timeline__tags" aria-label="Who does this">
+                  <li class="tag-chip tag-chip--us">Heliobond</li>
+                </ul>
+              </div>
+              <p>We walk you through every proposal, answer every question and explain your payment options, including 20% down with monthly instalments. You're never rushed.</p>
+            </div>
+          </li>
+          <li class="timeline__step">
+            <span class="timeline__num" aria-hidden="true">5</span>
+            <div class="timeline__body">
+              <div class="timeline__head">
+                <h3 class="timeline__title">We introduce your chosen installer</h3>
+                <ul class="timeline__tags" aria-label="Who does this">
+                  <li class="tag-chip tag-chip--you">You</li>
+                  <li class="tag-chip tag-chip--installer">Installer</li>
+                </ul>
+              </div>
+              <p>Only when you're ready do we make the formal introduction. It's your decision, made with complete information and zero pressure.</p>
+            </div>
+          </li>
+          <li class="timeline__step">
+            <span class="timeline__num" aria-hidden="true">6</span>
+            <div class="timeline__body">
+              <div class="timeline__head">
+                <h3 class="timeline__title">Installation and ongoing after-sales support</h3>
+                <ul class="timeline__tags" aria-label="Who does this">
+                  <li class="tag-chip tag-chip--installer">Installer</li>
+                  <li class="tag-chip tag-chip--us">Heliobond</li>
+                </ul>
+              </div>
+              <p>Your COREN-verified installer fits the system, with after-sales support built in and documented. If anything comes up, you know exactly who to call, and we keep them accountable.</p>
             </div>
           </li>
         </ol>
+
+        <div class="steps__cta steps__cta--center">
+          <a class="btn btn--dark" href="get-started.html">
+            Start in 2 minutes
+            <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
+          </a>
+          <p class="small text-muted">Free to request. No obligation.</p>
+        </div>
       </div>
     </section>
 
@@ -600,7 +720,7 @@
           <a class="brand" href="#top">
             <img src="assets/img/heliobond-logo-light.png" alt="Heliobond" width="640" height="108">
           </a>
-          <p>Compare solar quotes from COREN-accredited installers across Nigeria.</p>
+          <p>Heliobond helps Nigerian homeowners go solar with confidence. Compare quotes from COREN-verified installers, pay just 20% upfront with the rest in instalments, and get support long after installation.</p>
           <!-- Social links: add icon links here once official profiles exist. -->
         </div>
 
@@ -608,6 +728,7 @@
           <h2 class="footer__heading">Quick links</h2>
           <ul>
             <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#compare">Why Use Heliobond</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#resources">Guides</a></li>
@@ -618,7 +739,7 @@
           <h2 class="footer__heading">Homeowners</h2>
           <ul>
             <li><a href="get-started.html">Get Solar Quotes</a></li>
-            <li><a href="#financing">Instalment Options</a></li>
+            <li><a href="#financing">20% Down Instalments</a></li>
           </ul>
           <h2 class="footer__heading footer__heading--spaced">Installers</h2>
           <ul>
@@ -627,18 +748,17 @@
         </nav>
 
         <div class="footer__contact">
-          <!-- Contact details to be supplied. Replace the placeholder text below. -->
-          <div class="contact-item">
+          <a class="contact-item" href="tel:028137890976">
             <span class="contact-item__icon" aria-hidden="true"><svg><use href="#i-phone"/></svg></span>
-            <div><h2 class="footer__heading">Call us</h2><p>Phone number to be added</p></div>
-          </div>
-          <div class="contact-item">
+            <span><span class="footer__heading">Call us</span><span class="contact-item__value">028137890976</span></span>
+          </a>
+          <a class="contact-item" href="mailto:hi@heliobond.com">
             <span class="contact-item__icon" aria-hidden="true"><svg><use href="#i-mail"/></svg></span>
-            <div><h2 class="footer__heading">Email us</h2><p>Email address to be added</p></div>
-          </div>
+            <span><span class="footer__heading">Email us</span><span class="contact-item__value">hi@heliobond.com</span></span>
+          </a>
           <div class="contact-item">
             <span class="contact-item__icon" aria-hidden="true"><svg><use href="#i-pin"/></svg></span>
-            <div><h2 class="footer__heading">Location</h2><p>Nigeria · Office address to be added</p></div>
+            <span><span class="footer__heading">Visit us</span><span class="contact-item__value">Ikoyi, Lagos, Nigeria</span></span>
           </div>
         </div>
 

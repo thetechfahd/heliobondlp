@@ -521,40 +521,6 @@ button { font: inherit; color: inherit; }
 .wordmark--sans { font-family: var(--f-display); font-weight: 600; letter-spacing: -0.02em; }
 .wordmark--sans-heavy { font-family: var(--f-display); font-weight: 700; letter-spacing: -0.03em; }
 
-/* ---------- Why Heliobond ---------- */
-.why__grid {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: clamp(2.5rem, 7vw, 7rem);
-  align-items: center;
-}
-.why__copy .h2 { max-width: 12em; }
-.why__copy .lead { max-width: 28em; margin: var(--s-5) 0 var(--s-6); }
-
-.value-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--s-4);
-}
-.value-card {
-  padding: var(--s-6);
-  border-radius: var(--r-md);
-  background: var(--c-surface);
-  border: 1px solid var(--c-line);
-}
-.value-card__icon {
-  display: grid;
-  place-items: center;
-  width: 44px; height: 44px;
-  margin-bottom: var(--s-6);
-  border-radius: 12px;
-  background: rgba(254, 178, 4, 0.16);
-  color: var(--c-navy);
-}
-.value-card__icon svg { width: 22px; height: 22px; }
-.value-card__title { font-size: var(--fs-md); font-weight: 600; line-height: 1.3; }
-.value-card p { margin-top: var(--s-2); font-size: var(--fs-sm); color: var(--c-muted); }
-
 /* ---------- Section head ---------- */
 .section-head {
   display: flex;
@@ -565,35 +531,211 @@ button { font: inherit; color: inherit; }
 }
 .section-head .h2 { max-width: 16em; }
 .section-head__aside { max-width: 360px; }
-
-/* ---------- How it works ---------- */
-.steps__grid {
-  display: grid;
-  grid-template-columns: 0.9fr 1fr 1fr;
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: stretch;
+.section-head--center {
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  text-align: center;
 }
-.steps__intro { display: flex; flex-direction: column; }
-.steps__intro .h2 { max-width: 10em; }
-.steps__cta { margin-top: auto; padding-top: var(--s-7); display: grid; gap: var(--s-3); justify-items: start; }
+.section-head--center .h2 { max-width: 20em; }
+.section-head--center .lead { max-width: 38em; margin-top: var(--s-4); }
 
-.steps__media { aspect-ratio: 1 / 1.05; border-radius: var(--r-lg); }
+.pill-label {
+  display: inline-block;
+  margin-bottom: var(--s-4);
+  padding: 6px 16px;
+  border-radius: var(--r-pill);
+  background: #fff1cc;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7a5200;
+}
 
-.step-list { display: grid; gap: var(--s-7); align-content: center; }
-.step { display: flex; gap: var(--s-5); }
-.step__num {
-  flex: none;
+/* ---------- Why Heliobond (pains we solve) ---------- */
+.pain-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  gap: var(--s-4);
+}
+.pain-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-6);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+}
+.pain-card__icon {
   display: grid;
   place-items: center;
   width: 44px; height: 44px;
-  border-radius: 50%;
-  background: var(--c-amber);
+  margin-bottom: var(--s-5);
+  border-radius: 12px;
+  background: rgba(254, 178, 4, 0.16);
   color: var(--c-navy);
+}
+.pain-card__icon svg { width: 22px; height: 22px; }
+.pain-card__problem {
+  margin-bottom: var(--s-2);
   font-size: var(--fs-sm);
+  font-weight: 500;
+  font-style: italic;
+  color: #a5432f;
+}
+.pain-card__title { font-size: var(--fs-md); font-weight: 600; line-height: 1.3; }
+.pain-card__text { margin-top: var(--s-2); font-size: var(--fs-sm); color: var(--c-muted); }
+
+.pain-card--feature {
+  grid-row: span 3;
+  justify-content: flex-end;
+  padding: clamp(1.75rem, 1rem + 2vw, 2.5rem);
+  border: 0;
+  background:
+    radial-gradient(90% 60% at 100% 0%, rgba(254, 178, 4, 0.28), transparent 60%),
+    var(--c-navy);
+  color: #fff;
+}
+.pain-card--feature .pain-card__problem { color: #ffd27a; font-size: var(--fs-base); }
+.pain-card__big {
+  margin: var(--s-4) 0 var(--s-2);
+  font-family: var(--f-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+}
+.pain-card__big span {
+  display: block;
+  font-size: clamp(4.5rem, 3rem + 5vw, 7rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--c-amber);
+}
+.pain-card--feature .pain-card__title { margin-top: var(--s-4); font-size: var(--fs-lg); }
+.pain-card--feature .pain-card__text { color: rgba(255, 255, 255, 0.78); font-size: var(--fs-base); }
+.pain-card--feature .btn { align-self: flex-start; margin-top: var(--s-6); }
+
+.homes-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  margin-top: var(--s-6);
+  font-size: var(--fs-sm);
+  color: var(--c-muted);
+  text-align: center;
+}
+.homes-note svg { flex: none; width: 18px; height: 18px; color: var(--c-amber-2); }
+.homes-note strong { color: var(--c-ink); }
+
+/* ---------- Going it alone vs Heliobond ---------- */
+.alone__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-4);
+  max-width: 1080px;
+  margin-inline: auto;
+}
+.alone__col {
+  padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  border-radius: var(--r-lg);
+}
+.alone__col--without { background: #fbf0ec; border: 1px solid #f1d9d1; }
+.alone__col--with { background: var(--c-navy); color: #fff; }
+.alone__heading {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-5);
+  font-family: var(--f-display);
+  font-size: var(--fs-lg);
   font-weight: 700;
 }
-.step__title { font-size: var(--fs-md); font-weight: 600; line-height: 1.3; padding-top: 9px; }
-.step p { margin-top: 6px; color: var(--c-muted); }
+.alone__badge {
+  display: grid;
+  place-items: center;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+}
+.alone__badge svg { width: 16px; height: 16px; }
+.alone__badge--bad { background: #c2412d; color: #fff; }
+.alone__badge--good { background: var(--c-amber); color: var(--c-navy); }
+.alone__list { display: grid; gap: var(--s-4); }
+.alone__list li { display: flex; gap: var(--s-3); line-height: 1.5; }
+.alone__list svg { flex: none; width: 18px; height: 18px; margin-top: 3px; }
+.alone__col--without .alone__list li { color: #5b3a33; }
+.alone__col--without .alone__list svg { color: #c2412d; }
+.alone__col--with .alone__list li { color: rgba(255, 255, 255, 0.9); }
+.alone__col--with .alone__list svg { color: var(--c-amber); }
+.alone__col--with .btn { margin-top: var(--s-6); }
+
+/* ---------- How it works (timeline) ---------- */
+.steps__title { max-width: 18em; }
+.timeline {
+  max-width: 880px;
+  margin: var(--s-7) auto 0;
+}
+.timeline__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: var(--s-5);
+  padding-bottom: var(--s-7);
+}
+.timeline__step:last-child { padding-bottom: 0; }
+.timeline__step:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 25px;
+  top: 60px;
+  bottom: 8px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--c-line);
+}
+.timeline__num {
+  display: grid;
+  place-items: center;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: #fff6dd;
+  border: 2px solid #f6d98c;
+  font-family: var(--f-display);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #7a5200;
+}
+.timeline__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-4);
+  padding-top: 10px;
+}
+.timeline__title { font-size: var(--fs-lg); font-weight: 600; line-height: 1.3; }
+.timeline__body > p { margin-top: var(--s-3); max-width: 46em; color: var(--c-muted); }
+.timeline__tags { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.tag-chip {
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.tag-chip--you { background: #e4edff; color: #1d4ed8; }
+.tag-chip--us { background: #fff1cc; color: #7a5200; }
+.tag-chip--installer { background: #dcf3e5; color: #15703d; }
+.tag-chip--save { background: #dcf3e5; color: #15703d; }
+
+.steps__cta--center {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-7);
+  text-align: center;
+}
 
 /* ---------- Video testimonials ---------- */
 .video-grid {
@@ -821,7 +963,7 @@ button { font: inherit; color: inherit; }
 .footer__panel :focus-visible { outline-color: var(--c-amber); }
 
 .footer__contact { display: grid; gap: var(--s-4); align-content: start; }
-.contact-item { display: flex; gap: var(--s-4); align-items: center; }
+.contact-item { display: flex; gap: var(--s-4); align-items: center; color: inherit; text-decoration: none; }
 .contact-item__icon {
   flex: none;
   display: grid;
@@ -838,7 +980,10 @@ button { font: inherit; color: inherit; }
   text-transform: uppercase;
   color: var(--c-on-dark);
 }
-.contact-item p { font-size: var(--fs-xs); color: var(--c-on-dark-muted); }
+.contact-item .footer__heading { display: block; }
+.contact-item__value { display: block; font-size: var(--fs-sm); color: var(--c-on-dark-muted); transition: color 0.2s var(--ease); }
+a.contact-item:hover .contact-item__value { color: var(--c-amber); }
+a.contact-item:hover .contact-item__icon { border-color: var(--c-amber); color: var(--c-amber); }
 
 .footer__bottom {
   grid-column: 1 / -1;
@@ -857,9 +1002,8 @@ button { font: inherit; color: inherit; }
    Responsive
    ========================================================================== */
 @media (max-width: 1100px) {
-  .steps__grid { grid-template-columns: 1fr 1fr; }
-  .steps__intro { grid-column: 1 / -1; }
-  .steps__cta { margin-top: var(--s-5); padding-top: 0; }
+  .pain-grid { grid-template-columns: 1fr 1fr; }
+  .pain-card--feature { grid-row: auto; grid-column: 1 / -1; }
 
   .footer__panel { grid-template-columns: 1fr 1fr; }
 }
@@ -1009,7 +1153,7 @@ button { font: inherit; color: inherit; }
   .logo-strip__title { text-align: center; }
   .logo-strip__list { justify-content: center; gap: var(--s-4) var(--s-7); }
 
-  .why__grid,
+  .alone__grid,
   .about__grid,
   .installers__grid,
   .resources__grid { grid-template-columns: 1fr; }
@@ -1027,6 +1171,7 @@ button { font: inherit; color: inherit; }
   .video-grid > li { scroll-snap-align: start; }
 
   .section-head { flex-direction: column; align-items: flex-start; }
+  .section-head--center { align-items: center; }
 }
 
 @media (max-width: 640px) {
@@ -1039,13 +1184,16 @@ button { font: inherit; color: inherit; }
   .hero-stat__icon { width: 40px; height: 40px; border-radius: 12px; }
   .hero-stat__icon svg { width: 20px; height: 20px; }
 
-  .value-grid { grid-template-columns: 1fr 1fr; gap: var(--s-3); }
-  .value-card { padding: var(--s-5) var(--s-4); }
-  .value-card__icon { margin-bottom: var(--s-4); }
+  .pain-grid { grid-template-columns: 1fr; gap: var(--s-3); }
+  .pain-card { padding: var(--s-5); }
+  .pain-card__icon { margin-bottom: var(--s-4); }
+  .homes-note { align-items: flex-start; text-align: left; }
 
-  .steps__grid { grid-template-columns: 1fr; }
-  .steps__media { aspect-ratio: 4 / 3.4; }
-  .step-list { gap: var(--s-6); }
+  .timeline__step { grid-template-columns: 40px minmax(0, 1fr); gap: var(--s-4); padding-bottom: var(--s-6); }
+  .timeline__step:not(:last-child)::before { left: 19px; top: 48px; }
+  .timeline__num { width: 40px; height: 40px; font-size: 1rem; }
+  .timeline__head { flex-direction: column; padding-top: 6px; }
+  .timeline__title { font-size: var(--fs-md); }
 
   .video-grid { grid-auto-columns: 85%; }
   .case-note dl > div { grid-template-columns: 1fr; gap: 0; }
@@ -1056,10 +1204,6 @@ button { font: inherit; color: inherit; }
 
   .footer__panel { grid-template-columns: 1fr; }
   .footer__bottom { flex-direction: column; }
-}
-
-@media (max-width: 400px) {
-  .value-grid { grid-template-columns: 1fr; }
 }
 
 /* ---------- Reduced motion ---------- */
