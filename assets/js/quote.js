@@ -118,6 +118,12 @@
   ];
   var NIGHT_OPTIONS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   var KVA_SIZES = [3.5, 5, 7.5, 10, 15, 20, 25, 30];
+  function nightOptions(selected) {
+    return NIGHT_OPTIONS.map(function (h) {
+      return '<option value="' + h + '"' + (h === selected ? ' selected' : '') + '>' +
+        (h === 0 ? 'Not needed' : h + (h === 1 ? ' hour' : ' hours')) + '</option>';
+    }).join('');
+  }
   function appliance(id) { return APPLIANCES.filter(function (x) { return x.id === id; })[0]; }
 
   /* Projection only; the installer confirms the real size during the audit.
@@ -160,7 +166,7 @@
     spend: ['i-wallet', 'What do you spend on fuel and maintenance each week?', 'We use this to show how quickly solar can pay for itself.'],
     generator: ['i-bolt', 'What size is your generator?', 'It tells us your current power demand, so we can recommend the right capacity.'],
     decision: ['i-handshake', 'Are you making the decision?', "So we can prepare the right level of detail, whether that's a full proposal or a quick overview."],
-    appliances: ['i-house', 'Which appliances do you want to power?', 'Pick an appliance, set how many and how long it runs at night, then add it. Repeat until your list is complete.'],
+    appliances: ['i-house', 'Which appliances do you want to power?', 'Add each appliance, how many you have, and how many hours you want it to run at night. You can change or remove anything on your list.'],
     kva: ['i-bolt', 'Choose your system size', 'Not sure? Your installer will confirm the best size during the free home audit.'],
     tier: ['i-badge', 'What quality of system do you want?', 'Your installer will explain each option in detail during the free audit.'],
     budget: ['i-wallet', "What's your investment range?", 'This helps your installer prepare an accurate proposal.'],
@@ -228,14 +234,25 @@
     }
   }
 
-  function go(step) { current = step; error = ''; render(true); }
+  // Slide the current question out, then the next one in (direction-aware).
+  var dir = 'fwd', leaving = false;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function go(step, direction) {
+    dir = direction || 'fwd';
+    error = '';
+    var old = body && body.firstChild;
+    if (reduceMotion || !old || !old.classList) { current = step; render(true); return; }
+    leaving = true;
+    old.classList.add('is-leaving', 'is-leaving--' + dir);
+    setTimeout(function () { leaving = false; current = step; render(true); }, 170);
+  }
   function next() {
     var p = path(); var i = p.indexOf(current);
-    if (i > -1 && i < p.length - 1) go(p[i + 1]);
+    if (i > -1 && i < p.length - 1) go(p[i + 1], 'fwd');
   }
   function back() {
     var p = path(); var i = p.indexOf(current);
-    if (i > 0) go(p[i - 1]);
+    if (i > 0) go(p[i - 1], 'back');
   }
 
   /* ---------- API ---------- */
@@ -367,6 +384,13 @@
       case 'appliances':
         var sz = sizing(), d = f.draft, groups = {}, order = [];
         APPLIANCES.forEach(function (x) { if (!groups[x.group]) { groups[x.group] = []; order.push(x.group); } groups[x.group].push(x); });
+        var tip = '<div class="qm-tip">' +
+          '<span class="qm-tip__icon" aria-hidden="true">' + icon('i-wallet') + '</span>' +
+          '<div><p class="qm-tip__title">Only add what you really need at night</p>' +
+          '<p>During the day, your solar panels power your home and charge your battery. At night, the battery takes over. ' +
+          'So the more appliances you run at night, and the longer you run them, the <strong>bigger the battery</strong> you need, ' +
+          'and the <strong>more panels</strong> it takes to charge it. Both add to your cost. Keep night use to the essentials to keep your spending low.</p></div>' +
+          '</div>';
         var picker = '<div class="qm-picker">' +
           '<label class="qm-label" for="qm-appl">Appliance</label>' +
           '<select id="qm-appl" class="qm-input qm-select" data-draft="id"><option value="">Select an appliance…</option>' +
@@ -380,20 +404,25 @@
               '<button type="button" data-draftqty="-1" aria-label="One fewer"' + (d.qty > 1 ? '' : ' disabled') + '>−</button>' +
               '<span aria-live="polite">' + d.qty + '</span>' +
               '<button type="button" data-draftqty="1" aria-label="One more">+</button></div></div>' +
-            '<div><label class="qm-label" for="qm-night">Hours used at night</label>' +
-              '<select id="qm-night" class="qm-input qm-select" data-draft="night">' + NIGHT_OPTIONS.map(function (h) {
-                return '<option value="' + h + '"' + (h === d.night ? ' selected' : '') + '>' + (h === 0 ? 'Not at night' : h + (h === 1 ? ' hour' : ' hours')) + '</option>';
-              }).join('') + '</select></div>' +
+            '<div><label class="qm-label" for="qm-night">Hours to run at night</label>' +
+              '<select id="qm-night" class="qm-input qm-select" data-draft="night">' + nightOptions(d.night) + '</select></div>' +
           '</div>' +
           '<button type="button" class="btn btn--dark qm-add" data-action="addAppliance"' + (d.id ? '' : ' disabled') + '>+ Add to my list</button>' +
           '</div>';
         var list = f.appliances.length
           ? '<p class="qm-group">Your appliances (' + f.appliances.length + ')</p><ul class="qm-list">' + f.appliances.map(function (row, i) {
               var x = appliance(row.id);
-              return '<li class="qm-list__item"><span class="qm-list__qty">' + row.qty + '×</span>' +
-                '<span class="qm-list__info"><strong>' + esc(x.name) + '</strong><span>' + x.watts + ' W each · ' +
-                (row.night ? row.night + (row.night === 1 ? ' hour' : ' hours') + ' at night' : 'not used at night') + '</span></span>' +
-                '<button type="button" class="qm-list__remove" data-remove="' + i + '" aria-label="Remove ' + esc(x.name) + '">' + icon('i-x') + '</button></li>';
+              return '<li class="qm-list__item">' +
+                '<div class="qm-list__info"><strong>' + esc(x.name) + '</strong><span>' + x.watts + ' W each</span></div>' +
+                '<button type="button" class="qm-list__remove" data-remove="' + i + '" aria-label="Remove ' + esc(x.name) + '">' + icon('i-x') + '</button>' +
+                '<div class="qm-list__edit">' +
+                  '<div class="qm-stepper" role="group" aria-label="How many ' + esc(x.name) + '">' +
+                    '<button type="button" data-rowqty="' + i + '" data-delta="-1" data-key="rm' + i + '" aria-label="One fewer"' + (row.qty > 1 ? '' : ' disabled') + '>−</button>' +
+                    '<span aria-live="polite">' + row.qty + '</span>' +
+                    '<button type="button" data-rowqty="' + i + '" data-delta="1" data-key="rp' + i + '" aria-label="One more">+</button>' +
+                  '</div>' +
+                  '<label class="qm-list__night"><span>At night</span><select class="qm-select" data-rownight="' + i + '" aria-label="Hours ' + esc(x.name) + ' should run at night">' + nightOptions(row.night) + '</select></label>' +
+                '</div></li>';
             }).join('') + '</ul>'
           : '<p class="qm-empty">No appliances added yet. Start with the ones you most want to keep running, like lights, fans and your fridge.</p>';
         var summary = '<div class="qm-calc qm-calc--3" aria-live="polite">' +
@@ -404,7 +433,7 @@
           '<p class="qm-disclaimer">' + icon('i-shield-alert') + '<span><strong>This is only a projection</strong> based on typical appliance ratings' +
           (sz.watts ? ' (total load ' + sz.watts.toLocaleString() + ' W, ' + sz.nightKwh + ' kWh at night)' : '') +
           '. Your installer will confirm the exact system size and price during the free home audit.</span></p>';
-        return picker + list + summary +
+        return tip + picker + list + summary +
           primary('Continue', 'next', !f.appliances.length) +
           '<p class="qm-hint qm-center"><button type="button" class="qm-link" data-action="skipAppliances">Skip, I\'m not sure what I use</button></p>' + backBtn();
       case 'tier':
@@ -500,7 +529,7 @@
     var activeField = active && active.getAttribute && active.getAttribute('data-field');
     var caret = activeField && active.selectionStart;
 
-    body.innerHTML = '<div class="qm-step' + (stepChanged ? ' is-entering' : '') + '">' + head + stepHtml(current) + '</div>';
+    body.innerHTML = '<div class="qm-step' + (stepChanged ? ' is-entering is-entering--' + dir : '') + '">' + head + stepHtml(current) + '</div>';
 
     // Gather Back and the main button into one action bar at the end of the step.
     var step = body.firstChild;
@@ -526,6 +555,7 @@
 
   /* ---------- Events ---------- */
   function onClick(e) {
+    if (leaving) return;
     var t = e.target.closest('button');
     if (!t || !body.contains(t)) return;
     if (t.hasAttribute('data-set')) {
@@ -550,6 +580,15 @@
       render();
       var same = body.querySelector('[data-draftqty="' + t.getAttribute('data-draftqty') + '"]');
       if (same && !same.disabled) same.focus({ preventScroll: true });
+      return;
+    }
+    if (t.hasAttribute('data-rowqty')) {
+      var r = form.appliances[+t.getAttribute('data-rowqty')];
+      r.qty = Math.max(1, Math.min(50, r.qty + +t.getAttribute('data-delta')));
+      var k = t.getAttribute('data-key');
+      render();
+      var b2 = body.querySelector('[data-key="' + k + '"]');
+      if (b2 && !b2.disabled) b2.focus({ preventScroll: true });
       return;
     }
     if (t.hasAttribute('data-remove')) {
@@ -579,6 +618,14 @@
     }
   }
   function onInput(e) {
+    if (e.target.hasAttribute('data-rownight')) {
+      var idx = +e.target.getAttribute('data-rownight');
+      form.appliances[idx].night = +e.target.value;
+      render();
+      var sel2 = body.querySelector('[data-rownight="' + idx + '"]');
+      if (sel2) sel2.focus({ preventScroll: true });
+      return;
+    }
     if (e.target.hasAttribute('data-draft')) {
       var key = e.target.getAttribute('data-draft');
       if (key === 'id') {
