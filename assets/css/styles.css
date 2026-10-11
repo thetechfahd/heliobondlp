@@ -1859,22 +1859,6 @@ html.qm-open { overflow: hidden; }
   color: var(--c-muted);
 }
 .qm-group:first-child { margin-top: 0; }
-.qm-appliances { display: grid; gap: var(--s-2); }
-.qm-appl {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: var(--s-2) var(--s-3);
-  padding: 12px var(--s-4);
-  border: 1px solid var(--c-line);
-  border-radius: var(--r-md);
-  background: var(--c-surface);
-  transition: border-color 0.15s var(--ease), background-color 0.15s var(--ease);
-}
-.qm-appl.is-on { border-color: var(--c-amber); background: #fffaf0; }
-.qm-appl__info { display: grid; }
-.qm-appl__name { font-size: var(--fs-sm); font-weight: 600; }
-.qm-appl__rating { font-size: var(--fs-xs); color: var(--c-muted); }
 .qm-stepper { display: inline-flex; align-items: center; border: 1px solid var(--c-line); border-radius: var(--r-pill); background: var(--c-surface); }
 .qm-stepper button {
   display: grid;
@@ -1892,19 +1876,6 @@ html.qm-open { overflow: hidden; }
 .qm-stepper button:hover:not(:disabled) { background: var(--c-surface-2); }
 .qm-stepper button:disabled { color: #c3c7cb; cursor: default; }
 .qm-stepper span { min-width: 24px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
-.qm-appl__hours {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-3);
-  padding-top: var(--s-2);
-  border-top: 1px dashed #ecd9a6;
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  color: var(--c-ink-2);
-}
-.qm-appl__hours select,
 .qm-select {
   min-height: 36px;
   padding: 0 var(--s-6) 0 var(--s-3);
@@ -1918,6 +1889,62 @@ html.qm-open { overflow: hidden; }
           appearance: none;
 }
 .qm-select { width: 100%; min-height: 50px; }
+
+.qm-picker {
+  padding: var(--s-4);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+  background: var(--c-bg);
+}
+.qm-picker .qm-label:first-child { margin-top: 0; }
+.qm-stepper--lg { display: flex; justify-content: space-between; min-height: 50px; border-radius: var(--r-sm); border-color: #d5d8d3; padding: 0 4px; }
+.qm-stepper--lg button { width: 42px; height: 42px; }
+.qm-add { width: 100%; margin-top: var(--s-4); padding-right: 20px; }
+.qm-add:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.qm-list { display: grid; gap: var(--s-2); }
+.qm-list__item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 10px 10px 10px var(--s-4);
+  border: 1px solid #f1dfae;
+  border-radius: var(--r-md);
+  background: #fffaf0;
+}
+.qm-list__qty { font-family: var(--f-display); font-size: var(--fs-md); font-weight: 700; color: #8a5a00; }
+.qm-list__info { display: grid; }
+.qm-list__info strong { font-size: var(--fs-sm); font-weight: 600; }
+.qm-list__info span { font-size: var(--fs-xs); color: var(--c-muted); }
+.qm-list__remove {
+  display: grid;
+  place-items: center;
+  width: 36px; height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--c-muted);
+  cursor: pointer;
+}
+.qm-list__remove:hover { background: #fde4df; color: #c2412d; }
+.qm-list__remove svg { width: 14px; height: 14px; }
+.qm-empty { margin-top: var(--s-4); padding: var(--s-4); border: 1px dashed #d5d8d3; border-radius: var(--r-md); font-size: var(--fs-sm); text-align: center; color: var(--c-muted); }
+.qm-calc.qm-calc--3 { grid-template-columns: repeat(3, 1fr); }
+.qm-picker .qm-row { margin-top: var(--s-4); }
+.qm-picker .qm-row .qm-label { margin-top: 0 !important; }
+.qm-disclaimer {
+  display: flex;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+  padding: var(--s-3);
+  border-radius: var(--r-sm);
+  background: #fff6dd;
+  font-size: var(--fs-xs);
+  line-height: 1.55;
+  color: #6b4a00;
+}
+.qm-disclaimer svg { flex: none; width: 16px; height: 16px; margin-top: 1px; }
 .qm-calc {
   position: sticky;
   bottom: 0;
@@ -1967,6 +1994,9 @@ html.qm-open { overflow: hidden; }
 
 @media (max-width: 640px) {
   .qm-calc { grid-template-columns: 1fr 1fr; }
+  .qm-calc.qm-calc--3 { grid-template-columns: 1fr 1fr; }
+  .qm-calc--3 > div:last-child { grid-column: 1 / -1; }
+  .qm-picker .qm-row { grid-template-columns: 1fr 1fr; gap: var(--s-3); }
   .ty__estimate { grid-template-columns: repeat(3, 1fr); }
   .ty__estimate strong { font-size: var(--fs-base); }
 }
