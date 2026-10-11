@@ -648,97 +648,120 @@ button { font: inherit; color: inherit; }
 .homes-note strong { color: var(--c-ink); }
 
 /* ---------- Going it alone vs Heliobond ---------- */
-/* Calm, readable comparison: neutral table, one soft highlight column. */
-.vs {
-  max-width: 1120px;
+.vs2 {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 var(--s-5);
+  max-width: 1080px;
   margin-inline: auto;
 }
-.vs__row {
-  display: grid;
-  grid-template-columns: 0.75fr 1fr 1.1fr;
-  align-items: stretch;
-}
-.vs__topic,
-.vs__cell {
+.vs2__card {
   display: flex;
-  gap: var(--s-3);
-  padding: var(--s-5);
-  border-bottom: 1px solid var(--c-line);
+  flex-direction: column;
+  padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  border-radius: var(--r-lg);
 }
-.vs__topic {
+.vs2__card--bad {
+  background: #efeee9;
+}
+.vs2__card--good {
+  background:
+    radial-gradient(90% 50% at 100% 0%, rgba(254, 178, 4, 0.16), transparent 70%),
+    var(--c-surface);
+  border: 1px solid #f1dfae;
+  box-shadow: 0 30px 60px -36px rgba(4, 36, 57, 0.28);
+}
+
+.vs2__head {
+  display: flex;
   align-items: center;
-  padding-left: 0;
-  font-family: var(--f-display);
-  font-size: var(--fs-md);
-  font-weight: 600;
-  color: var(--c-ink);
+  gap: var(--s-4);
+  padding-bottom: var(--s-5);
+  margin-bottom: var(--s-2);
+  border-bottom: 1px solid rgba(4, 36, 57, 0.08);
 }
-.vs__topic-icon {
+.vs2__icon {
   flex: none;
   display: grid;
   place-items: center;
-  width: 38px; height: 38px;
-  border-radius: 10px;
-  background: var(--c-surface);
-  border: 1px solid var(--c-line);
-  color: var(--c-ink-2);
+  width: 48px; height: 48px;
+  border-radius: 14px;
 }
-.vs__topic-icon svg { width: 18px; height: 18px; }
-
-.vs__cell { align-items: flex-start; font-size: var(--fs-base); line-height: 1.55; }
-.vs__cell > svg { flex: none; width: 20px; height: 20px; margin-top: 3px; padding: 4px; border-radius: 50%; }
-
-.vs__cell--bad { color: var(--c-muted); }
-.vs__cell--bad > svg { background: #ebe9e3; color: #8b8f94; }
-
-.vs__cell--good {
-  background: var(--c-surface);
-  color: var(--c-ink);
-  border-left: 1px solid var(--c-line);
-  border-right: 1px solid var(--c-line);
-}
-.vs__cell--good > svg { background: rgba(254, 178, 4, 0.22); color: #8a5a00; }
-
-.vs__row--head { align-items: end; }
-.vs__colhead {
-  display: flex;
-  align-items: center;
-  gap: var(--s-3);
-  padding: var(--s-5);
+.vs2__icon svg { width: 20px; height: 20px; }
+.vs2__icon--bad { background: #dedcd5; color: #6f747a; }
+.vs2__icon--good { background: var(--c-surface); border: 1px solid var(--c-line); }
+.vs2__icon--good img { width: 30px; height: 30px; }
+.vs2__title {
   font-family: var(--f-display);
-  font-size: var(--fs-md);
+  font-size: var(--fs-lg);
   font-weight: 700;
-  border-bottom: 1px solid var(--c-line);
+  line-height: 1.2;
+  color: var(--c-ink);
 }
-.vs__colhead--bad { color: var(--c-muted); }
-.vs__colhead-badge {
+.vs2__card--bad .vs2__title { color: #4a5259; }
+.vs2__sub { margin-top: 2px; font-size: var(--fs-sm); color: var(--c-muted); }
+
+.vs2__list { display: grid; }
+.vs2__item {
+  display: flex;
+  gap: var(--s-4);
+  padding: var(--s-4) 0;
+}
+.vs2__item + .vs2__item { border-top: 1px dashed rgba(4, 36, 57, 0.1); }
+.vs2__mark {
+  flex: none;
   display: grid;
   place-items: center;
   width: 26px; height: 26px;
+  margin-top: 2px;
   border-radius: 50%;
-  background: #ebe9e3;
+}
+.vs2__mark svg { width: 13px; height: 13px; }
+.vs2__card--bad .vs2__mark { background: #dedcd5; color: #6f747a; }
+.vs2__card--good .vs2__mark { background: var(--c-amber); color: var(--c-navy); }
+.vs2__topic {
+  display: block;
+  margin-bottom: 2px;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: #8b8f94;
 }
-.vs__colhead-badge svg { width: 12px; height: 12px; }
-.vs__colhead--good {
-  position: relative;
-  border-radius: var(--r-lg) var(--r-lg) 0 0;
-  background: var(--c-surface);
-  border: 1px solid var(--c-line);
-  border-top: 3px solid var(--c-amber);
-  color: var(--c-ink);
+.vs2__card--good .vs2__topic { color: #9a6700; }
+.vs2__text { display: block; font-size: var(--fs-base); line-height: 1.5; }
+.vs2__card--bad .vs2__text { color: #5d6369; }
+.vs2__card--good .vs2__text { color: var(--c-ink); font-weight: 500; }
+.vs2__cta { align-self: flex-start; margin-top: var(--s-5); }
+
+/* Keep rows lined up across both cards where subgrid is supported. */
+@supports (grid-template-rows: subgrid) {
+  .vs2 { grid-template-rows: auto repeat(6, auto) auto; }
+  .vs2__card { display: grid; grid-row: 1 / -1; grid-template-rows: subgrid; }
+  .vs2__card--bad { grid-column: 1; }
+  .vs2__card--good { grid-column: 2; }
+  .vs2__list { display: contents; }
+  .vs2__cta { justify-self: start; }
 }
-.vs__colhead--good img { width: 26px; height: 26px; }
-.vs__row--foot > span { display: block; }
-.vs__cta {
-  padding: var(--s-5) var(--s-5) var(--s-6);
-  border-radius: 0 0 var(--r-lg) var(--r-lg);
-  background: var(--c-surface);
-  border: 1px solid var(--c-line);
-  border-top: 0;
-  box-shadow: 0 24px 40px -32px rgba(4, 36, 57, 0.35);
+
+.vs2__vs {
+  position: absolute;
+  top: 50%; left: 50%;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 52px; height: 52px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--c-navy);
+  border: 4px solid var(--c-bg);
+  font-family: var(--f-display);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
 }
-.vs__mobile-label { display: none; }
 
 /* ---------- How it works (timeline) ---------- */
 .steps__title { max-width: 18em; }
@@ -1408,35 +1431,15 @@ a.contact-item:hover .contact-item__icon { border-color: var(--c-amber); color: 
 }
 
 @media (max-width: 700px) {
-  /* Comparison: one card per topic, problem above, Heliobond fix below. */
-  .vs__row--head { display: none; }
-  .vs__row {
-    grid-template-columns: 1fr;
-    margin-bottom: var(--s-4);
-    border-radius: var(--r-md);
-    overflow: hidden;
-    background: var(--c-surface);
-    border: 1px solid var(--c-line);
+  /* Comparison: stack the two cards with the VS badge between them. */
+  .vs2 { grid-template-columns: 1fr; gap: var(--s-3) 0; }
+  @supports (grid-template-rows: subgrid) {
+    .vs2 { grid-template-rows: none; }
+    .vs2__card { display: flex; grid-row: auto; grid-column: 1 !important; }
+    .vs2__list { display: grid; }
   }
-  .vs__topic { padding: var(--s-4) var(--s-4) var(--s-3); border-bottom: 1px solid var(--c-line); }
-  .vs__cell { flex-wrap: wrap; padding: var(--s-4); border: 0; }
-  .vs__cell--bad { background: #f6f5f1; border-bottom: 1px solid var(--c-line); }
-  .vs__cell--good { border-left: 3px solid var(--c-amber); }
-  .vs__mobile-label {
-    display: block;
-    flex-basis: 100%;
-    margin-bottom: 2px;
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--c-muted);
-  }
-  .vs__cell--good .vs__mobile-label { color: var(--c-ink); }
-  .vs__cell > span:last-child { flex: 1; min-width: 0; }
-  .vs__row--foot { border: 0; background: none; margin: var(--s-2) 0 0; }
-  .vs__row--foot > span { display: none; }
-  .vs__cta { padding: 0; background: none; border: 0; box-shadow: none; }
+  .vs2__vs { position: static; translate: none; justify-self: center; margin-block: calc(var(--s-5) * -1); }
+  .vs2__cta { align-self: stretch; }
 }
 
 @media (max-width: 640px) {
@@ -1446,7 +1449,6 @@ a.contact-item:hover .contact-item__icon { border-color: var(--c-amber); color: 
 
   /* Full-width primary buttons on phones: easy to tap, same shape everywhere. */
   .pain-card--feature .btn,
-  .vs__cta .btn,
   .steps__cta .btn,
   .installers__copy .btn,
   .promo__content .btn { width: 100%; }
