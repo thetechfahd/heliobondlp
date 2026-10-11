@@ -689,7 +689,7 @@ button { font: inherit; color: inherit; }
   border-radius: 14px;
 }
 .vs2__icon svg { width: 20px; height: 20px; }
-.vs2__icon--bad { background: #dedcd5; color: #6f747a; }
+.vs2__icon--bad { background: #fbe4df; color: #c2412d; }
 .vs2__icon--good { background: var(--c-surface); border: 1px solid var(--c-line); }
 .vs2__icon--good img { width: 30px; height: 30px; }
 .vs2__title {
@@ -718,8 +718,8 @@ button { font: inherit; color: inherit; }
   border-radius: 50%;
 }
 .vs2__mark svg { width: 13px; height: 13px; }
-.vs2__card--bad .vs2__mark { background: #dedcd5; color: #6f747a; }
-.vs2__card--good .vs2__mark { background: var(--c-amber); color: var(--c-navy); }
+.vs2__card--bad .vs2__mark { background: #fbe4df; color: #c2412d; }
+.vs2__card--good .vs2__mark { background: #1f9254; color: #fff; }
 .vs2__topic {
   display: block;
   margin-bottom: 2px;
@@ -729,7 +729,7 @@ button { font: inherit; color: inherit; }
   text-transform: uppercase;
   color: #8b8f94;
 }
-.vs2__card--good .vs2__topic { color: #9a6700; }
+.vs2__card--good .vs2__topic { color: #1b7a47; }
 .vs2__text { display: block; font-size: var(--fs-base); line-height: 1.5; }
 .vs2__card--bad .vs2__text { color: #5d6369; }
 .vs2__card--good .vs2__text { color: var(--c-ink); font-weight: 500; }
