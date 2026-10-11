@@ -1821,3 +1821,30 @@ html.qm-open { overflow: hidden; }
   .qm__badge { display: none; }
   .qm-close { margin-left: auto; }
 }
+
+/* ---------- Quote form on its own page (get-quotes.html) ---------- */
+.qm--page {
+  position: static;
+  min-height: 100dvh;
+  place-items: start center;
+  padding: clamp(1rem, 4vw, 3rem) var(--s-4);
+  background:
+    radial-gradient(60% 40% at 100% 0%, rgba(254, 178, 4, 0.12), transparent 70%),
+    var(--c-bg);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  opacity: 1;
+}
+.qm--page .qm__panel {
+  max-height: none;
+  transform: none;
+  box-shadow: 0 30px 60px -36px rgba(4, 36, 57, 0.3);
+  border: 1px solid var(--c-line);
+}
+.qm--page .qm-body { overflow: visible; }
+.qm__home { display: inline-flex; }
+.qm-noscript { max-width: 640px; margin: var(--s-4) auto; padding: 0 var(--s-4); }
+@media (max-width: 640px) {
+  .qm--page { padding: 0; }
+  .qm--page .qm__panel { height: auto; min-height: 100dvh; border: 0; border-radius: 0; box-shadow: none; }
+}

@@ -1,4 +1,6 @@
-/* Heliobond — "Get My Free Quotes" popup.
+/* Heliobond — "Get My Free Quotes" request form.
+   Runs on its own page (get-quotes.html, #quote-modal has data-mode="page")
+   or as a popup opened by [data-quote] elements.
    A step-by-step request form that sends leads to the Heliobond quote API
    (the same endpoints used by solar.heliobond.com). Any link or button with
    [data-quote] opens it; without JavaScript those links fall back to
@@ -196,7 +198,7 @@
   }
 
   /* ---------- Rendering ---------- */
-  var modal, body, progressBar, progressText;
+  var modal, body, progressBar, progressText, pageMode;
 
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -209,13 +211,15 @@
   function choice(field, options, opts) {
     opts = opts || {};
     return '<div class="qm-options' + (opts.grid ? ' qm-options--grid' : '') + '">' + options.map(function (o) {
+      // Strings have built-in methods called sub() etc., so only read extras from objects.
+      var obj = typeof o === 'object' ? o : {};
       var value = typeof o === 'string' ? o : o.value;
       var label = typeof o === 'string' ? o : o.label;
       var on = form[field] === value;
       return '<button type="button" class="qm-option' + (on ? ' is-selected' : '') + '" aria-pressed="' + on + '" data-set="' + field + '" data-value="' + esc(value) + '">' +
         '<span class="qm-option__label">' + esc(label) + '</span>' +
-        (o.price ? '<span class="qm-option__meta">' + esc(o.price) + '</span>' : '') +
-        (o.sub ? '<span class="qm-option__sub">' + esc(o.sub) + '</span>' : '') +
+        (obj.price ? '<span class="qm-option__meta">' + esc(obj.price) + '</span>' : '') +
+        (obj.sub ? '<span class="qm-option__sub">' + esc(obj.sub) + '</span>' : '') +
         '</button>';
     }).join('') + '</div>';
   }
@@ -405,6 +409,7 @@
     render(true);
   }
   function close() {
+    if (pageMode) { window.location.href = 'index.html'; return; }
     modal.classList.remove('is-open');
     document.documentElement.classList.remove('qm-open');
     setTimeout(function () { modal.hidden = true; }, 200);
@@ -419,6 +424,24 @@
     progressBar = modal.querySelector('.qm-progress__bar');
     progressText = modal.querySelector('.qm-progress__text');
     reset();
+    pageMode = modal.getAttribute('data-mode') === 'page';
+
+    if (pageMode) {
+      modal.addEventListener('click', function (e) {
+        if (e.target.closest('.qm-close')) { e.preventDefault(); close(); return; }
+        onClick(e);
+      });
+      body.addEventListener('input', onInput);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && e.target.matches && e.target.matches('.qm-input')) {
+          e.preventDefault();
+          var btn = body.querySelector('.qm-primary');
+          if (btn && !btn.disabled) btn.click();
+        }
+      });
+      render(false);
+      return;
+    }
 
     document.addEventListener('click', function (e) {
       var trigger = e.target.closest('[data-quote]');

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en-NG" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Get My Free Solar Quotes | Heliobond</title>
+  <meta name="description" content="Answer a few questions about your home and get quotes from COREN-accredited solar installers in your region.">
+  <meta name="theme-color" content="#042439">
+  <link rel="icon" href="assets/img/heliobond-mark.png?v=202610111528" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/css/styles.css?v=202610111528">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <script src="assets/js/quote.js?v=202610111528" defer></script>
+</head>
+<body class="quote-page">
+  <!-- Icon sprite -->
+  <svg width="0" height="0" class="visually-hidden" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" fill="currentColor"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z" fill="currentColor"/></symbol>
+    <symbol id="i-badge" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4.3 3 8 7 9.5 4-1.5 7-5.2 7-9.5V6l-7-3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2.2 2.2L15.5 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-compare" viewBox="0 0 24 24"><rect x="3.5" y="4" width="7" height="16" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="4" width="7" height="16" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6 9h2M6 12h2M16 9h2M16 12h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><rect x="4" y="8" width="16" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="16" cy="13.5" r="1.3" fill="currentColor"/></symbol>
+    <symbol id="i-support" viewBox="0 0 24 24"><path d="M5 13v-1a7 7 0 0 1 14 0v1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="3.5" y="13" width="4" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="16.5" y="13" width="4" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-shield-alert" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4.3 3 8 7 9.5 4-1.5 7-5.2 7-9.5V6l-7-3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 8v4.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="12" cy="15.6" r="1.1" fill="currentColor"/></symbol>
+    <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 8h6M9 12h6M9 16h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24"><rect x="3" y="7" width="16" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M21 10.5v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M6.5 10v4M9.5 10v4M12.5 10v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-panel" viewBox="0 0 24 24"><path d="M5 5h14l2 10H3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 5v10M4 10h16M8.5 5 8 15M15.5 5l.5 10M12 15v4M8.5 19h7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-handshake" viewBox="0 0 24 24"><path d="m3 11 4-4 4 2 3-2 7 5-4 4M3 11l5 6 2-1 2 2 2-1 2 1 1-2M11 9l-3 3 2 1.5 3-2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4.3 3 8 7 9.5 4-1.5 7-5.2 7-9.5V6l-7-3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2.2 2.2L15.5 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-house" viewBox="0 0 24 24"><path d="M3.5 11 12 4l8.5 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 9.5V20h13V9.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M10 20v-5h4v5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+    <symbol id="i-video-chat" viewBox="0 0 24 24"><path d="M4 5.5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M10.5 8.5v5l4-2.5z" fill="currentColor"/></symbol>
+    <symbol id="i-google" viewBox="0 0 48 48"><path fill="#4285F4" d="M43.6 20.1H42V20H24v8h11.3a12 12 0 0 1-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"/><path fill="#34A853" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2A12 12 0 0 1 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#FBBC05" d="M12.7 28.1A12 12 0 0 1 12 24c0-1.4.2-2.8.7-4.1l-6.4-5.2A20 20 0 0 0 4 24c0 3.2.8 6.3 2.2 9z"/><path fill="#EA4335" d="M24 12c3.1 0 5.8 1.2 8 3l5.6-5.6A20 20 0 0 0 6.3 14.7l6.5 5.2C14.4 15.3 18.8 12 24 12z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 6h16v12H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M11 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  </svg>
+
+  <!-- Quote request form (assets/js/quote.js, page mode) -->
+  <main class="qm qm--page is-open" id="quote-modal" data-mode="page" aria-label="Get my free solar quotes">
+    <div class="qm__panel">
+      <div class="qm__top">
+        <a href="index.html" class="qm__home"><img class="qm__logo" src="assets/img/heliobond-logo.png" alt="Heliobond" width="720" height="123"></a>
+        <span class="qm__badge"><svg aria-hidden="true"><use href="#i-badge"/></svg>COREN accredited</span>
+        <a class="qm-close" href="index.html" aria-label="Back to the Heliobond home page"><svg aria-hidden="true"><use href="#i-x"/></svg></a>
+      </div>
+      <div class="qm-progress">
+        <div class="qm-progress__track"><div class="qm-progress__bar"></div></div>
+        <p class="qm-progress__text" aria-live="polite"></p>
+      </div>
+      <div class="qm-body"></div>
+    </div>
+  </main>
+
+  <noscript>
+    <p class="qm-noscript">This form needs JavaScript. You can also request quotes at <a href="https://solar.heliobond.com/">solar.heliobond.com</a>.</p>
+  </noscript>
+</body>
+</html>
