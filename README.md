@@ -34,5 +34,5 @@ python3 -m http.server 8000
 - **Onboarding flows.** All homeowner CTAs point to `get-started.html`. The installer CTA points to `get-started.html#installers`.
 - **Phone number.** The footer shows `028137890976` as supplied. Double-check it; a Nigerian mobile number is usually 11 digits (e.g. `0813 789 0976`).
 - **Social links.** None are shown. There is a comment in the footer where they should go.
-- **Articles.** The resources section shows planned guide titles marked "Coming soon". Link each card once the article is published.
+- **Blog.** The six blog cards (titles, excerpts, authors, dates) are sample content and are not linked yet. Once the articles exist, wrap each title in a link to its post (see the comment in `index.html`), and use real author names.
 - **Legal copy.** Privacy Policy and Terms of Service.
