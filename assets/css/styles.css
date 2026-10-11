@@ -648,45 +648,109 @@ button { font: inherit; color: inherit; }
 .homes-note strong { color: var(--c-ink); }
 
 /* ---------- Going it alone vs Heliobond ---------- */
-.alone__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--s-4);
-  max-width: 1080px;
+.vs {
+  max-width: 1120px;
   margin-inline: auto;
 }
-.alone__col {
-  padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
-  border-radius: var(--r-lg);
+.vs__row {
+  display: grid;
+  grid-template-columns: 0.7fr 1fr 1.1fr;
+  align-items: stretch;
 }
-.alone__col--without { background: #fbf0ec; border: 1px solid #f1d9d1; }
-.alone__col--with { background: var(--c-navy); color: #fff; }
-.alone__heading {
+.vs__topic,
+.vs__cell {
   display: flex;
   align-items: center;
   gap: var(--s-3);
-  margin-bottom: var(--s-5);
+  padding: var(--s-5) var(--s-5);
+  border-bottom: 1px solid var(--c-line);
+}
+.vs__topic {
+  padding-left: 0;
+  font-family: var(--f-display);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--c-ink);
+}
+.vs__topic-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  background: rgba(254, 178, 4, 0.16);
+  color: var(--c-navy);
+}
+.vs__topic-icon svg { width: 20px; height: 20px; }
+
+.vs__cell { align-items: flex-start; line-height: 1.5; }
+.vs__cell > svg { flex: none; width: 20px; height: 20px; margin-top: 2px; padding: 4px; border-radius: 50%; }
+
+.vs__cell--bad { color: #6b4a42; }
+.vs__cell--bad > svg { background: #fbe1da; color: #c2412d; }
+
+/* The Heliobond column reads as one raised navy panel. */
+.vs__cell--good {
+  background: var(--c-navy);
+  color: rgba(255, 255, 255, 0.92);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+  font-weight: 500;
+  box-shadow: 0 30px 60px -40px rgba(4, 36, 57, 0.6);
+}
+.vs__cell--good > svg { background: var(--c-amber); color: var(--c-navy); }
+
+.vs__row--head { align-items: end; }
+.vs__colhead {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-5);
   font-family: var(--f-display);
   font-size: var(--fs-lg);
   font-weight: 700;
 }
-.alone__badge {
+.vs__colhead--bad { color: #8a3a2a; }
+.vs__colhead-badge {
   display: grid;
   place-items: center;
-  width: 32px; height: 32px;
+  width: 30px; height: 30px;
   border-radius: 50%;
+  background: #c2412d;
+  color: #fff;
 }
-.alone__badge svg { width: 16px; height: 16px; }
-.alone__badge--bad { background: #c2412d; color: #fff; }
-.alone__badge--good { background: var(--c-amber); color: var(--c-navy); }
-.alone__list { display: grid; gap: var(--s-4); }
-.alone__list li { display: flex; gap: var(--s-3); line-height: 1.5; }
-.alone__list svg { flex: none; width: 18px; height: 18px; margin-top: 3px; }
-.alone__col--without .alone__list li { color: #5b3a33; }
-.alone__col--without .alone__list svg { color: #c2412d; }
-.alone__col--with .alone__list li { color: rgba(255, 255, 255, 0.9); }
-.alone__col--with .alone__list svg { color: var(--c-amber); }
-.alone__col--with .btn { margin-top: var(--s-6); }
+.vs__colhead-badge svg { width: 14px; height: 14px; }
+.vs__colhead--good {
+  position: relative;
+  padding-top: var(--s-6);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(254, 178, 4, 0.3), transparent 55%),
+    var(--c-navy);
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.vs__colhead--good img { width: 28px; height: 28px; padding: 3px; border-radius: 8px; background: #fff; }
+.vs__colhead--good::before {
+  content: "Recommended";
+  position: absolute;
+  top: -12px;
+  right: var(--s-5);
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+  background: var(--c-amber);
+  font-family: var(--f-body);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--c-navy);
+}
+.vs__row--foot > span { display: block; }
+.vs__cta {
+  padding: var(--s-5) var(--s-5) var(--s-6);
+  border-radius: 0 0 var(--r-lg) var(--r-lg);
+  background: var(--c-navy);
+}
+.vs__mobile-label { display: none; }
 
 /* ---------- How it works (timeline) ---------- */
 .steps__title { max-width: 18em; }
@@ -1279,7 +1343,6 @@ a.contact-item:hover .contact-item__icon { border-color: var(--c-amber); color: 
   .logo-strip__title { text-align: center; }
   .logo-strip__list { justify-content: center; gap: var(--s-4) var(--s-7); }
 
-  .alone__grid,
   .about__grid,
   .installers__grid { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1356,6 +1419,37 @@ a.contact-item:hover .contact-item__icon { border-color: var(--c-amber); color: 
   .section-head--center { align-items: center; }
 }
 
+@media (max-width: 700px) {
+  /* Comparison: one card per topic, problem above, Heliobond fix below. */
+  .vs__row--head { display: none; }
+  .vs__row {
+    grid-template-columns: 1fr;
+    margin-bottom: var(--s-4);
+    border-radius: var(--r-md);
+    overflow: hidden;
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+  }
+  .vs__topic { padding: var(--s-4) var(--s-4) var(--s-3); border-bottom: 0; }
+  .vs__cell { flex-wrap: wrap; padding: var(--s-3) var(--s-4) var(--s-4); border-bottom: 0; }
+  .vs__cell--bad { background: #fbf0ec; }
+  .vs__cell--good { box-shadow: none; }
+  .vs__mobile-label {
+    display: block;
+    flex-basis: 100%;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .vs__cell--bad .vs__mobile-label { color: #b4472f; }
+  .vs__cell--good .vs__mobile-label { color: var(--c-amber); }
+  .vs__cell > span:last-child { flex: 1; min-width: 0; }
+  .vs__row--foot { border: 0; background: none; margin: var(--s-2) 0 0; }
+  .vs__row--foot > span { display: none; }
+  .vs__cta { padding: 0; background: none; }
+}
+
 @media (max-width: 640px) {
   /* Consistent left alignment for every section heading on phones. */
   .section-head--center { align-items: flex-start; text-align: left; }
@@ -1363,7 +1457,7 @@ a.contact-item:hover .contact-item__icon { border-color: var(--c-amber); color: 
 
   /* Full-width primary buttons on phones: easy to tap, same shape everywhere. */
   .pain-card--feature .btn,
-  .alone__col--with .btn,
+  .vs__cta .btn,
   .steps__cta .btn,
   .installers__copy .btn,
   .promo__content .btn { width: 100%; }
