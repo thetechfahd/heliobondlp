@@ -98,6 +98,29 @@
     });
   });
 
+  /* ---------- Testimonial swipe indicator ---------- */
+  // Keeps the amber thumb in step with the sideways scroll of the testimonial cards.
+  var videoGrid = document.querySelector('.video-grid');
+  var swipeHint = document.querySelector('.swipe-hint');
+  if (videoGrid && swipeHint) {
+    var updateHint = function () {
+      var max = videoGrid.scrollWidth - videoGrid.clientWidth;
+      if (max <= 0) return;
+      var ratio = videoGrid.clientWidth / videoGrid.scrollWidth;      // visible share
+      var progress = videoGrid.scrollLeft / max;                      // 0 → 1
+      var thumbW = Math.max(ratio * 100, 18);
+      swipeHint.style.setProperty('--thumb-w', thumbW + '%');
+      // translateX % is relative to the thumb itself
+      swipeHint.style.setProperty('--thumb-x', (progress * (100 - thumbW) / thumbW * 100) + '%');
+    };
+    videoGrid.addEventListener('scroll', function () {
+      swipeHint.classList.add('is-used');
+      updateHint();
+    }, { passive: true });
+    window.addEventListener('resize', updateHint);
+    updateHint();
+  }
+
   /* ---------- Press and partner logos ---------- */
   // Show the text name when a logo file hasn't been added yet.
   document.querySelectorAll('.logo-strip__img').forEach(function (img) {

@@ -816,6 +816,9 @@ button { font: inherit; color: inherit; }
 }
 .video-card.has-video .video-card__soon { display: none; }
 
+/* Swipe indicator: only shown when the cards scroll sideways (tablet and mobile). */
+.swipe-hint { display: none; }
+
 .video-card__caption { display: grid; margin-top: var(--s-4); padding-inline: var(--s-1); }
 .video-card__caption strong { font-weight: 600; }
 .video-card__caption span { font-size: var(--fs-sm); color: var(--c-muted); }
@@ -1280,6 +1283,63 @@ a.contact-item:hover .contact-item__icon { border-color: var(--c-amber); color: 
     padding-bottom: var(--s-3);
   }
   .video-grid > li { scroll-snap-align: start; }
+  .video-grid { scrollbar-width: none; }
+  .video-grid::-webkit-scrollbar { display: none; }
+
+  .swipe-hint {
+    display: grid;
+    justify-items: center;
+    gap: var(--s-3);
+    margin-top: var(--s-5);
+  }
+  .swipe-hint__track {
+    position: relative;
+    width: 96px;
+    height: 6px;
+    border-radius: var(--r-pill);
+    background: var(--c-line);
+    overflow: hidden;
+  }
+  .swipe-hint__thumb {
+    position: absolute;
+    top: 0; left: 0;
+    width: var(--thumb-w, 33%);
+    height: 100%;
+    border-radius: inherit;
+    background: var(--c-amber);
+    transform: translateX(var(--thumb-x, 0%));
+    transition: transform 0.15s linear;
+  }
+  /* Until the visitor scrolls, the thumb glides to show the row moves sideways. */
+  .swipe-hint:not(.is-used) .swipe-hint__thumb { animation: swipe-nudge 2.4s var(--ease) infinite; }
+  .swipe-hint__label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--c-muted);
+  }
+  .swipe-hint__label::after {
+    content: "";
+    width: 18px; height: 10px;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 10'%3E%3Cpath d='M1 5h15M12 1l4 4-4 4' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 10'%3E%3Cpath d='M1 5h15M12 1l4 4-4 4' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  .swipe-hint:not(.is-used) .swipe-hint__label::after { animation: swipe-arrow 1.2s ease-in-out infinite; }
+  .swipe-hint.is-used .swipe-hint__label { opacity: 0.7; }
+
+  @keyframes swipe-nudge {
+    0%, 15% { transform: translateX(0%); }
+    55%, 70% { transform: translateX(200%); }
+    100% { transform: translateX(0%); }
+  }
+  @keyframes swipe-arrow {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+  }
 
   .section-head { flex-direction: column; align-items: flex-start; }
   .section-head--center { align-items: center; }
