@@ -383,12 +383,29 @@ button { font: inherit; color: inherit; }
 /* Desktop: three deliberate lines. */
 .hero__line { display: block; white-space: nowrap; }
 .hero__title .hl { color: var(--c-amber); }
-.hero__lead {
-  max-width: 500px;
+.hero__points {
+  display: grid;
+  gap: var(--s-3);
+  max-width: 540px;
   margin: var(--s-5) 0 var(--s-6);
+}
+.hero__points li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
   font-size: var(--fs-md);
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.86);
+}
+.hero__points strong { font-weight: 600; color: #fff; }
+.hero__points svg {
+  flex: none;
+  width: 22px; height: 22px;
+  margin-top: 1px;
+  padding: 4px;
+  border-radius: 50%;
+  background: var(--c-amber);
+  color: var(--c-navy);
 }
 
 .hero__stats {
