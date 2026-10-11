@@ -897,19 +897,13 @@ button { font: inherit; color: inherit; }
   gap: clamp(2.5rem, 7vw, 7rem);
   align-items: center;
 }
-.installers__panel {
-  display: grid;
-  place-items: center;
-  padding: clamp(2rem, 6vw, 4.5rem);
-  border-radius: var(--r-lg);
-  background: var(--c-surface-2);
-}
+.installers__panel { display: grid; }
 .installers__media {
-  width: min(380px, 100%);
-  aspect-ratio: 4 / 5;
+  width: 100%;
+  aspect-ratio: 4 / 3;
   border-radius: var(--r-lg);
 }
-.installers__media img { object-position: 35% 40%; }
+.installers__media img { object-position: 40% 35%; }
 .installers__copy { max-width: 480px; }
 .installers__copy .lead { margin-top: var(--s-5); }
 
@@ -1276,7 +1270,6 @@ a.contact-item:hover .contact-item__icon { border-color: var(--c-amber); color: 
   .installers__grid { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-  .installers__media { width: min(300px, 100%); }
 
   .video-grid {
     grid-auto-flow: column;
@@ -1315,7 +1308,6 @@ a.contact-item:hover .contact-item__icon { border-color: var(--c-amber); color: 
 
   .video-grid { grid-auto-columns: 85%; }
 
-  .installers__panel { padding: var(--s-6) var(--s-5); }
 
   .blog-grid { grid-template-columns: minmax(0, 1fr); gap: var(--s-7); }
 
