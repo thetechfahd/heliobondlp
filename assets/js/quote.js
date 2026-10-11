@@ -308,7 +308,10 @@
         try {
           sessionStorage.setItem('hb-quote', JSON.stringify({
             name: form.firstName.trim(), state: form.state, held: held,
-            kva: loadSummary.kva, batteryKwh: loadSummary.batteryKwh, spend: loadSummary.spend
+            kva: loadSummary.kva, batteryKwh: loadSummary.batteryKwh, spend: loadSummary.spend,
+            appliances: form.appliances.length, timeline: form.timeline,
+            // Masked so the full number is never kept in the browser.
+            phone: (function (d) { return d.length >= 7 ? '0' + d.slice(-10, -7) + ' ••• ' + d.slice(-4) : ''; })(form.phone.replace(/\D/g, ''))
           }));
         } catch (e) {}
         window.location.href = 'thank-you.html' + (held ? '?status=saved' : '');

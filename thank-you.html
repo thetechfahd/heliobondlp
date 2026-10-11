@@ -6,71 +6,170 @@
   <title>Request received | Heliobond</title>
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#042439">
-  <link rel="icon" href="assets/img/heliobond-mark.png?v=202610112227" type="image/png">
+  <link rel="icon" href="assets/img/heliobond-mark.png?v=202610112353" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/css/styles.css?v=202610112227">
+  <link rel="stylesheet" href="assets/css/styles.css?v=202610112353">
 </head>
 <body class="quote-page">
   <svg width="0" height="0" class="visually-hidden" aria-hidden="true" focusable="false">
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.8L3.5 20.5l4.3-1.1A8.5 8.5 0 1 0 12 3.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 8.6c.2-.5.5-.5.8-.5h.5c.2 0 .4 0 .6.5l.6 1.5c.1.2 0 .4-.1.6l-.5.6c-.1.2-.1.3 0 .5.6 1 1.4 1.8 2.4 2.4.2.1.4.1.5 0l.6-.6c.2-.2.4-.2.6-.1l1.5.7c.4.2.4.4.4.6 0 .9-.7 1.9-1.9 1.9-2.8 0-6.4-3.4-6.4-6.4 0-.6.3-1.2.7-1.7Z" fill="currentColor"/></symbol>
+    <symbol id="i-badge" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4.3 3 8 7 9.5 4-1.5 7-5.2 7-9.5V6l-7-3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2.2 2.2L15.5 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-house" viewBox="0 0 24 24"><path d="M3.5 11 12 4l8.5 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 9.5V20h13V9.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M10 20v-5h4v5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 6h16v12H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M11 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
   </svg>
 
-  <main class="qm qm--page is-open">
-    <div class="qm__panel">
-      <div class="qm__top">
-        <a href="index.html" class="qm__home"><img class="qm__logo" src="assets/img/heliobond-logo.png?v=202610112227" alt="Heliobond home" width="720" height="123"></a>
-      </div>
-      <div class="qm-body">
-        <div class="qm-done ty">
-          <span class="qm-done__icon" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
-          <h1 class="qm-done__title" id="ty-title">Request received!</h1>
-          <p id="ty-text">We're matching you with COREN-accredited installers in your region. Your quotes will be sent to your WhatsApp.</p>
+  <div class="qa ty2">
+    <!-- What happens next (desktop) -->
+    <aside class="qa-side" aria-label="What happens next">
+      <a href="index.html" class="qa-side__logo"><img src="assets/img/heliobond-logo-light.png?v=202610112353" alt="Heliobond home" width="720" height="123"></a>
 
-          <div class="qm-calc ty__estimate" id="ty-estimate" hidden>
+      <div class="qa-side__intro">
+        <p class="qa-kicker">Your solar journey</p>
+        <h2 class="qa-side__title">You've done the hard part.</h2>
+        <p class="qa-side__lead">From here, we do the legwork. Here's where your request is now.</p>
+      </div>
+
+      <ol class="qa-stages ty2-journey">
+        <li class="is-done"><span class="qa-stages__dot" aria-hidden="true"><svg><use href="#i-check"/></svg></span><span><strong>Request submitted</strong><small>Just now</small></span></li>
+        <li class="is-current" aria-current="step"><span class="qa-stages__dot" aria-hidden="true"><svg><use href="#i-check"/></svg></span><span><strong>Matching installers</strong><small>We shortlist COREN-verified installers near you</small></span></li>
+        <li><span class="qa-stages__dot" aria-hidden="true"><svg><use href="#i-check"/></svg></span><span><strong>Quotes on WhatsApp</strong><small>Comparable quotes, side by side</small></span></li>
+        <li><span class="qa-stages__dot" aria-hidden="true"><svg><use href="#i-check"/></svg></span><span><strong>Free home audit</strong><small>Your installer confirms the system on site</small></span></li>
+        <li><span class="qa-stages__dot" aria-hidden="true"><svg><use href="#i-check"/></svg></span><span><strong>Installation</strong><small>20% down, the rest in monthly instalments</small></span></li>
+      </ol>
+
+      <p class="qa-side__help">Need help? <a href="mailto:hi@heliobond.com">hi@heliobond.com</a></p>
+    </aside>
+
+    <main class="qa-main">
+      <header class="qa-top">
+        <a href="index.html" class="qa-top__logo"><img src="assets/img/heliobond-logo.png?v=202610112353" alt="Heliobond home" width="720" height="123"></a>
+        <a class="qm-close qa-exit" href="index.html"><span>Back to home</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </header>
+
+      <div class="qa-canvas ty2-canvas">
+        <!-- Confirmation -->
+        <section class="ty2-hero ty2-reveal" aria-labelledby="ty-title">
+          <div class="ty2-mark" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><circle class="ty2-mark__ring" cx="32" cy="32" r="29"/><path class="ty2-mark__tick" d="m20 33 8 8 16-17"/></svg>
+          </div>
+          <p class="qm-eyebrow" id="ty-eyebrow">Request received</p>
+          <h1 class="ty2-title" id="ty-title">You're all set.</h1>
+          <p class="ty2-lead" id="ty-text">We're matching you with COREN-accredited installers in your region.</p>
+
+          <div class="ty2-wa" id="ty-wa">
+            <span class="ty2-wa__icon" aria-hidden="true"><svg><use href="#i-whatsapp"/></svg></span>
+            <p><strong>Watch your WhatsApp.</strong> <span id="ty-wa-text">Your quotes will arrive there, usually within 24 hours.</span></p>
+          </div>
+        </section>
+
+        <!-- Projected system -->
+        <section class="ty2-card ty2-reveal" id="ty-estimate" aria-labelledby="ty-est-title" hidden>
+          <div class="ty2-card__head">
+            <h2 class="ty2-h2" id="ty-est-title">Your projected system</h2>
+            <span class="ty2-pill" id="ty-appl"></span>
+          </div>
+          <div class="qm-calc qm-calc--3 ty2-calc">
             <div class="qm-calc__hl"><span>Inverter</span><strong id="ty-kva"></strong></div>
             <div class="qm-calc__hl"><span>Battery</span><strong id="ty-battery"></strong></div>
-            <div><span>Projected spend</span><strong id="ty-spend"></strong></div>
+            <div class="qm-calc__hl"><span>Projected spend</span><strong id="ty-spend"></strong></div>
           </div>
+          <p class="ty2-fine">This is a projection based on typical appliance ratings. Your installer confirms the exact system and price during the free home audit, and you can pay 20% down with the rest in monthly instalments.</p>
+        </section>
 
-          <p class="qm-hint" id="ty-note" hidden>This is only a projection. Your installer confirms the exact size and price during the free home audit.</p>
-
-          <ol class="ty__next" id="ty-next">
-            <li><span><strong>Matching.</strong> We shortlist COREN-verified installers who work in your state.</span></li>
-            <li><span><strong>Quotes.</strong> You receive comparable quotes on WhatsApp.</span></li>
-            <li><span><strong>Free home audit.</strong> Your chosen installer confirms the system size on site.</span></li>
+        <!-- Next steps -->
+        <section class="ty2-card ty2-reveal" id="ty-next" aria-labelledby="ty-next-title">
+          <h2 class="ty2-h2" id="ty-next-title">What happens next</h2>
+          <ol class="ty2-steps">
+            <li>
+              <span class="ty2-steps__icon" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
+              <div><p class="ty2-steps__when">Today</p><h3>We shortlist installers</h3><p>We pick COREN-verified installers who work in <span class="ty-state">your state</span> and suit your home.</p></div>
+            </li>
+            <li>
+              <span class="ty2-steps__icon" aria-hidden="true"><svg><use href="#i-whatsapp"/></svg></span>
+              <div><p class="ty2-steps__when">Within 24 hours</p><h3>Your quotes arrive on WhatsApp</h3><p>Every quote is laid out the same way, so you can compare equipment, price and warranty at a glance.</p></div>
+            </li>
+            <li>
+              <span class="ty2-steps__icon" aria-hidden="true"><svg><use href="#i-house"/></svg></span>
+              <div><p class="ty2-steps__when">When you're ready</p><h3>Free home audit</h3><p>The installer you choose visits to check your roof and confirm the right system. No obligation.</p></div>
+            </li>
+            <li>
+              <span class="ty2-steps__icon" aria-hidden="true"><svg><use href="#i-bolt"/></svg></span>
+              <div><p class="ty2-steps__when">Then</p><h3>Installation and support</h3><p>Your system is installed, and we hold the installer accountable if anything goes wrong.</p></div>
+            </li>
           </ol>
+        </section>
 
-          <a class="btn btn--dark qm-primary" href="index.html">
+        <!-- Kept on file (shown instead of next steps when the request is held) -->
+        <section class="ty2-card ty2-reveal" id="ty-held" aria-labelledby="ty-held-title" hidden>
+          <h2 class="ty2-h2" id="ty-held-title">What happens now</h2>
+          <p class="ty2-body">We've kept your project details on file. When a suitable option or payment plan becomes available, we'll message you on WhatsApp. You don't need to do anything in the meantime.</p>
+        </section>
+
+        <!-- While you wait -->
+        <section class="ty2-reveal" aria-labelledby="ty-wait-title">
+          <h2 class="ty2-h2 ty2-h2--sm" id="ty-wait-title">While you wait</h2>
+          <div class="ty2-links">
+            <a class="ty2-link" href="index.html#resources">
+              <span class="ty2-link__icon" aria-hidden="true"><svg><use href="#i-book"/></svg></span>
+              <span><strong>Read our solar guides</strong><small>What to compare in a quote, batteries and more</small></span>
+              <svg class="ty2-link__arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+            <a class="ty2-link" href="mailto:hi@heliobond.com">
+              <span class="ty2-link__icon" aria-hidden="true"><svg><use href="#i-mail"/></svg></span>
+              <span><strong>Questions? Email us</strong><small>hi@heliobond.com</small></span>
+              <svg class="ty2-link__arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+          </div>
+          <a class="btn btn--dark ty2-home" href="index.html">
             Back to the website
             <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
           </a>
-        </div>
+        </section>
       </div>
-    </div>
-  </main>
+    </main>
+  </div>
 
   <script>
     (function () {
       var held = /status=saved/.test(location.search), d = {};
       try { d = JSON.parse(sessionStorage.getItem('hb-quote') || '{}'); } catch (e) {}
-      var name = d.name ? ', ' + d.name : '';
+      var $ = function (id) { return document.getElementById(id); };
+      var first = d.name ? ', ' + d.name : '';
+
+      if (d.state) Array.prototype.forEach.call(document.querySelectorAll('.ty-state'), function (el) { el.textContent = d.state; });
+
       if (held) {
-        document.getElementById('ty-title').textContent = 'Thank you' + name + '.';
-        document.getElementById('ty-text').textContent = "We've saved your project details. Our team will reach out on WhatsApp when a suitable option is available.";
-        document.getElementById('ty-next').hidden = true;
+        document.title = 'Details saved | Heliobond';
+        $('ty-eyebrow').textContent = 'Details saved';
+        $('ty-title').textContent = 'Thank you' + first + '.';
+        $('ty-text').textContent = "We've saved your project details. We'll be in touch when a suitable option is available.";
+        $('ty-wa-text').textContent = d.phone ? "We'll message you on " + d.phone + '.' : "We'll message you there when we have an option for you.";
+        $('ty-next').hidden = true;
+        $('ty-held').hidden = false;
+        var journey = document.querySelectorAll('.ty2-journey li');
+        if (journey[1]) journey[1].querySelector('strong').textContent = 'Saved on file';
+        if (journey[1]) journey[1].querySelector('small').textContent = "We'll reach out when an option suits you";
       } else {
-        document.getElementById('ty-title').textContent = 'Request received' + name + '!';
-        if (d.state) document.getElementById('ty-text').textContent = "We're matching you with COREN-accredited installers in " + d.state + '. Your quotes will be sent to your WhatsApp.';
+        $('ty-title').textContent = "You're all set" + first + '.';
+        if (d.state) $('ty-text').textContent = "We're matching you with COREN-accredited installers in " + d.state + '.';
+        if (d.phone) $('ty-wa-text').textContent = 'Your quotes will arrive on ' + d.phone + ', usually within 24 hours.';
       }
+
       if (d.kva) {
-        document.getElementById('ty-kva').textContent = d.kva === '30+' ? 'Over 30 kVA' : d.kva + ' kVA';
-        document.getElementById('ty-battery').textContent = d.batteryKwh ? d.batteryKwh + ' kWh' : 'Not needed';
-        document.getElementById('ty-spend').textContent = d.spend || '–';
-        document.getElementById('ty-estimate').hidden = false;
-        document.getElementById('ty-note').hidden = false;
+        $('ty-kva').textContent = d.kva === '30+' ? 'Over 30 kVA' : d.kva + ' kVA';
+        $('ty-battery').textContent = d.batteryKwh ? d.batteryKwh + ' kWh' : 'Not needed';
+        $('ty-spend').textContent = d.spend || '–';
+        $('ty-appl').textContent = d.appliances ? d.appliances + (d.appliances === 1 ? ' appliance' : ' appliances') : '';
+        $('ty-appl').hidden = !d.appliances;
+        $('ty-estimate').hidden = false;
       }
     })();
   </script>
