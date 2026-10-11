@@ -6,16 +6,17 @@
   <title>Heliobond — Compare Solar Quotes from COREN-Accredited Installers</title>
   <meta name="description" content="Get multiple solar quotes from COREN-accredited installers within 24 hours, pay just 20% upfront with the rest in instalments, and work with installers accountable to COREN.">
   <meta name="theme-color" content="#042439">
-  <link rel="icon" href="assets/img/heliobond-mark.png?v=202610111518" type="image/png">
+  <link rel="icon" href="assets/img/heliobond-mark.png?v=202610111523" type="image/png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/css/styles.css?v=202610111518">
+  <link rel="stylesheet" href="assets/css/styles.css?v=202610111523">
 
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
-  <script src="assets/js/main.js?v=202610111518" defer></script>
+  <script src="assets/js/quote.js?v=202610111523" defer></script>
+  <script src="assets/js/main.js?v=202610111523" defer></script>
 </head>
 <body>
   <!-- Icon sprite -->
@@ -33,6 +34,9 @@
     <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 8h6M9 12h6M9 16h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
     <symbol id="i-battery" viewBox="0 0 24 24"><rect x="3" y="7" width="16" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M21 10.5v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M6.5 10v4M9.5 10v4M12.5 10v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
     <symbol id="i-panel" viewBox="0 0 24 24"><path d="M5 5h14l2 10H3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 5v10M4 10h16M8.5 5 8 15M15.5 5l.5 10M12 15v4M8.5 19h7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-handshake" viewBox="0 0 24 24"><path d="m3 11 4-4 4 2 3-2 7 5-4 4M3 11l5 6 2-1 2 2 2-1 2 1 1-2M11 9l-3 3 2 1.5 3-2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4.3 3 8 7 9.5 4-1.5 7-5.2 7-9.5V6l-7-3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2.2 2.2L15.5 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-house" viewBox="0 0 24 24"><path d="M3.5 11 12 4l8.5 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 9.5V20h13V9.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M10 20v-5h4v5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
     <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
     <symbol id="i-video-chat" viewBox="0 0 24 24"><path d="M4 5.5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M10.5 8.5v5l4-2.5z" fill="currentColor"/></symbol>
@@ -48,7 +52,7 @@
   <header class="site-header">
     <div class="container site-header__inner">
       <a class="brand" href="#top">
-        <img src="assets/img/heliobond-logo.png?v=202610111518" alt="Heliobond" width="720" height="123">
+        <img src="assets/img/heliobond-logo.png?v=202610111523" alt="Heliobond" width="720" height="123">
       </a>
 
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
@@ -66,7 +70,7 @@
           <li><a href="#about"><span>About</span><svg class="site-nav__arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
         </ul>
         <div class="site-nav__actions">
-          <a class="btn btn--dark btn--sm site-nav__cta" href="https://solar.heliobond.com/#start">
+          <a class="btn btn--dark btn--sm site-nav__cta" href="https://solar.heliobond.com/" data-quote>
             <span class="site-nav__cta-desktop">Get Started</span>
             <span class="site-nav__cta-mobile">Get My Free Quotes</span>
             <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
@@ -101,7 +105,7 @@
               <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Work with installers <strong>accountable to COREN</strong> if anything goes wrong.</span></li>
             </ul>
             <div class="btn-row">
-              <a class="btn btn--accent" href="https://solar.heliobond.com/#start">
+              <a class="btn btn--accent" href="https://solar.heliobond.com/" data-quote>
                 Get My Free Quotes
                 <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
               </a>
@@ -222,7 +226,7 @@
             <p class="pain-card__big"><span>20%</span> down</p>
             <h3 class="pain-card__title">Pay the rest in monthly instalments</h3>
             <p class="pain-card__text">Start with just 20% of the cost and spread the balance over affordable monthly payments, so your family gets steady power now, not after years of saving.</p>
-            <a class="btn btn--accent btn--sm" href="https://solar.heliobond.com/#start">
+            <a class="btn btn--accent btn--sm" href="https://solar.heliobond.com/" data-quote>
               Check my instalment plan
               <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
             </a>
@@ -354,7 +358,7 @@
                 <span><span class="vs2__topic">Warranty</span><span class="vs2__text">Warranties are documented before you commit.</span></span>
               </li>
             </ul>
-            <a class="btn btn--accent vs2__cta" href="https://solar.heliobond.com/#start">
+            <a class="btn btn--accent vs2__cta" href="https://solar.heliobond.com/" data-quote>
               Get My Free Quotes
               <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
             </a>
@@ -451,7 +455,7 @@
         </ol>
 
         <div class="steps__cta steps__cta--center">
-          <a class="btn btn--dark" href="https://solar.heliobond.com/#start">
+          <a class="btn btn--dark" href="https://solar.heliobond.com/" data-quote>
             Start in 2 minutes
             <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
           </a>
@@ -713,7 +717,7 @@
           <div class="promo__content">
             <h2 class="promo__title" id="promo-title">Make a more confident solar decision.</h2>
             <p class="promo__lead">Free, side-by-side quotes from accredited installers near you.</p>
-            <a class="btn btn--accent" href="https://solar.heliobond.com/#start">
+            <a class="btn btn--accent" href="https://solar.heliobond.com/" data-quote>
               Start Your Solar Request
               <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
             </a>
@@ -857,7 +861,7 @@
       <div class="footer__panel">
         <div class="footer__brand">
           <a class="brand" href="#top">
-            <img src="assets/img/heliobond-logo-light.png?v=202610111518" alt="Heliobond" width="720" height="123">
+            <img src="assets/img/heliobond-logo-light.png?v=202610111523" alt="Heliobond" width="720" height="123">
           </a>
           <p>Heliobond helps Nigerian homeowners go solar with confidence. Compare quotes from COREN-verified installers, pay just 20% upfront with the rest in instalments, and get support long after installation.</p>
           <!-- Social links: add icon links here once official profiles exist. -->
@@ -877,7 +881,7 @@
         <nav class="footer__col" aria-label="Homeowners and installers">
           <h2 class="footer__heading">Homeowners</h2>
           <ul>
-            <li><a href="https://solar.heliobond.com/#start">Get Solar Quotes</a></li>
+            <li><a href="https://solar.heliobond.com/" data-quote>Get Solar Quotes</a></li>
             <li><a href="#financing">20% Down Instalments</a></li>
           </ul>
           <h2 class="footer__heading footer__heading--spaced">Installers</h2>
@@ -911,5 +915,21 @@
       </div>
     </div>
   </footer>
+
+  <!-- ============ Quote request popup (assets/js/quote.js) ============ -->
+  <div class="qm" id="quote-modal" role="dialog" aria-modal="true" aria-label="Get my free solar quotes" hidden>
+    <div class="qm__panel">
+      <div class="qm__top">
+        <img class="qm__logo" src="assets/img/heliobond-logo.png" alt="Heliobond" width="720" height="123">
+        <span class="qm__badge"><svg aria-hidden="true"><use href="#i-badge"/></svg>COREN accredited</span>
+        <button type="button" class="qm-close" aria-label="Close"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+      </div>
+      <div class="qm-progress">
+        <div class="qm-progress__track"><div class="qm-progress__bar"></div></div>
+        <p class="qm-progress__text" aria-live="polite"></p>
+      </div>
+      <div class="qm-body"></div>
+    </div>
+  </div>
 </body>
 </html>

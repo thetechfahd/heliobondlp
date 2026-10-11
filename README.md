@@ -16,6 +16,7 @@ python3 -m http.server 8000
 | --- | --- |
 | `index.html` | The landing page |
 | `assets/css/styles.css` | All styles. Design tokens (colours, type, spacing, radii, container) are defined in `:root` |
+| `assets/js/quote.js` | The quote request popup |
 | `assets/js/main.js` | Mobile menu, header scroll state, video testimonial player, image-failure fallback and footer year. The page also works without it |
 | `assets/img/heliobond-logo.png` | Heliobond logo on a transparent background, for light backgrounds |
 | `assets/img/heliobond-logo-light.png` | Logo with "Helio" and the right ring in white, for the dark footer |
@@ -31,12 +32,7 @@ python3 -m http.server 8000
 - **Video testimonials.** Each card in the Testimonials section takes a `data-video` value: an `.mp4` path (for example `assets/video/customer-1.mp4`) or a YouTube link. Also set the poster image, customer name and city. Cards without a video show "Video coming soon". There are six cards, each with a case-study note (result, then inverter, battery and panels). The notes are sample content, so replace them with real project details.
 - **Logo permissions.** Both sliders now use official logo files in `assets/img/logos/` (press: Punch, Vanguard, TechCrunch, TechCabal, Premium Times, ThisDay; partners: Rivy, SunFi, CreditDirect, COREN, REA). Only list outlets that have covered Heliobond and organisations you formally partner with, and get permission before using a partner's logo — especially COREN and REA, which are government bodies.
 - **Logo files.** The PNGs were cut from the supplied JPG. An SVG or high-resolution original from the designer would be sharper.
-- **Quote form.** Every homeowner button links to `https://solar.heliobond.com/#start`, where the 16-step quote form lives. That site opens the form only when a button is clicked, so add this to the bottom of its page script to open it automatically from these links:
-
-  ```js
-  if (location.hash === '#start') openModal();
-  ```
-
+- **Quote popup.** Every homeowner button opens the quote popup (`assets/js/quote.js`), a step-by-step request form for homes only. It sends leads to the Heliobond quote API at `https://solar.heliobond.com/api/` (`send_otp.php`, then `submit.php`), the same system as solar.heliobond.com, tagged `source: "landing-page"`. Any element with a `data-quote` attribute opens it, and so does a link to `#get-quotes`. Without JavaScript, the buttons fall back to solar.heliobond.com.
 - **Installer applications.** "Apply as an Installer" still points to the placeholder `get-started.html#installers`.
 - **Phone number.** The footer shows `028137890976` as supplied. Double-check it; a Nigerian mobile number is usually 11 digits (e.g. `0813 789 0976`).
 - **Social links.** None are shown. There is a comment in the footer where they should go.
