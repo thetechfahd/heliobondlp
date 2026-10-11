@@ -305,7 +305,8 @@ button { font: inherit; color: inherit; }
 .site-nav__list a:hover::after { transform: scaleX(1); }
 
 .site-nav__arrow,
-.site-nav__note { display: none; }
+.site-nav__note,
+.site-nav__cta-mobile { display: none; }
 .site-nav__actions { display: flex; align-items: center; }
 
 .nav-toggle {
@@ -377,7 +378,7 @@ button { font: inherit; color: inherit; }
   font-family: var(--f-display);
   font-size: clamp(2.25rem, 3.55vw, 3.25rem);
   font-weight: 700;
-  line-height: 1.08;
+  line-height: 1.1;
   letter-spacing: -0.03em;
 }
 /* Desktop: three deliberate lines. */
@@ -393,8 +394,8 @@ button { font: inherit; color: inherit; }
   display: flex;
   align-items: flex-start;
   gap: var(--s-3);
-  font-size: var(--fs-md);
-  line-height: 1.45;
+  font-size: 1.0625rem;
+  line-height: 1.5;
   color: rgba(255, 255, 255, 0.86);
 }
 .hero__points strong { font-weight: 600; color: #fff; }
@@ -1249,6 +1250,8 @@ a.contact-item:hover .contact-item__icon { border-color: var(--c-amber); color: 
     font-size: var(--fs-base);
   }
   .site-nav__cta:hover { --btn-bg: #ffc433; }
+  .site-nav__cta-desktop { display: none; }
+  .site-nav__cta-mobile { display: inline; }
   .site-nav__note {
     display: block;
     text-align: center;
@@ -1366,6 +1369,11 @@ a.contact-item:hover .contact-item__icon { border-color: var(--c-amber); color: 
   .promo__content .btn { width: 100%; }
   .pain-card--feature .btn { align-self: stretch; min-height: 52px; font-size: var(--fs-sm); }
   .steps__cta--center { justify-items: stretch; }
+
+  /* Hero points: a clear step down from the headline on phones. */
+  .hero__points { gap: var(--s-3); margin: var(--s-4) 0 var(--s-5); }
+  .hero__points li { font-size: 0.9375rem; gap: 10px; }
+  .hero__points svg { width: 20px; height: 20px; margin-top: 1px; }
 
   /* Hero headline: same three phrases as desktop, sized so the longest
      line ("Installers in Your Region") fills the width on any phone. */
