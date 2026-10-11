@@ -269,7 +269,7 @@ button { font: inherit; color: inherit; }
   min-height: var(--header-h);
 }
 
-.brand { display: inline-flex; flex: none; }
+.brand { display: inline-flex; align-items: center; flex: none; min-height: 44px; }
 .brand img { width: auto; height: 30px; }
 
 .site-nav {
@@ -1346,6 +1346,22 @@ a.contact-item:hover .contact-item__icon { border-color: var(--c-amber); color: 
 }
 
 @media (max-width: 640px) {
+  /* Consistent left alignment for every section heading on phones. */
+  .section-head--center { align-items: flex-start; text-align: left; }
+  .section-head--center .lead { margin-inline: 0; }
+
+  /* Full-width primary buttons on phones: easy to tap, same shape everywhere. */
+  .pain-card--feature .btn,
+  .alone__col--with .btn,
+  .steps__cta .btn,
+  .installers__copy .btn,
+  .promo__content .btn { width: 100%; }
+  .pain-card--feature .btn { align-self: stretch; min-height: 52px; font-size: var(--fs-sm); }
+  .steps__cta--center { justify-items: stretch; }
+
+  /* Keep the hero headline inside the screen on small phones. */
+  .hero__title { font-size: clamp(1.875rem, 8.4vw, 2.25rem); }
+
   .wordmark { font-size: 1.125rem; }
   .wordmark--serif { font-size: 1rem; }
   .hero__media { aspect-ratio: 4 / 3.2; }
