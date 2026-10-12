@@ -121,8 +121,8 @@
   var GROUP_ICONS = { 'Lighting': 'i-bulb', 'Cooling': 'i-snow', 'Kitchen': 'i-fridge', 'Entertainment & work': 'i-tv', 'Household': 'i-house' };
   function nightOptions() {
     return NIGHT_OPTIONS.map(function (h) {
-      return { value: String(h), icon: h ? 'i-moon' : 'i-sun', label: h === 0 ? 'Not needed at night' : h + (h === 1 ? ' hour' : ' hours'), short: h === 0 ? 'Daytime only' : '',
-        meta: h === 0 ? 'Daytime only' : (h >= 8 ? 'Needs more battery' : ''), tone: h >= 8 ? 'warn' : '' };
+      return { value: String(h), icon: h ? 'i-moon' : 'i-sun', label: h === 0 ? 'Not needed at night' : h + (h === 1 ? ' hour' : ' hours'), short: h === 0 ? 'Day only' : '',
+        meta: h === 0 ? 'Daytime only' : '' };
     });
   }
   function applianceOptions() {
@@ -482,14 +482,24 @@
                 '</div></li>';
             }).join('') + '</ul>'
           : '<p class="qm-empty">No appliances added yet. Start with the ones you most want to keep running, like lights, fans and your fridge.</p>';
-        var summary = '<div class="qm-calc qm-calc--3" aria-live="polite">' +
-          '<div class="qm-calc__hl"><span>Suggested inverter</span><strong>' + (sz.kva ? esc(fmtKva(sz.kva)) : '–') + '</strong></div>' +
-          '<div class="qm-calc__hl"><span>Suggested battery</span><strong>' + (sz.batteryKwh ? sz.batteryKwh + ' kWh' : (sz.watts ? 'Not needed' : '–')) + '</strong></div>' +
-          '<div class="qm-calc__hl"><span>Projected spend</span><strong>' + (sz.spend ? esc(sz.spend) : '–') + '</strong></div>' +
+        var m = /₦([\d.]+)M/.exec(sz.spend || ''), down = m ? +m[1] * 0.2 : 0;
+        var downStr = down ? (down < 1 ? '₦' + Math.round(down * 1000) + 'k' : '₦' + Math.round(down * 10) / 10 + 'M') : '';
+        var summary = '<section class="qm-proj' + (sz.watts ? '' : ' is-empty') + '" aria-live="polite" aria-labelledby="qm-proj-title">' +
+          '<header class="qm-proj__head"><p class="qm-proj__kicker" id="qm-proj-title">' + icon('i-sun') + 'Your projected system</p><span class="qm-proj__pill">Estimate</span></header>' +
+          '<div class="qm-proj__specs">' +
+            '<div class="qm-proj__spec"><span class="qm-proj__ico" aria-hidden="true">' + icon('i-bolt') + '</span><div>' +
+              '<span class="qm-proj__label">Inverter</span><strong>' + (sz.kva ? esc(fmtKva(sz.kva)) : '–') + '</strong>' +
+              '<small>' + (sz.watts ? sz.watts.toLocaleString() + ' W running at once' : 'Add appliances to see this') + '</small></div></div>' +
+            '<div class="qm-proj__spec"><span class="qm-proj__ico" aria-hidden="true">' + icon('i-battery') + '</span><div>' +
+              '<span class="qm-proj__label">Battery</span><strong>' + (sz.batteryKwh ? sz.batteryKwh + ' kWh' : (sz.watts ? 'Not needed' : '–')) + '</strong>' +
+              '<small>' + (sz.batteryKwh ? 'For ' + sz.nightKwh + ' kWh used at night' : (sz.watts ? 'No night use added' : 'Set your night hours')) + '</small></div></div>' +
           '</div>' +
-          '<p class="qm-disclaimer">' + icon('i-shield-alert') + '<span><strong>This is only a projection</strong> based on typical appliance ratings' +
-          (sz.watts ? ' (total load ' + sz.watts.toLocaleString() + ' W, ' + sz.nightKwh + ' kWh at night)' : '') +
-          '. Your installer will confirm the exact system size and price during the free home audit.</span></p>';
+          '<div class="qm-proj__spend">' +
+            '<div><span class="qm-proj__label">Projected spend</span><strong>' + (sz.spend ? esc(sz.spend) : '–') + '</strong></div>' +
+            (downStr ? '<div class="qm-proj__down"><span>Start with 20% down</span><strong>' + (/^Above/.test(sz.spend) ? 'Above ' : 'About ') + downStr + '</strong><small>Rest in monthly instalments</small></div>' : '') +
+          '</div>' +
+          '<p class="qm-proj__note">' + icon('i-shield-alert') + '<span><strong>This is only a projection</strong> based on typical appliance ratings. Your installer confirms the exact size and price during the free home audit.</span></p>' +
+          '</section>';
         return tip + picker + list + summary +
           primary('Continue', 'next', !f.appliances.length) +
           '<p class="qm-hint qm-center"><button type="button" class="qm-link" data-action="skipAppliances">Skip, I\'m not sure what I use</button></p>' + backBtn();
