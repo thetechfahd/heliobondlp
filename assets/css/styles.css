@@ -2430,7 +2430,7 @@ html.qm-open { overflow: hidden; }
 }
 .qm-list__edit .qm-stepper { height: 44px; border-color: #e7d7a8; }
 .qm-list__edit .qm-stepper button { width: 40px; height: 40px; }
-.qm-list__night { display: flex; align-items: center; gap: var(--s-3); min-width: 0; font-size: var(--fs-xs); font-weight: 600; color: var(--c-ink-2); white-space: nowrap; }
+.qm-list__night { display: flex; flex: 1 1 260px; align-items: center; gap: 8px; min-width: 0; font-size: var(--fs-xs); font-weight: 600; color: var(--c-ink-2); white-space: nowrap; }
 .qm-list__night .qm-dd { flex: 1; min-width: 0; }
 @media (max-width: 400px) {
   .qm-list__night > span { display: none; }
@@ -3189,3 +3189,33 @@ html.qm-open { overflow: hidden; }
   .qm-proj__down { grid-template-columns: 1fr auto; align-items: center; text-align: left; }
   .qm-proj__down strong { grid-row: span 2; grid-column: 2; }
 }
+
+/* ---------- How many run at night ---------- */
+.qm-list__edit { display: flex; flex-wrap: wrap; }
+.qm-list__edit .qm-stepper { flex: none; }
+.qm-list__info { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+.qm-list__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 3px 10px 3px 8px;
+  border-radius: 999px;
+  background: #0a2a40;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+}
+.qm-list__tag svg { width: 13px; height: 13px; color: var(--c-amber); }
+.qm-list__tag--day { background: #fff1c7; color: #7a5200; }
+.qm-list__tag--day svg { color: #b07800; }
+
+.qm-nightqty { margin-top: var(--s-4); animation: qa-rise 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.qa .qm-picker .qm-nightqty .qm-label { margin-top: 0; }
+.qm-nightqty__hint { display: flex; gap: 8px; margin-top: 8px; font-size: var(--fs-xs); line-height: 1.5; color: var(--c-muted); }
+.qm-nightqty__hint svg { flex: none; width: 14px; height: 14px; margin-top: 2px; color: #9a6700; }
+
+.qm-explain__dayonly { display: block; margin-top: 6px; }
+.qm-explain__tip .qm-explain__dayonly svg { display: inline-block; width: 15px; height: 15px; margin: 0 3px -3px 2px; padding: 0; border-radius: 0; background: none; color: #b07800; }
+.qm-list__info .qm-list__tag { font-size: 0.75rem; color: #fff; }
+.qm-list__info .qm-list__tag--day { color: #7a5200; }

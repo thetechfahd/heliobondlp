@@ -164,6 +164,22 @@
         '</div></div></div>';
   }
   function appliance(id) { return APPLIANCES.filter(function (x) { return x.id === id; })[0]; }
+  // nightQty is how many of a line run at night; ALL means every one, whatever the quantity.
+  var ALL = 99;
+  function nightCount(row) { return row.night ? Math.min(row.nightQty, row.qty) : 0; }
+  function nightQtyValue(row) { return row.nightQty >= row.qty ? ALL : row.nightQty; }
+  function nightTag(row) {
+    var n = nightCount(row);
+    if (!n) return '<span class="qm-list__tag qm-list__tag--day">' + icon('i-sun') + 'Day only</span>';
+    var who = row.qty === 1 ? 'Runs' : (n >= row.qty ? 'All ' + row.qty : n + ' of ' + row.qty);
+    return '<span class="qm-list__tag">' + icon('i-moon') + who + ' at night · ' + row.night + (row.night === 1 ? ' hour' : ' hours') + '</span>';
+  }
+  function nightQtyOptions(qty) {
+    var out = [];
+    for (var k = 1; k < qty; k++) out.push({ value: String(k), icon: 'i-moon', label: k + ' of ' + qty });
+    out.push({ value: String(ALL), icon: 'i-moon', label: 'All ' + qty });
+    return out;
+  }
 
   /* Projection only; the installer confirms the real size during the audit.
      - Inverter: total load if everything runs at once / 0.8 power factor,
@@ -178,8 +194,10 @@
       var a = appliance(row.id);
       var w = a.watts * row.qty;
       watts += w;
-      nightWh += w * row.night;
-      items.push(row.qty + ' x ' + a.name + ' (' + a.watts + 'W, ' + row.night + 'h at night)');
+      nightWh += a.watts * nightCount(row) * row.night;
+      items.push(row.qty + ' x ' + a.name + ' (' + a.watts + 'W, ' + (row.night
+        ? (row.nightQty >= row.qty ? (row.qty > 1 ? 'all ' + row.qty : '1') : row.nightQty + ' of ' + row.qty) + ' at night for ' + row.night + 'h'
+        : 'daytime only') + ')');
     });
     var kvaNeeded = watts / 1000 / 0.8 * 1.25;
     var kva = null;
@@ -205,7 +223,7 @@
     spend: ['i-wallet', 'What do you spend on fuel and maintenance each week?', 'We use this to show how quickly solar can pay for itself.'],
     generator: ['i-bolt', 'What size is your generator?', 'It tells us your current power demand, so we can recommend the right capacity.'],
     decision: ['i-handshake', 'Are you making the decision?', "So we can prepare the right level of detail, whether that's a full proposal or a quick overview."],
-    appliances: ['i-house', 'Which appliances do you want to power?', 'Add each appliance, how many you have, and how many hours you want it to run at night. You can change or remove anything on your list.'],
+    appliances: ['i-house', 'Which appliances do you want to power?', 'Add each appliance and how many you have, then choose how many of them you need at night and for how long. You can change or remove anything on your list.'],
     kva: ['i-bolt', 'Choose your system size', 'Not sure? Your installer will confirm the best size during the free home audit.'],
     tier: ['i-badge', 'What quality of system do you want?', 'Your installer will explain each option in detail during the free audit.'],
     budget: ['i-wallet', "What's your investment range?", 'This helps your installer prepare an accurate proposal.'],
@@ -236,7 +254,7 @@
       electricitySource: '', weeklySpend: '', generatorSize: '', decisionRole: '',
       kva: '', systemTier: '', budgetRange: '', budgetInput: '',
       timeline: '', consent: '', title: '', firstName: '', lastName: '', phone: '', otp: '',
-      appliances: [], draft: { id: '', qty: 1, night: 0 }
+      appliances: [], draft: { id: '', qty: 1, nightQty: ALL, night: 0 }
     };
     current = 'zone'; busy = false; error = '';
   }
@@ -451,7 +469,7 @@
             '<p class="qm-explain__q">"My friend has the same kVA. Why is mine more expensive?"</p>' +
             '<p>kVA only tells you the size of the inverter. Two homes can both have a 5 kVA system and pay very different prices, because the price mostly depends on <strong>what each home wants to power, especially at night</strong>. A home that runs an AC and a freezer all night needs a much bigger battery, and more panels to charge it, than a home that only keeps lights, fans and a TV on.</p>' +
           '</div>' +
-          '<p class="qm-explain__tip">' + icon('i-check') + '<span><strong>Keep your cost down:</strong> only add what you truly need at night. You can still use more appliances during the day, while the sun is out.</span></p>' +
+          '<p class="qm-explain__tip">' + icon('i-check') + '<span><strong>Keep your cost down:</strong> only add what you truly need at night. You can still use more appliances during the day, while the sun is out.<span class="qm-explain__dayonly">If you won\'t use an appliance at night, choose ' + icon('i-sun') + '<strong>Day only</strong> for its hours. If you have several but only need some at night, say how many.</span></span></p>' +
           '</section>';
         var picker = '<div class="qm-picker">' +
           '<label class="qm-label" for="qm-appl">Appliance</label>' +
@@ -464,13 +482,18 @@
             '<div><label class="qm-label" for="qm-night">Hours to run at night</label>' +
               dropdown({ key: 'night', id: 'qm-night', value: d.night, options: nightOptions(), title: 'Hours to run at night' }) + '</div>' +
           '</div>' +
+          (d.qty > 1 && d.night > 0
+            ? '<div class="qm-nightqty"><label class="qm-label" for="qm-nq">How many of them will run at night?</label>' +
+              dropdown({ key: 'nq', id: 'qm-nq', value: nightQtyValue(d), options: nightQtyOptions(d.qty), title: 'How many run at night?' }) +
+              '<p class="qm-nightqty__hint">' + icon('i-moon') + '<span>Only count the ones you will switch on after dark. The rest still run in the day.</span></p></div>'
+            : '') +
           '<button type="button" class="btn btn--dark qm-add" data-action="addAppliance"' + (d.id ? '' : ' disabled') + '>+ Add to my list</button>' +
           '</div>';
         var list = f.appliances.length
           ? '<p class="qm-group">Your appliances (' + f.appliances.length + ')</p><ul class="qm-list">' + f.appliances.map(function (row, i) {
               var x = appliance(row.id);
               return '<li class="qm-list__item">' +
-                '<div class="qm-list__info"><strong>' + esc(x.name) + '</strong><span>' + x.watts + ' W each</span></div>' +
+                '<div class="qm-list__info"><strong>' + (row.qty > 1 ? row.qty + ' × ' : '') + esc(x.name) + '</strong><span>' + x.watts.toLocaleString() + ' W each</span>' + nightTag(row) + '</div>' +
                 '<button type="button" class="qm-list__remove" data-remove="' + i + '" aria-label="Remove ' + esc(x.name) + '">' + icon('i-x') + '</button>' +
                 '<div class="qm-list__edit">' +
                   '<div class="qm-stepper" role="group" aria-label="How many ' + esc(x.name) + '">' +
@@ -478,7 +501,9 @@
                     '<span aria-live="polite">' + row.qty + '</span>' +
                     '<button type="button" data-rowqty="' + i + '" data-delta="1" data-key="rp' + i + '" aria-label="One more">+</button>' +
                   '</div>' +
-                  '<div class="qm-list__night"><span aria-hidden="true">At night</span>' + dropdown({ key: 'row' + i, value: row.night, options: nightOptions(), title: x.name + ': hours at night', ariaLabel: 'Hours ' + x.name + ' should run at night', small: true }) + '</div>' +
+                  '<div class="qm-list__night"><span aria-hidden="true">At night</span>' +
+                    (row.qty > 1 && row.night > 0 ? dropdown({ key: 'rq' + i, value: nightQtyValue(row), options: nightQtyOptions(row.qty), title: x.name + ': how many at night', ariaLabel: 'How many ' + x.name + ' run at night', small: true }) : '') +
+                    dropdown({ key: 'row' + i, value: row.night, options: nightOptions(), title: x.name + ': hours at night', ariaLabel: 'Hours ' + x.name + ' should run at night', small: true }) + '</div>' +
                 '</div></li>';
             }).join('') + '</ul>'
           : '<p class="qm-empty">No appliances added yet. Start with the ones you most want to keep running, like lights, fans and your fridge.</p>';
@@ -501,8 +526,7 @@
           '<p class="qm-proj__note">' + icon('i-shield-alert') + '<span><strong>This is only a projection</strong> based on typical appliance ratings. Your installer confirms the exact size and price during the free home audit.</span></p>' +
           '</section>';
         return tip + picker + list + summary +
-          primary('Continue', 'next', !f.appliances.length) +
-          '<p class="qm-hint qm-center"><button type="button" class="qm-link" data-action="skipAppliances">Skip, I\'m not sure what I use</button></p>' + backBtn();
+          primary('Continue', 'next', !f.appliances.length) + backBtn();
       case 'tier':
         return '<div class="qm-options">' + SYSTEM_TIERS.map(function (t) {
           var on = f.systemTier === t.value;
@@ -677,15 +701,20 @@
       case 'sendOtp': sendOtp(); break;
       case 'submit': if (canNext('otp')) submit(); break;
       case 'close': close(); break;
-      case 'skipAppliances': form.appliances = []; next(); break;
       case 'addAppliance':
         var d = form.draft;
         if (!d.id) break;
         // Adding the same appliance again updates its line instead of duplicating it.
         var existing = form.appliances.filter(function (r) { return r.id === d.id && r.night === d.night; })[0];
-        if (existing) existing.qty = Math.min(50, existing.qty + d.qty);
-        else form.appliances.push({ id: d.id, qty: d.qty, night: d.night });
-        form.draft = { id: '', qty: 1, night: 0 };
+        if (existing) {
+          var bothAll = nightQtyValue(existing) === ALL && nightQtyValue(d) === ALL;
+          var atNight = nightCount(existing) + nightCount(d);
+          existing.qty = Math.min(50, existing.qty + d.qty);
+          existing.nightQty = bothAll || !d.night ? ALL : atNight;
+        } else {
+          form.appliances.push({ id: d.id, qty: d.qty, nightQty: d.nightQty, night: d.night });
+        }
+        form.draft = { id: '', qty: 1, nightQty: ALL, night: 0 };
         render();
         var sel = body.querySelector('#qm-appl');
         if (sel) sel.focus({ preventScroll: true });
@@ -729,6 +758,10 @@
       if (x) form.draft.night = x.night;   // sensible default; they can change it
     } else if (key === 'night') {
       form.draft.night = +value;
+    } else if (key === 'nq') {
+      form.draft.nightQty = +value;
+    } else if (key.indexOf('rq') === 0) {
+      form.appliances[+key.slice(2)].nightQty = +value;
     } else {
       form.appliances[+key.slice(3)].night = +value;
     }
