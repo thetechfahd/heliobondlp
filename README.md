@@ -17,6 +17,7 @@ python3 -m http.server 8000
 | `index.html` | The landing page |
 | `assets/css/styles.css` | All styles. Design tokens (colours, type, spacing, radii, container) are defined in `:root` |
 | `get-quotes.html` | The quote request page, including the appliance calculator |
+| `track.html` | Application tracking: status, recommended installer with trust score, side-by-side comparison, and choosing an installer (`assets/js/track.js`). `track.html?example=1` shows labelled sample data |
 | `thank-you.html` | Where visitors land after a successful request (`?status=saved` for requests kept on file) |
 | `assets/js/quote.js` | The quote request form |
 | `assets/js/main.js` | Mobile menu, header scroll state, video testimonial player, image-failure fallback and footer year. The page also works without it |
@@ -41,3 +42,21 @@ python3 -m http.server 8000
 - **Social links.** None are shown. There is a comment in the footer where they should go.
 - **Blog.** The six blog cards (titles, excerpts, authors, dates) are sample content and are not linked yet. Once the articles exist, wrap each title in a link to its post (see the comment in `index.html`), and use real author names.
 - **Legal copy.** Privacy Policy and Terms of Service.
+
+## Tracking API (to be built on solar.heliobond.com)
+
+The quote form now sends a `trackingId` (for example `HB-7K2Q9M`) with every request. Store it with the lead. The tracking page expects:
+
+- `GET https://solar.heliobond.com/api/track.php?id=HB-XXXXXX` returns the application as JSON:
+  `trackingId`, `submittedAt` (ISO date), `name` (first name), `state`, `system` (`kva`, `batteryKwh`, `spend`),
+  `status` (`submitted`, `matching`, `quotes_ready`, `installer_chosen`, `audit_scheduled` or `installed`),
+  `chosenInstallerId`, and `installers` (a list). Each installer has `id`, `name`, `initials`, `area`, `recommended` (true for one),
+  `coren`, `years`, `installs`, `rating`, `reviews`, `onTimeRate`, `responseHours`,
+  `scores` (`accreditation`, `trackRecord`, `reviews`, `onTime`, `responsiveness`, each 0 to 100),
+  `quote` (`price`, `inverter`, `battery`, `panels`, `warranty` with `panels`/`inverter`/`battery`/`workmanship` in years, `installDays`, `audit`),
+  and optionally `reasons` (plain-language reasons for the recommendation). The full shape is the `EXAMPLE` object in `assets/js/track.js`.
+- `POST https://solar.heliobond.com/api/choose_installer.php` with `{ "trackingId": "...", "installerId": "..." }` returns `{ "success": true }`.
+  This is where the homeowner's contact details should be released to the chosen installer only.
+
+The trust score is a weighted average of the five `scores`: accreditation 20%, track record 25%, reviews 25%, on-time delivery 20%, responsiveness 10%.
+Until these endpoints exist, entering a real ID shows a "couldn't load" message, and `track.html?example=1` demonstrates the full flow with sample data (nothing is sent).

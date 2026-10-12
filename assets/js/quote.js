@@ -255,6 +255,15 @@
     if (i > 0) go(p[i - 1], 'back');
   }
 
+  /* Tracking ID, e.g. HB-7K2Q9M (no 0/O/1/I to avoid misreading). */
+  function makeTrackingId() {
+    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', out = '';
+    var rnd = new Uint32Array(6);
+    (window.crypto || window.msCrypto).getRandomValues(rnd);
+    for (var i = 0; i < 6; i++) out += chars[rnd[i] % chars.length];
+    return 'HB-' + out;
+  }
+
   /* ---------- API ---------- */
   function post(endpoint, body) {
     return fetch(API + endpoint, {
@@ -282,6 +291,7 @@
     busy = true; error = ''; render();
     var f = form;
     var loadSummary = sizing();
+    if (!form.trackingId) form.trackingId = makeTrackingId();
     post('submit.php', {
       title: f.title, firstName: f.firstName.trim(), lastName: f.lastName.trim(),
       phone: f.phone.trim(), otp: f.otp.trim(),
@@ -300,6 +310,7 @@
       projectedSpend: loadSummary.spend,
       recommendedKva: loadSummary.kva,
       recommendedBatteryKwh: loadSummary.batteryKwh,
+      trackingId: form.trackingId,
       source: SOURCE
     }).then(function (data) {
       busy = false;
@@ -309,11 +320,12 @@
           sessionStorage.setItem('hb-quote', JSON.stringify({
             name: form.firstName.trim(), state: form.state, held: held,
             kva: loadSummary.kva, batteryKwh: loadSummary.batteryKwh, spend: loadSummary.spend,
-            appliances: form.appliances.length, timeline: form.timeline,
+            appliances: form.appliances.length, timeline: form.timeline, trackingId: form.trackingId,
             // Masked so the full number is never kept in the browser.
             phone: (function (d) { return d.length >= 7 ? '0' + d.slice(-10, -7) + ' ••• ' + d.slice(-4) : ''; })(form.phone.replace(/\D/g, ''))
           }));
         } catch (e) {}
+        try { localStorage.setItem('hb-last-tracking', form.trackingId); } catch (e) {}
         window.location.href = 'thank-you.html' + (held ? '?status=saved' : '');
         return;
       }

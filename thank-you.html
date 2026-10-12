@@ -6,11 +6,11 @@
   <title>Request received | Heliobond</title>
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#042439">
-  <link rel="icon" href="assets/img/heliobond-mark.png?v=202610112353" type="image/png">
+  <link rel="icon" href="assets/img/heliobond-mark.png?v=202610120003" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/css/styles.css?v=202610112353">
+  <link rel="stylesheet" href="assets/css/styles.css?v=202610120003">
 </head>
 <body class="quote-page">
   <svg width="0" height="0" class="visually-hidden" aria-hidden="true" focusable="false">
@@ -23,13 +23,14 @@
     <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 6h16v12H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M11 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
     <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
   </svg>
 
   <div class="qa ty2">
     <!-- What happens next (desktop) -->
     <aside class="qa-side" aria-label="What happens next">
-      <a href="index.html" class="qa-side__logo"><img src="assets/img/heliobond-logo-light.png?v=202610112353" alt="Heliobond home" width="720" height="123"></a>
+      <a href="index.html" class="qa-side__logo"><img src="assets/img/heliobond-logo-light.png?v=202610120003" alt="Heliobond home" width="720" height="123"></a>
 
       <div class="qa-side__intro">
         <p class="qa-kicker">Your solar journey</p>
@@ -50,7 +51,7 @@
 
     <main class="qa-main">
       <header class="qa-top">
-        <a href="index.html" class="qa-top__logo"><img src="assets/img/heliobond-logo.png?v=202610112353" alt="Heliobond home" width="720" height="123"></a>
+        <a href="index.html" class="qa-top__logo"><img src="assets/img/heliobond-logo.png?v=202610120003" alt="Heliobond home" width="720" height="123"></a>
         <a class="qm-close qa-exit" href="index.html"><span>Back to home</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </header>
 
@@ -63,6 +64,23 @@
           <p class="qm-eyebrow" id="ty-eyebrow">Request received</p>
           <h1 class="ty2-title" id="ty-title">You're all set.</h1>
           <p class="ty2-lead" id="ty-text">We're matching you with COREN-accredited installers in your region.</p>
+
+          <div class="ty2-track" id="ty-track" hidden>
+            <div class="ty2-track__id">
+              <span class="ty2-track__label">Your tracking ID</span>
+              <span class="ty2-track__code" id="ty-code"></span>
+            </div>
+            <button type="button" class="ty2-copy" id="ty-copy"><svg aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button>
+            <p class="ty2-track__hint">Save this ID. Use it to check your application and compare installer quotes.</p>
+          </div>
+
+          <div class="ty2-actions">
+            <a class="btn btn--accent" id="ty-track-btn" href="track.html">
+              Track my application
+              <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
+            </a>
+            <a class="btn btn--ghost-dark" href="index.html">Back to home</a>
+          </div>
 
           <div class="ty2-wa" id="ty-wa">
             <span class="ty2-wa__icon" aria-hidden="true"><svg><use href="#i-whatsapp"/></svg></span>
@@ -128,10 +146,6 @@
               <svg class="ty2-link__arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
             </a>
           </div>
-          <a class="btn btn--dark ty2-home" href="index.html">
-            Back to the website
-            <span class="btn__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
-          </a>
         </section>
       </div>
     </main>
@@ -161,6 +175,18 @@
         $('ty-title').textContent = "You're all set" + first + '.';
         if (d.state) $('ty-text').textContent = "We're matching you with COREN-accredited installers in " + d.state + '.';
         if (d.phone) $('ty-wa-text').textContent = 'Your quotes will arrive on ' + d.phone + ', usually within 24 hours.';
+      }
+
+      if (d.trackingId) {
+        $('ty-code').textContent = d.trackingId;
+        $('ty-track').hidden = false;
+        $('ty-track-btn').href = 'track.html?id=' + encodeURIComponent(d.trackingId);
+        $('ty-copy').addEventListener('click', function () {
+          var btn = this, label = btn.querySelector('span');
+          var done = function () { label.textContent = 'Copied'; btn.classList.add('is-copied'); setTimeout(function () { label.textContent = 'Copy'; btn.classList.remove('is-copied'); }, 2000); };
+          if (navigator.clipboard) navigator.clipboard.writeText(d.trackingId).then(done, function () {});
+          else { var r = document.createRange(); r.selectNodeContents($('ty-code')); var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+        });
       }
 
       if (d.kva) {
