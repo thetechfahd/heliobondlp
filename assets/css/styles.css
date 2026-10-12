@@ -2373,14 +2373,15 @@ html.qm-open { overflow: hidden; }
 .qa .qm-note,
 .qa .qm-tip,
 .qa .qm-disclaimer { width: 100%; }
-.qa .qm-options--grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* One answer per row on every question (the appliance and contact steps have their own layouts). */
+.qa .qm-options--grid,
+.qa .qm-zones { grid-template-columns: 1fr; }
 .qa .qm-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4); align-items: end; }
 .qa .qm-row .qm-label { margin-top: var(--s-5); }
 .qa .qm-picker .qm-row .qm-label { margin-top: 0 !important; }
 .qa .qm-stepper--lg { min-height: 54px; border: 1.5px solid #d9dcd8; border-radius: 12px; }
 .qa .qm-label { line-height: 1.3; }
 .qa .qm-note { margin-bottom: var(--s-5); }
-@media (max-width: 400px) { .qa .qm-options--grid { grid-template-columns: 1fr; } }
 
 /* ---------- Appliance tip ---------- */
 .qm-tip {
