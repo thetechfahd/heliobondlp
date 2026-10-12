@@ -118,11 +118,50 @@
   ];
   var NIGHT_OPTIONS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   var KVA_SIZES = [3.5, 5, 7.5, 10, 15, 20, 25, 30];
-  function nightOptions(selected) {
+  var GROUP_ICONS = { 'Lighting': 'i-bulb', 'Cooling': 'i-snow', 'Kitchen': 'i-fridge', 'Entertainment & work': 'i-tv', 'Household': 'i-house' };
+  function nightOptions() {
     return NIGHT_OPTIONS.map(function (h) {
-      return '<option value="' + h + '"' + (h === selected ? ' selected' : '') + '>' +
-        (h === 0 ? 'Not needed' : h + (h === 1 ? ' hour' : ' hours')) + '</option>';
-    }).join('');
+      return { value: String(h), icon: h ? 'i-moon' : 'i-sun', label: h === 0 ? 'Not needed at night' : h + (h === 1 ? ' hour' : ' hours'), short: h === 0 ? 'Daytime only' : '',
+        meta: h === 0 ? 'Daytime only' : (h >= 8 ? 'Needs more battery' : ''), tone: h >= 8 ? 'warn' : '' };
+    });
+  }
+  function applianceOptions() {
+    return APPLIANCES.map(function (x) {
+      return { value: x.id, group: x.group, icon: GROUP_ICONS[x.group], label: x.name, meta: x.watts + ' W' };
+    });
+  }
+
+  /* Custom dropdown: a button that opens a styled list (a bottom sheet on phones).
+     o: { key, id, value, options, placeholder, title, ariaLabel, search, small } */
+  function dropdown(o) {
+    var cur = o.options.filter(function (x) { return x.value === String(o.value); })[0];
+    var face = function (x, onButton) {
+      return '<span class="qm-dd__icon" aria-hidden="true">' + icon(x.icon) + '</span>' +
+        '<span class="qm-dd__label">' + esc(onButton && x.short ? x.short : x.label) + '</span>' +
+        (x.meta ? '<span class="qm-dd__meta' + (x.tone ? ' qm-dd__meta--' + x.tone : '') + '">' + esc(x.meta) + '</span>' : '');
+    };
+    var opt = function (x) {
+      var on = cur && cur.value === x.value;
+      return '<button type="button" role="option" class="qm-dd__opt' + (on ? ' is-selected' : '') + '" aria-selected="' + !!on + '" data-ddpick="' + o.key + '" data-value="' + esc(x.value) + '" data-text="' + esc((x.label + ' ' + (x.group || '')).toLowerCase()) + '">' +
+        face(x) + '<span class="qm-dd__tick" aria-hidden="true">' + icon('i-check') + '</span></button>';
+    };
+    var groups = [], byGroup = {};
+    o.options.forEach(function (x) { var g = x.group || ''; if (!byGroup[g]) { byGroup[g] = []; groups.push(g); } byGroup[g].push(x); });
+    var listId = 'dd-' + o.key;
+    return '<div class="qm-dd' + (o.small ? ' qm-dd--sm' : '') + '" data-dd="' + o.key + '">' +
+      '<button type="button" class="qm-dd__btn' + (cur ? '' : ' is-empty') + '"' + (o.id ? ' id="' + o.id + '"' : '') + ' aria-haspopup="listbox" aria-expanded="false" aria-controls="' + listId + '" data-ddopen="' + o.key + '"' + (o.ariaLabel ? ' aria-label="' + esc(o.ariaLabel) + '"' : '') + '>' +
+        (cur ? face(cur, true) : '<span class="qm-dd__icon" aria-hidden="true">' + icon(o.search ? 'i-search' : 'i-moon') + '</span><span class="qm-dd__label">' + esc(o.placeholder) + '</span>') +
+        '<span class="qm-dd__chev" aria-hidden="true">' + icon('i-chevron') + '</span></button>' +
+      '<div class="qm-dd__panel" hidden>' +
+        '<div class="qm-dd__head"><strong>' + esc(o.title) + '</strong><button type="button" class="qm-dd__close" data-ddclose aria-label="Close">' + icon('i-x') + '</button></div>' +
+        (o.search ? '<div class="qm-dd__search">' + icon('i-search') + '<input type="text" data-ddsearch placeholder="Search, e.g. fan, freezer, AC" autocomplete="off" aria-label="Search appliances"></div>' : '') +
+        '<div class="qm-dd__list" id="' + listId + '" role="listbox" aria-label="' + esc(o.title) + '">' +
+          groups.map(function (g) {
+            return g ? '<div class="qm-dd__sec" role="group" aria-label="' + esc(g) + '"><p class="qm-dd__group" aria-hidden="true">' + icon(GROUP_ICONS[g] || 'i-bolt') + esc(g) + '</p>' + byGroup[g].map(opt).join('') + '</div>'
+              : byGroup[g].map(opt).join('');
+          }).join('') +
+          (o.search ? '<p class="qm-dd__empty" hidden>No match. Try another word, or pick the closest appliance.</p>' : '') +
+        '</div></div></div>';
   }
   function appliance(id) { return APPLIANCES.filter(function (x) { return x.id === id; })[0]; }
 
@@ -397,8 +436,7 @@
           : '';
         return recNote + choice('kva', KVA_OPTIONS, { recommended: rec.kva }) + backBtn();
       case 'appliances':
-        var sz = sizing(), d = f.draft, groups = {}, order = [];
-        APPLIANCES.forEach(function (x) { if (!groups[x.group]) { groups[x.group] = []; order.push(x.group); } groups[x.group].push(x); });
+        var sz = sizing(), d = f.draft;
         var tip = '<section class="qm-explain" aria-labelledby="qm-explain-title">' +
           '<p class="qm-explain__kicker" id="qm-explain-title">How your solar system works</p>' +
           '<ul class="qm-parts">' +
@@ -417,19 +455,14 @@
           '</section>';
         var picker = '<div class="qm-picker">' +
           '<label class="qm-label" for="qm-appl">Appliance</label>' +
-          '<select id="qm-appl" class="qm-input qm-select" data-draft="id"><option value="">Select an appliance…</option>' +
-          order.map(function (g) {
-            return '<optgroup label="' + esc(g) + '">' + groups[g].map(function (x) {
-              return '<option value="' + x.id + '"' + (d.id === x.id ? ' selected' : '') + '>' + esc(x.name) + ' (' + x.watts + ' W)</option>';
-            }).join('') + '</optgroup>';
-          }).join('') + '</select>' +
+          dropdown({ key: 'appl', id: 'qm-appl', value: d.id, options: applianceOptions(), placeholder: 'Select an appliance', title: 'Choose an appliance', search: true }) +
           '<div class="qm-row">' +
             '<div><p class="qm-label" id="qm-qty-label">How many?</p><div class="qm-stepper qm-stepper--lg" role="group" aria-labelledby="qm-qty-label">' +
               '<button type="button" data-draftqty="-1" aria-label="One fewer"' + (d.qty > 1 ? '' : ' disabled') + '>−</button>' +
               '<span aria-live="polite">' + d.qty + '</span>' +
               '<button type="button" data-draftqty="1" aria-label="One more">+</button></div></div>' +
             '<div><label class="qm-label" for="qm-night">Hours to run at night</label>' +
-              '<select id="qm-night" class="qm-input qm-select" data-draft="night">' + nightOptions(d.night) + '</select></div>' +
+              dropdown({ key: 'night', id: 'qm-night', value: d.night, options: nightOptions(), title: 'Hours to run at night' }) + '</div>' +
           '</div>' +
           '<button type="button" class="btn btn--dark qm-add" data-action="addAppliance"' + (d.id ? '' : ' disabled') + '>+ Add to my list</button>' +
           '</div>';
@@ -445,7 +478,7 @@
                     '<span aria-live="polite">' + row.qty + '</span>' +
                     '<button type="button" data-rowqty="' + i + '" data-delta="1" data-key="rp' + i + '" aria-label="One more">+</button>' +
                   '</div>' +
-                  '<label class="qm-list__night"><span>At night</span><select class="qm-select" data-rownight="' + i + '" aria-label="Hours ' + esc(x.name) + ' should run at night">' + nightOptions(row.night) + '</select></label>' +
+                  '<div class="qm-list__night"><span aria-hidden="true">At night</span>' + dropdown({ key: 'row' + i, value: row.night, options: nightOptions(), title: x.name + ': hours at night', ariaLabel: 'Hours ' + x.name + ' should run at night', small: true }) + '</div>' +
                 '</div></li>';
             }).join('') + '</ul>'
           : '<p class="qm-empty">No appliances added yet. Start with the ones you most want to keep running, like lights, fans and your fridge.</p>';
@@ -517,6 +550,7 @@
   }
 
   function render(stepChanged) {
+    document.documentElement.classList.remove('qm-dd-lock');
     var p = path();
     var done = current === 'done';
     var i = p.indexOf(current);
@@ -598,6 +632,13 @@
       render();
       return;
     }
+    if (t.hasAttribute('data-ddopen')) {
+      var w = t.closest('.qm-dd');
+      if (w.classList.contains('is-open')) closeDd(w, false); else openDd(w);
+      return;
+    }
+    if (t.hasAttribute('data-ddclose')) { closeDd(t.closest('.qm-dd'), true); return; }
+    if (t.hasAttribute('data-ddpick')) { pickDd(t.getAttribute('data-ddpick'), t.getAttribute('data-value')); return; }
     if (t.hasAttribute('data-title')) { form.title = t.getAttribute('data-title'); render(); return; }
     if (t.hasAttribute('data-draftqty')) {
       form.draft.qty = Math.max(1, Math.min(50, form.draft.qty + +t.getAttribute('data-draftqty')));
@@ -641,29 +682,94 @@
         break;
     }
   }
+  /* ---------- Custom dropdowns ---------- */
+  var phoneMq = window.matchMedia('(max-width: 599px)');
+  function openDd(w) {
+    body.querySelectorAll('.qm-dd.is-open').forEach(function (o) { closeDd(o, false); });
+    var btn = w.querySelector('.qm-dd__btn'), panel = w.querySelector('.qm-dd__panel'), list = w.querySelector('.qm-dd__list');
+    panel.hidden = false;
+    w.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+    if (phoneMq.matches) {
+      document.documentElement.classList.add('qm-dd-lock');
+    } else {
+      // Bring the whole list into view if it opens below the fold.
+      var r = panel.getBoundingClientRect(), gap = r.bottom + 16 - window.innerHeight;
+      if (gap > 0) window.scrollBy({ top: Math.min(gap, btn.getBoundingClientRect().top - 80), behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+    var sel = w.querySelector('.qm-dd__opt.is-selected');
+    if (sel) list.scrollTop = sel.offsetTop - list.clientHeight / 2 + sel.offsetHeight / 2;
+    var search = w.querySelector('[data-ddsearch]');
+    var target = search && !phoneMq.matches ? search : (sel || w.querySelector('.qm-dd__opt'));
+    if (target) target.focus({ preventScroll: true });
+  }
+  function closeDd(w, refocus) {
+    if (!w || !w.classList.contains('is-open')) return;
+    w.classList.remove('is-open');
+    w.querySelector('.qm-dd__panel').hidden = true;
+    var btn = w.querySelector('.qm-dd__btn');
+    btn.setAttribute('aria-expanded', 'false');
+    document.documentElement.classList.remove('qm-dd-lock');
+    if (refocus) btn.focus({ preventScroll: true });
+  }
+  function pickDd(key, value) {
+    if (key === 'appl') {
+      form.draft.id = value;
+      var x = appliance(value);
+      if (x) form.draft.night = x.night;   // sensible default; they can change it
+    } else if (key === 'night') {
+      form.draft.night = +value;
+    } else {
+      form.appliances[+key.slice(3)].night = +value;
+    }
+    document.documentElement.classList.remove('qm-dd-lock');
+    render();
+    var again = body.querySelector('[data-ddopen="' + key + '"]');
+    if (again) again.focus({ preventScroll: true });
+  }
+  function filterDd(input) {
+    var w = input.closest('.qm-dd'), q = input.value.trim().toLowerCase(), any = false;
+    w.querySelectorAll('.qm-dd__opt').forEach(function (o) {
+      var hit = !q || o.getAttribute('data-text').indexOf(q) > -1;
+      o.hidden = !hit;
+      if (hit) any = true;
+    });
+    w.querySelectorAll('.qm-dd__sec').forEach(function (s) { s.hidden = !s.querySelector('.qm-dd__opt:not([hidden])'); });
+    w.querySelector('.qm-dd__empty').hidden = any;
+  }
+  function onDdKey(e) {
+    var w = e.target.closest && e.target.closest('.qm-dd');
+    if (!w) return;
+    var open = w.classList.contains('is-open');
+    if (!open) {
+      if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && e.target.matches('.qm-dd__btn')) { e.preventDefault(); openDd(w); }
+      return;
+    }
+    var opts = Array.prototype.slice.call(w.querySelectorAll('.qm-dd__opt:not([hidden])'));
+    var at = opts.indexOf(document.activeElement);
+    switch (e.key) {
+      case 'Escape': e.preventDefault(); e.stopPropagation(); closeDd(w, true); break;
+      case 'Tab': e.preventDefault(); closeDd(w, true); break;
+      case 'ArrowDown': e.preventDefault(); if (opts.length) opts[Math.min(at + 1, opts.length - 1)].focus(); break;
+      case 'ArrowUp':
+        e.preventDefault();
+        if (at <= 0) { var s = w.querySelector('[data-ddsearch]'); if (s) s.focus(); else if (opts[0]) opts[0].focus(); }
+        else opts[at - 1].focus();
+        break;
+      case 'Home': if (at > -1) { e.preventDefault(); opts[0].focus(); } break;
+      case 'End': if (at > -1) { e.preventDefault(); opts[opts.length - 1].focus(); } break;
+      case 'Enter':
+        if (e.target.hasAttribute('data-ddsearch')) { e.preventDefault(); e.stopPropagation(); if (opts[0]) opts[0].click(); }
+        break;
+    }
+  }
+  function onDdOutside(e) {
+    var w = body && body.querySelector('.qm-dd.is-open');
+    if (w && !(w.contains(e.target) && e.target.closest('.qm-dd__panel, .qm-dd__btn'))) closeDd(w, false);
+  }
+
   function onInput(e) {
-    if (e.target.hasAttribute('data-rownight')) {
-      var idx = +e.target.getAttribute('data-rownight');
-      form.appliances[idx].night = +e.target.value;
-      render();
-      var sel2 = body.querySelector('[data-rownight="' + idx + '"]');
-      if (sel2) sel2.focus({ preventScroll: true });
-      return;
-    }
-    if (e.target.hasAttribute('data-draft')) {
-      var key = e.target.getAttribute('data-draft');
-      if (key === 'id') {
-        form.draft.id = e.target.value;
-        var x = appliance(e.target.value);
-        if (x) form.draft.night = x.night;   // sensible default; they can change it
-        render();
-        var again = body.querySelector('#qm-appl');
-        if (again) again.focus({ preventScroll: true });
-      } else {
-        form.draft.night = +e.target.value;
-      }
-      return;
-    }
+    if (e.target.hasAttribute('data-ddsearch')) { filterDd(e.target); return; }
     var field = e.target.getAttribute('data-field');
     if (!field) return;
     var v = e.target.value;
@@ -721,6 +827,8 @@
     progressText = modal.querySelector('.qm-progress__text');
     reset();
     pageMode = modal.getAttribute('data-mode') === 'page';
+    body.addEventListener('keydown', onDdKey);
+    document.addEventListener('click', onDdOutside, true);
 
     if (pageMode) {
       modal.addEventListener('click', function (e) {
