@@ -399,13 +399,22 @@
       case 'appliances':
         var sz = sizing(), d = f.draft, groups = {}, order = [];
         APPLIANCES.forEach(function (x) { if (!groups[x.group]) { groups[x.group] = []; order.push(x.group); } groups[x.group].push(x); });
-        var tip = '<div class="qm-tip">' +
-          '<span class="qm-tip__icon" aria-hidden="true">' + icon('i-wallet') + '</span>' +
-          '<div><p class="qm-tip__title">Only add what you really need at night</p>' +
-          '<p>During the day, your solar panels power your home and charge your battery. At night, the battery takes over. ' +
-          'So the more appliances you run at night, and the longer you run them, the <strong>bigger the battery</strong> you need, ' +
-          'and the <strong>more panels</strong> it takes to charge it. Both add to your cost. Keep night use to the essentials to keep your spending low.</p></div>' +
-          '</div>';
+        var tip = '<section class="qm-explain" aria-labelledby="qm-explain-title">' +
+          '<p class="qm-explain__kicker" id="qm-explain-title">How your solar system works</p>' +
+          '<ul class="qm-parts">' +
+            '<li><span class="qm-parts__icon" aria-hidden="true">' + icon('i-panel') + '</span><div><strong>Solar panels</strong><span>Turn sunlight into power and <b>charge your battery</b> during the day.</span></div></li>' +
+            '<li><span class="qm-parts__icon" aria-hidden="true">' + icon('i-battery') + '</span><div><strong>Battery</strong><span><b>Stores power</b> so you can keep using it after the sun goes down.</span></div></li>' +
+            '<li><span class="qm-parts__icon" aria-hidden="true">' + icon('i-bolt') + '</span><div><strong>Inverter (kVA)</strong><span>Decides <b>how many things you can switch on at the same time</b>. It is the most your system can carry at once.</span></div></li>' +
+          '</ul>' +
+          '<div class="qm-chain" aria-label="More night use means a bigger battery, which needs more panels, which costs more">' +
+            '<span>More use at night</span>' + icon('i-arrow') + '<span>Bigger battery</span>' + icon('i-arrow') + '<span>More panels to charge it</span>' + icon('i-arrow') + '<span class="qm-chain__end">Higher cost</span>' +
+          '</div>' +
+          '<div class="qm-explain__why">' +
+            '<p class="qm-explain__q">"My friend has the same kVA. Why is mine more expensive?"</p>' +
+            '<p>kVA only tells you the size of the inverter. Two homes can both have a 5 kVA system and pay very different prices, because the price mostly depends on <strong>what each home wants to power, especially at night</strong>. A home that runs an AC and a freezer all night needs a much bigger battery, and more panels to charge it, than a home that only keeps lights, fans and a TV on.</p>' +
+          '</div>' +
+          '<p class="qm-explain__tip">' + icon('i-check') + '<span><strong>Keep your cost down:</strong> only add what you truly need at night. You can still use more appliances during the day, while the sun is out.</span></p>' +
+          '</section>';
         var picker = '<div class="qm-picker">' +
           '<label class="qm-label" for="qm-appl">Appliance</label>' +
           '<select id="qm-appl" class="qm-input qm-select" data-draft="id"><option value="">Select an appliance…</option>' +

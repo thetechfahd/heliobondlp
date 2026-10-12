@@ -2840,3 +2840,42 @@ html.qm-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .tr-pulse span { animation: none; }
 }
+
+/* ---------- Appliance step: how solar works explainer ---------- */
+.qm-explain {
+  margin-bottom: var(--s-6);
+  padding: clamp(1rem, 0.8rem + 1vw, 1.5rem);
+  border: 1px solid #f1dfae;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #fffaf0, #fffdf8);
+}
+.qm-explain__kicker { margin-bottom: var(--s-3); font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #9a6700; }
+.qm-parts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-2); }
+.qm-parts li { display: grid; gap: var(--s-2); align-content: start; padding: var(--s-3); border-radius: 12px; background: #fff; border: 1px solid #f3e6bf; }
+.qm-parts__icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: var(--c-amber); color: var(--c-navy); }
+.qm-parts__icon svg { width: 18px; height: 18px; }
+.qm-parts strong { display: block; font-size: var(--fs-sm); font-weight: 700; color: var(--c-ink); }
+.qm-parts span { display: block; margin-top: 2px; font-size: var(--fs-xs); line-height: 1.5; color: var(--c-ink-2); }
+.qm-parts b { font-weight: 600; color: var(--c-ink); }
+
+.qm-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: var(--s-4); }
+.qm-chain span { padding: 5px 10px; border-radius: var(--r-pill); background: #fff; border: 1px solid #ecd9a6; font-size: var(--fs-xs); font-weight: 600; color: var(--c-ink-2); white-space: nowrap; }
+.qm-chain .qm-chain__end { background: var(--c-navy); border-color: var(--c-navy); color: var(--c-amber); }
+.qm-chain svg { width: 14px; height: 14px; color: #c9a646; }
+
+.qm-explain__why { margin-top: var(--s-4); padding: var(--s-4); border-radius: 12px; background: #fff; border-left: 3px solid var(--c-amber); }
+.qm-explain__q { margin-bottom: 4px; font-family: var(--f-display); font-size: var(--fs-base); font-weight: 700; color: var(--c-ink); }
+.qm-explain__why p:last-child { font-size: var(--fs-sm); line-height: 1.6; color: var(--c-ink-2); }
+.qm-explain__why strong { color: var(--c-ink); }
+
+.qm-explain__tip { display: flex; gap: var(--s-2); margin-top: var(--s-4); font-size: var(--fs-sm); line-height: 1.55; color: #1d4f33; }
+.qm-explain__tip svg { flex: none; width: 20px; height: 20px; margin-top: 1px; padding: 4px; border-radius: 50%; background: #1f9254; color: #fff; }
+.qm-explain__tip strong { color: #123d27; }
+
+.qa .qm-step.is-entering .qm-explain { animation: qa-rise 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s both; }
+
+@media (max-width: 640px) {
+  .qm-parts { grid-template-columns: 1fr; }
+  .qm-parts li { grid-template-columns: 36px minmax(0, 1fr); align-items: start; gap: var(--s-3); }
+  .qm-chain span { white-space: normal; }
+}
