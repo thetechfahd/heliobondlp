@@ -90,6 +90,11 @@
   function downOf(str) { var m = millions(str); return m.length ? naira(m[0] * DOWN_SHARE) : ''; }
   var TIMELINE_OPTIONS = ['Immediately', 'In 14 days', 'In 1 month', 'In 2 months', 'In 3 months', 'Not sure yet'];
   var TITLES = ['Mr', 'Mrs', 'Miss', 'Dr', 'Prof'];
+  var GROWTH_OPTIONS = [
+    { value: 'none', label: 'No, this is what I need' },
+    { value: 'unsure', label: 'Maybe, not sure yet' },
+    { value: 'yes', label: 'Yes, such as an AC, more rooms or a bigger fridge' }
+  ];
   var OWNERSHIP_OPTIONS = [
     { value: 'Owner', label: 'I own it' },
     { value: 'Family house', label: 'It belongs to my family' },
@@ -106,30 +111,32 @@
      Typical ratings for Nigerian homes. "night" is the default number of
      hours each one runs at night (or without sun or grid power). */
   // aliases: the everyday words people type, so "fridge", "AC" or "pumping machine" all find a match.
+  // say: singular|plural for generated sentences. motor: draws a start-up surge.
+  // essential: worth keeping on through the night (used for the "essentials only" option).
   var APPLIANCES = [
-    { id: 'bulb', group: 'Lighting', name: 'LED bulb', watts: 10, night: 6, aliases: ['light', 'lamp', 'energy saver', 'bulbs'] },
-    { id: 'security', group: 'Lighting', name: 'Security / outdoor light', watts: 30, night: 12, aliases: ['security light', 'flood light', 'floodlight', 'outdoor light', 'street light'] },
-    { id: 'ceilingfan', group: 'Cooling', name: 'Ceiling fan', watts: 75, night: 8, aliases: ['fan'] },
-    { id: 'standfan', group: 'Cooling', name: 'Standing / table fan', watts: 60, night: 8, aliases: ['standing fan', 'table fan', 'rechargeable fan', 'fan'] },
-    { id: 'ac1', group: 'Cooling', name: 'Air conditioner (1 HP)', watts: 900, night: 6, aliases: ['ac', 'a/c', 'aircon', 'air con', 'air conditioning', 'split unit', '1hp'] },
-    { id: 'ac15', group: 'Cooling', name: 'Air conditioner (1.5 HP)', watts: 1300, night: 6, aliases: ['ac', 'a/c', 'aircon', 'air con', 'air conditioning', 'split unit', '1.5hp'] },
-    { id: 'ac2', group: 'Cooling', name: 'Air conditioner (2 HP)', watts: 1800, night: 6, aliases: ['ac', 'a/c', 'aircon', 'air con', 'air conditioning', 'split unit', '2hp'] },
-    { id: 'fridge', group: 'Kitchen', name: 'Refrigerator', watts: 150, night: 12, aliases: ['fridge', 'fridge freezer', 'refridgerator'] },
-    { id: 'freezer', group: 'Kitchen', name: 'Chest / deep freezer', watts: 200, night: 12, aliases: ['deep freezer', 'chest freezer', 'freezer', 'fridge'] },
-    { id: 'microwave', group: 'Kitchen', name: 'Microwave', watts: 1200, night: 0, aliases: ['micro wave', 'oven'] },
-    { id: 'kettle', group: 'Kitchen', name: 'Electric kettle', watts: 1500, night: 0, aliases: ['kettle', 'boiling ring', 'water heater'] },
-    { id: 'blender', group: 'Kitchen', name: 'Blender', watts: 400, night: 0, aliases: ['grinder', 'mixer', 'juicer'] },
-    { id: 'tv', group: 'Entertainment & work', name: 'LED TV', watts: 100, night: 4, aliases: ['television', 'telly', 'smart tv', 'tv'] },
-    { id: 'decoder', group: 'Entertainment & work', name: 'Decoder (DStv / GOtv)', watts: 25, night: 4, aliases: ['dstv', 'gotv', 'startimes', 'cable', 'cable tv'] },
-    { id: 'sound', group: 'Entertainment & work', name: 'Sound system', watts: 100, night: 2, aliases: ['home theatre', 'home theater', 'speaker', 'speakers', 'woofer', 'sub woofer'] },
-    { id: 'router', group: 'Entertainment & work', name: 'Wi-Fi router', watts: 15, night: 12, aliases: ['wifi', 'wi-fi', 'internet', 'mifi', 'modem'] },
-    { id: 'laptop', group: 'Entertainment & work', name: 'Laptop', watts: 65, night: 3, aliases: ['computer', 'pc', 'macbook', 'notebook'] },
-    { id: 'desktop', group: 'Entertainment & work', name: 'Desktop computer', watts: 200, night: 3, aliases: ['computer', 'pc', 'monitor'] },
-    { id: 'charger', group: 'Entertainment & work', name: 'Phone charger', watts: 10, night: 2, aliases: ['phone', 'charging'] },
-    { id: 'iron', group: 'Household', name: 'Pressing iron', watts: 1000, night: 0, aliases: ['iron', 'pressing'] },
-    { id: 'washer', group: 'Household', name: 'Washing machine', watts: 500, night: 0, aliases: ['washer', 'washing'] },
-    { id: 'pump', group: 'Household', name: 'Water pump (1 HP)', watts: 750, night: 0, aliases: ['pumping machine', 'pump', 'borehole', 'water pump', 'pumping'] },
-    { id: 'cctv', group: 'Household', name: 'CCTV / security system', watts: 40, night: 12, aliases: ['camera', 'security camera', 'cctv'] }
+    { id: 'bulb', group: 'Lighting', name: 'LED bulb', watts: 10, night: 6, say: 'bulb|bulbs', essential: true, aliases: ['light', 'lamp', 'energy saver', 'bulbs'] },
+    { id: 'security', group: 'Lighting', name: 'Security / outdoor light', watts: 30, night: 12, say: 'security light|security lights', essential: true, aliases: ['security light', 'flood light', 'floodlight', 'outdoor light', 'street light'] },
+    { id: 'ceilingfan', group: 'Cooling', name: 'Ceiling fan', watts: 75, night: 8, say: 'ceiling fan|ceiling fans', essential: true, aliases: ['fan'] },
+    { id: 'standfan', group: 'Cooling', name: 'Standing / table fan', watts: 60, night: 8, say: 'standing fan|standing fans', essential: true, aliases: ['standing fan', 'table fan', 'rechargeable fan', 'fan'] },
+    { id: 'ac1', group: 'Cooling', name: 'Air conditioner (1 HP)', watts: 900, night: 6, say: 'air conditioner|air conditioners', motor: true, aliases: ['ac', 'a/c', 'aircon', 'air con', 'air conditioning', 'split unit', '1hp'] },
+    { id: 'ac15', group: 'Cooling', name: 'Air conditioner (1.5 HP)', watts: 1300, night: 6, say: 'air conditioner|air conditioners', motor: true, aliases: ['ac', 'a/c', 'aircon', 'air con', 'air conditioning', 'split unit', '1.5hp'] },
+    { id: 'ac2', group: 'Cooling', name: 'Air conditioner (2 HP)', watts: 1800, night: 6, say: 'air conditioner|air conditioners', motor: true, aliases: ['ac', 'a/c', 'aircon', 'air con', 'air conditioning', 'split unit', '2hp'] },
+    { id: 'fridge', group: 'Kitchen', name: 'Refrigerator', watts: 150, night: 12, say: 'fridge|fridges', motor: true, essential: true, aliases: ['fridge', 'fridge freezer', 'refridgerator'] },
+    { id: 'freezer', group: 'Kitchen', name: 'Chest / deep freezer', watts: 200, night: 12, say: 'freezer|freezers', motor: true, essential: true, aliases: ['deep freezer', 'chest freezer', 'freezer', 'fridge'] },
+    { id: 'microwave', group: 'Kitchen', name: 'Microwave', watts: 1200, night: 0, say: 'microwave|microwaves', aliases: ['micro wave', 'oven'] },
+    { id: 'kettle', group: 'Kitchen', name: 'Electric kettle', watts: 1500, night: 0, say: 'kettle|kettles', aliases: ['kettle', 'boiling ring', 'water heater'] },
+    { id: 'blender', group: 'Kitchen', name: 'Blender', watts: 400, night: 0, say: 'blender|blenders', aliases: ['grinder', 'mixer', 'juicer'] },
+    { id: 'tv', group: 'Entertainment & work', name: 'LED TV', watts: 100, night: 4, say: 'TV|TVs', essential: true, aliases: ['television', 'telly', 'smart tv', 'tv'] },
+    { id: 'decoder', group: 'Entertainment & work', name: 'Decoder (DStv / GOtv)', watts: 25, night: 4, say: 'decoder|decoders', essential: true, aliases: ['dstv', 'gotv', 'startimes', 'cable', 'cable tv'] },
+    { id: 'sound', group: 'Entertainment & work', name: 'Sound system', watts: 100, night: 2, say: 'sound system|sound systems', aliases: ['home theatre', 'home theater', 'speaker', 'speakers', 'woofer', 'sub woofer'] },
+    { id: 'router', group: 'Entertainment & work', name: 'Wi-Fi router', watts: 15, night: 12, say: 'Wi-Fi router|Wi-Fi routers', essential: true, aliases: ['wifi', 'wi-fi', 'internet', 'mifi', 'modem'] },
+    { id: 'laptop', group: 'Entertainment & work', name: 'Laptop', watts: 65, night: 3, say: 'laptop|laptops', essential: true, aliases: ['computer', 'pc', 'macbook', 'notebook'] },
+    { id: 'desktop', group: 'Entertainment & work', name: 'Desktop computer', watts: 200, night: 3, say: 'desktop computer|desktop computers', aliases: ['computer', 'pc', 'monitor'] },
+    { id: 'charger', group: 'Entertainment & work', name: 'Phone charger', watts: 10, night: 2, say: 'phone charger|phone chargers', essential: true, aliases: ['phone', 'charging'] },
+    { id: 'iron', group: 'Household', name: 'Pressing iron', watts: 1000, night: 0, say: 'pressing iron|pressing irons', aliases: ['iron', 'pressing'] },
+    { id: 'washer', group: 'Household', name: 'Washing machine', watts: 500, night: 0, say: 'washing machine|washing machines', motor: true, aliases: ['washer', 'washing'] },
+    { id: 'pump', group: 'Household', name: 'Water pump (1 HP)', watts: 750, night: 0, say: 'water pump|water pumps', motor: true, aliases: ['pumping machine', 'pump', 'borehole', 'water pump', 'pumping'] },
+    { id: 'cctv', group: 'Household', name: 'CCTV / security system', watts: 40, night: 12, say: 'CCTV system|CCTV systems', essential: true, aliases: ['camera', 'security camera', 'cctv'] }
   ];
   var NIGHT_OPTIONS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   var KVA_SIZES = [3.5, 5, 7.5, 10, 15, 20, 25, 30];
@@ -204,12 +211,14 @@
      - Battery: energy used at night / 80% usable depth of discharge /
        90% inverter efficiency, rounded up to the next 2.5 kWh.
      - Spend: the "From" price for that inverter size (KVA_OPTIONS). */
-  function sizing() {
-    var watts = 0, nightWh = 0, items = [];
-    form.appliances.forEach(function (row) {
+  // rows defaults to the visitor's list; the all-in-one checks pass other lists through the same maths.
+  function sizing(rows) {
+    var watts = 0, nightWh = 0, motorW = 0, items = [];
+    (rows || form.appliances).forEach(function (row) {
       var a = appliance(row.id);
       var w = a.watts * row.qty;
       watts += w;
+      if (a.motor) motorW = Math.max(motorW, a.watts);
       nightWh += a.watts * nightCount(row) * row.night;
       items.push(row.qty + ' x ' + a.name + ' (' + a.watts + 'W, ' + (row.night
         ? (row.nightQty >= row.qty ? (row.qty > 1 ? 'all ' + row.qty : '1') : row.nightQty + ' of ' + row.qty) + ' at night for ' + row.night + 'h'
@@ -224,9 +233,12 @@
     return {
       watts: watts, nightKwh: Math.round(nightWh / 100) / 10, kva: kvaStr,
       batteryKwh: batteryRaw ? Math.ceil(batteryRaw / 2.5) * 2.5 : 0,
-      spend: price, items: items
+      spend: price, items: items,
+      // Unrounded figures for the all-in-one fit checks (assets/js/allinone.js).
+      loadKva: watts / 1000 / 0.8, nightNeedKwh: nightWh / 1000 / 0.9, motorW: motorW
     };
   }
+  window.HB_LOAD = { appliances: APPLIANCES, appliance: appliance, sizing: sizing, nightCount: nightCount };
   function fmtKva(v) { return v === '30+' ? 'Over 30 kVA' : v + ' kVA'; }
 
   var META = {
@@ -239,6 +251,7 @@
     spend: ['i-wallet', 'What do you spend on fuel and maintenance each week?', 'We use this to show how quickly solar can pay for itself.'],
     generator: ['i-bolt', 'What size is your generator?', 'It tells us your current power demand, so we can recommend the right capacity.'],
     decision: ['i-handshake', 'Are you making the decision?', "So we can prepare the right level of detail, whether that's a full proposal or a quick overview."],
+    growth: ['i-bolt', 'Do you expect to power more in the next two or three years?', 'For example an AC, more rooms or a bigger fridge. This helps us show you the kind of system that suits you.'],
     appliances: ['i-house', 'Which appliances do you want to power?', 'Add each appliance and how many you have, then choose how many of them you need at night and for how long. You can change or remove anything on your list.'],
     kva: ['i-bolt', 'Choose your system size', 'Not sure? Your installer confirms the right size at your free home audit, a no-obligation visit to check your roof and what you want to power.'],
     tier: ['i-badge', 'What quality of system do you want?', 'Your installer explains each option in detail at your free home audit.'],
@@ -255,7 +268,7 @@
      question count never changes while the visitor is inside it. */
   var STAGES = [
     { name: 'Your home', steps: ['zone', 'state', 'property', 'ownership', 'shading', 'power'] },
-    { name: 'Your energy', steps: ['spend', 'generator', 'appliances', 'kva'] },
+    { name: 'Your energy', steps: ['spend', 'generator', 'appliances', 'growth', 'kva'] },
     { name: 'Your system', steps: ['decision', 'tier', 'budget', 'timeline'] },
     { name: 'Your details', steps: ['consent', 'contact', 'otp'] }
   ];
@@ -272,7 +285,9 @@
       electricitySource: '', weeklySpend: '', generatorSize: '', decisionRole: '',
       kva: '', systemTier: '', budgetRange: '', budgetInput: '',
       timeline: '', consent: '', title: '', firstName: '', lastName: '', phone: '', otp: '',
-      appliances: [], draft: { id: '', qty: 1, nightQty: ALL, night: 0 }
+      appliances: [], draft: { id: '', qty: 1, nightQty: ALL, night: 0 },
+      // All-in-one track (assets/js/allinone.js). track: custom | allinone | essentials.
+      growth: '', track: '', shortlist: [], mismatch: null
     };
     current = 'zone'; busy = false; error = '';
   }
@@ -290,13 +305,19 @@
   function budgetOut() { return form.budgetRange === NOT_READY || form.budgetRange === ABOVE_PLAN; }
   function disqualified() { return kvaOut(); }
   function usesGenerator() { return /generator/i.test(form.electricitySource); }
+  function customTrack() { return form.track !== 'allinone' && form.track !== 'essentials'; }
+  // The catalogue helpers, only when units are on offer. Without them the quiz runs as before.
+  function allInOne() { var a = window.HBAllInOne; return a && a.active() ? a : null; }
+  // Set from units.html links (?unit= or ?brand=); never changes which questions are asked.
+  var entryUnit = '', entryBrand = '';
 
   // The ordered list of steps for the answers given so far.
   function path() {
     var p = ['zone', 'state', 'property', 'ownership', 'shading', 'power', 'spend'];
     if (usesGenerator()) p.push('generator');
-    p.push('appliances', 'kva', 'decision');
-    if (!kvaOut()) p.push('tier', 'budget');
+    p.push('appliances', 'growth', 'kva', 'decision');
+    // Quality tiers and price bands describe custom builds, so all-in-one requests skip them.
+    if (!kvaOut() && customTrack()) p.push('tier', 'budget');
     p.push('timeline', 'consent', 'contact', 'otp');
     return p;
   }
@@ -376,7 +397,7 @@
       ownership: f.ownership, roofShade: f.roofShade,
       electricitySource: f.electricitySource, weeklySpend: f.weeklySpend,
       generatorSize: f.generatorSize, decisionRole: f.decisionRole,
-      kva: f.kva, systemTier: f.systemTier,
+      kva: f.kva || (customTrack() ? '' : loadSummary.kva), systemTier: f.systemTier,
       budgetRange: f.budgetRange,
       instalmentInterest: budgetOut(),
       upfrontBudget: budgetOut() ? f.budgetInput.replace(/[^\d]/g, '') : '',
@@ -389,6 +410,12 @@
       recommendedKva: loadSummary.kva,
       recommendedBatteryKwh: loadSummary.batteryKwh,
       trackingId: form.trackingId,
+      // All-in-one track: tells installers whether this is a named sealed unit or a custom design.
+      track: f.track || 'custom',
+      shortlisted_units: customTrack() ? [] : f.shortlist.slice(),
+      mismatch: f.track === 'allinone' ? f.mismatch : null,
+      growth_expectation: f.growth || null,
+      entry_intent: entryUnit || entryBrand || null,
       source: SOURCE
     }).then(function (data) {
       busy = false;
@@ -399,6 +426,11 @@
             name: form.firstName.trim(), state: form.state, held: held,
             kva: loadSummary.kva, batteryKwh: loadSummary.batteryKwh, spend: loadSummary.spend,
             appliances: form.appliances.length, timeline: form.timeline, trackingId: form.trackingId,
+            track: form.track || 'custom',
+            units: customTrack() || !allInOne() ? [] : form.shortlist.map(function (id) {
+              var aio = allInOne(), u = aio.byId(id);
+              return u ? { name: aio.title(u), spec: aio.specLine(u), price: aio.priceLine(u) } : null;
+            }).filter(Boolean),
             // Masked so the full number is never kept in the browser.
             phone: (function (d) { return d.length >= 7 ? '0' + d.slice(-10, -7) + ' ••• ' + d.slice(-4) : ''; })(form.phone.replace(/\D/g, ''))
           }));
@@ -448,6 +480,134 @@
   function backBtn(label) { return '<button type="button" class="qm-back" data-action="back"><svg aria-hidden="true"><use href="#i-arrow"/></svg>' + esc(label || 'Back') + '</button>'; }
   function errorBox() { return error ? '<p class="qm-error" role="alert">' + esc(error) + '</p>' : ''; }
 
+  /* ---------- All-in-one track ---------- */
+  var fitsOpen = false;
+  function fitsCounter() {
+    var aio = allInOne();
+    if (!aio) return '';
+    var list = aio.eligible(form.appliances), n = list.length;
+    var text = n ? '<strong>' + n + '</strong> all-in-one ' + (n === 1 ? 'unit fits' : 'units fit') + ' your list' + (form.appliances.length ? '' : ' so far')
+      : '<strong>No</strong> all-in-one unit fits your whole list';
+    return '<div class="qm-fits' + (n ? '' : ' is-none') + '" aria-live="polite">' +
+      '<button type="button" class="qm-fits__btn" data-action="toggleFits" aria-expanded="' + (fitsOpen && !!n) + '"' + (n ? '' : ' disabled') + '>' +
+        '<span class="qm-fits__icon" aria-hidden="true">' + icon('i-battery') + '</span>' +
+        '<span class="qm-fits__text">' + text + '<small>' + (n ? 'Sealed units with the battery built in. Tap to see which.' : "You'll see your options after this step.") + '</small></span>' +
+        (n ? '<span class="qm-fits__chev" aria-hidden="true">' + icon('i-chevron') + '</span>' : '') +
+      '</button>' +
+      (fitsOpen && n ? '<ul class="qm-fits__list">' + list.map(function (u) {
+        return '<li><strong>' + esc(aio.title(u)) + '</strong><span>' + esc(aio.specLine(u)) + '</span></li>';
+      }).join('') + '</ul>' : '') +
+      '</div>';
+  }
+  function fallbackPower() {
+    var src = form.electricitySource;
+    if (/PHCN/.test(src) && /Generator/.test(src)) return 'PHCN or the generator';
+    if (/Generator/.test(src)) return 'the generator';
+    if (/PHCN/.test(src)) return 'PHCN';
+    return 'your current power';
+  }
+  // Keep track choices valid if the visitor went back and changed their list.
+  function syncTrack(aio, list) {
+    var ids = list.map(function (u) { return u.id; });
+    if (form.track === 'allinone' && !form.mismatch) form.shortlist = form.shortlist.filter(function (id) { return ids.indexOf(id) > -1; });
+    if (form.track === 'allinone' && form.mismatch && ids.length) { form.mismatch = null; form.shortlist = []; }
+    if (form.track === 'essentials') {
+      var ess = aio.essentialsOption(form.appliances);
+      if (ids.length || !ess || form.shortlist[0] !== ess.unit.id) { form.track = ''; form.shortlist = []; }
+    }
+  }
+  function unitBits(aio, u) {
+    var price = aio.priceLine(u), down = aio.downLine(u, DOWN_SHARE);
+    return { price: price ? esc(price) : 'Installers quote the price', down: down ? esc(down) : '' };
+  }
+  function entryNote(aio, list) {
+    if (!entryUnit) return '';
+    var u = aio.byId(entryUnit);
+    if (!u || list.some(function (x) { return x.id === u.id; })) return '';
+    if (u.status !== 'active') return '<p class="qm-note">' + icon('i-shield-alert') + '<span>The <strong>' + esc(aio.title(u)) + '</strong> you looked at is not available right now. Here is what suits your home.</span></p>';
+    var cov = aio.coverage(u, form.appliances);
+    return '<p class="qm-note qm-note--intent">' + icon('i-battery') + '<span>You looked at the <strong>' + esc(aio.title(u)) + '</strong>. It can\'t carry your whole list: ' + esc(aio.reasonText(u, form.appliances)) + '.' +
+      (cov.kept.length ? ' Without your ' + esc(aio.names(cov.dropped)) + ', it would fit.' : '') + '</span></p>';
+  }
+  function tracksHtml(aio, rec, ladder) {
+    var rows = form.appliances, list = aio.eligible(rows);
+    syncTrack(aio, list);
+    var pick = form.growth === 'none' ? 'aio' : form.growth === 'yes' ? 'custom' : '';
+    var badge = '<span class="qm-badge qm-badge--green">Recommended</span>';
+    if (!list.length) return entryNote(aio, list) + forkHtml(aio, rec, ladder);
+
+    var max = aio.config().maxShortlist || 3;
+    var best = list.filter(function (u) { return u.id === entryUnit; })[0] || list[0], bb = unitBits(aio, best);
+    var custom = KVA_OPTIONS.filter(function (o) { return o.value === rec.kva; })[0];
+    var compare = '<div class="qm-compare">' +
+      '<div class="qm-compare__col' + (pick === 'aio' ? ' is-picked' : '') + '"><p class="qm-compare__kicker">All-in-one' + (pick === 'aio' ? badge : '') + '</p>' +
+        '<strong>' + esc(aio.title(best)) + '</strong><span>' + esc(aio.specLine(best)) + '</span>' +
+        '<span class="qm-compare__price">' + bb.price + '</span>' + (bb.down ? '<span class="qm-compare__down">' + bb.down + '</span>' : '') +
+        '<ul><li>One sealed unit, installed in a day</li><li>Fixed capacity: what you buy is what you have</li></ul></div>' +
+      '<div class="qm-compare__col' + (pick === 'custom' ? ' is-picked' : '') + '"><p class="qm-compare__kicker">Custom build' + (pick === 'custom' ? badge : '') + '</p>' +
+        '<strong>' + esc(fmtKva(rec.kva)) + (rec.batteryKwh ? ', ' + esc(rec.batteryKwh) + ' kWh battery' : '') + '</strong><span>Sized to your list</span>' +
+        '<span class="qm-compare__price">' + esc(custom ? custom.price : rec.spend || 'Installers quote the price') + '</span>' +
+        (custom ? '<span class="qm-compare__down">or ' + esc(downOf(custom.price)) + ' down + monthly instalments</span>' : '') +
+        '<ul><li>Separate inverter, batteries and panels</li><li>Can be expanded later</li></ul></div>' +
+      '</div>';
+    var neutral = pick ? '' : '<p class="qm-tradeoff">' + icon('i-shield-alert') + '<span><strong>Not sure yet?</strong> An all-in-one costs less today, but you can\'t add to it later. If you might add an AC or more rooms, a custom build can grow with you.</span></p>';
+
+    var full = form.shortlist.length >= max;
+    var units = '<section class="qm-track" aria-labelledby="qm-aio-title">' +
+      '<h3 class="qm-group" id="qm-aio-title">All-in-one units that fit your list (' + list.length + ')</h3>' +
+      '<p class="qm-hint">Pick up to ' + max + ' and installers quote on each, side by side.</p>' +
+      '<div class="qm-options">' + list.map(function (u) {
+        var on = form.track === 'allinone' && form.shortlist.indexOf(u.id) > -1, b = unitBits(aio, u), blurb = aio.blurb(u);
+        var off = !on && full;
+        return '<button type="button" class="qm-option qm-unit' + (on ? ' is-selected' : '') + (u.id === entryUnit ? ' is-intent' : '') + '" aria-pressed="' + on + '" data-unit="' + esc(u.id) + '"' + (off ? ' aria-disabled="true"' : '') + '>' +
+          '<span class="qm-radio qm-radio--box" aria-hidden="true"></span>' +
+          '<span class="qm-option__label">' + esc(aio.title(u)) + (u.id === entryUnit ? ' <span class="qm-badge qm-badge--blue">You looked at this</span>' : '') + '</span>' +
+          '<span class="qm-option__meta">' + esc(aio.specLine(u)) + '</span>' +
+          (blurb ? '<span class="qm-option__sub">' + esc(blurb) + '</span>' : '') +
+          '<span class="qm-option__sub qm-unit__price"><strong>' + b.price + '</strong>' + (b.down ? ' · ' + b.down : '') + '</span>' +
+          '</button>';
+      }).join('') + '</div>' +
+      (full ? '<p class="qm-hint">You\'ve picked ' + max + '. Untick one to choose another.</p>' : '') +
+      '<button type="button" class="btn btn--dark qm-track__go" data-action="aioContinue"' + (form.track === 'allinone' && form.shortlist.length ? '' : ' disabled') + '>' +
+        (form.track === 'allinone' && form.shortlist.length ? 'Continue with ' + form.shortlist.length + (form.shortlist.length === 1 ? ' unit' : ' units') : 'Pick at least one unit') + '</button>' +
+      '</section>';
+    var customTrackHtml = '<section class="qm-track" aria-labelledby="qm-custom-title">' +
+      '<h3 class="qm-group" id="qm-custom-title">Custom build: choose your system size</h3>' + ladder + '</section>';
+    return entryNote(aio, list) + compare + neutral + units + customTrackHtml;
+  }
+  function forkHtml(aio, rec, ladder) {
+    var rows = form.appliances, ess = aio.essentialsOption(rows), all = aio.units(), n = 0;
+    var biggest = all.slice().sort(function (a, b) { return b.usable_kwh - a.usable_kwh || b.kva - a.kva; })[0];
+    var door = function (kicker, title, body, extra, id) {
+      n++;
+      return '<section class="qm-door" aria-labelledby="qm-door-' + id + '"><p class="qm-door__kicker">Option ' + n + ' · ' + kicker + '</p>' +
+        '<h3 class="qm-door__title" id="qm-door-' + id + '">' + title + '</h3>' + (body ? '<p class="qm-door__body">' + body + '</p>' : '') + extra + '</section>';
+    };
+    var out = '<div class="qm-fork__lead"><p><strong>No all-in-one unit carries everything on your list.</strong> Even the biggest one we offer, the ' + esc(aio.title(biggest)) + ', falls short: ' + esc(aio.reasonText(biggest, rows)) + '.</p><p>Here are your options. You can go ahead with any of them.</p></div>';
+    if (ess) {
+      var eb = unitBits(aio, ess.unit), on = form.track === 'essentials';
+      out += door('Essentials only', 'Keep the essentials running all night',
+        'The <strong>' + esc(aio.title(ess.unit)) + '</strong> runs your ' + esc(aio.names(ess.covered)) + ' through the night. Your ' + esc(aio.names(ess.uncovered)) + ' would stay on ' + esc(fallbackPower()) + '.',
+        '<p class="qm-door__price"><strong>' + eb.price + '</strong>' + (eb.down ? ' · ' + eb.down : '') + '</p>' +
+        '<button type="button" class="btn ' + (on ? 'btn--accent' : 'btn--dark') + ' qm-track__go" data-action="essentials">' + (on ? 'Essentials only: selected, continue' : 'Choose essentials only') + '</button>', 'ess');
+    }
+    out += door('Custom build', 'Power everything on your list',
+      'A separate inverter, batteries and panels sized to your full list. It costs more, and it can be expanded later.', ladder, 'custom');
+    var picked = form.track === 'allinone' && form.mismatch ? form.mismatch.unit_id : '';
+    out += door('Keep an all-in-one anyway', 'I still want an all-in-one unit',
+      "Choose one and we'll tell your installer exactly what it won't carry, so they can talk you through it.",
+      '<div class="qm-options">' + all.map(function (u) {
+        var cov = aio.coverage(u, rows), on = picked === u.id, b = unitBits(aio, u);
+        return '<button type="button" class="qm-option qm-unit' + (on ? ' is-selected' : '') + '" aria-pressed="' + on + '" data-anyway="' + esc(u.id) + '">' +
+          '<span class="qm-radio" aria-hidden="true"></span><span class="qm-option__label">' + esc(aio.title(u)) + '</span>' +
+          '<span class="qm-option__meta">' + esc(aio.specLine(u)) + '</span>' +
+          '<span class="qm-option__sub qm-unit__gap">Won\'t carry: your ' + esc(aio.names(cov.dropped)) + '</span>' +
+          '<span class="qm-option__sub qm-unit__price"><strong>' + b.price + '</strong></span></button>';
+      }).join('') + '</div>' +
+      '<button type="button" class="btn btn--dark qm-track__go" data-action="anywayContinue"' + (picked ? '' : ' disabled') + '>' + (picked ? 'Continue with this unit' : 'Pick a unit') + '</button>', 'anyway');
+    return '<div class="qm-fork">' + out + '</div>';
+  }
+
   function stepHtml(step) {
     var f = form;
     switch (step) {
@@ -468,6 +628,7 @@
       case 'spend': return choice('weeklySpend', SPEND_OPTIONS) + backBtn();
       case 'generator': return choice('generatorSize', GENERATOR_SIZES, { grid: true }) + backBtn();
       case 'decision': return choice('decisionRole', DECISION_ROLES) + backBtn();
+      case 'growth': return choice('growth', GROWTH_OPTIONS) + backBtn();
       case 'kva':
         var rec = sizing();
         var recNote = rec.kva
@@ -476,7 +637,10 @@
         var kvaOpts = KVA_OPTIONS.map(function (o) {
           return o.price ? { label: o.label, value: o.value, price: o.price, sub: 'or ' + downOf(o.price) + ' down + monthly instalments' } : o;
         });
-        return recNote + choice('kva', kvaOpts, { recommended: rec.kva }) + backBtn();
+        var ladder = choice('kva', kvaOpts, { recommended: rec.kva });
+        var aio = allInOne();
+        if (!aio) return recNote + ladder + backBtn();
+        return recNote + tracksHtml(aio, rec, ladder) + backBtn();
       case 'appliances':
         var sz = sizing(), d = f.draft;
         var tip = '<section class="qm-explain" aria-labelledby="qm-explain-title">' +
@@ -548,7 +712,7 @@
           '</div>' +
           '<p class="qm-proj__note">' + icon('i-shield-alert') + '<span><strong>This is only a projection</strong> based on typical appliance ratings. Your installer confirms the exact size and price during the free home audit.</span></p>' +
           '</section>';
-        return tip + picker + list + summary +
+        return tip + picker + fitsCounter() + list + summary +
           primary('Continue', 'next', !f.appliances.length) + backBtn();
       case 'tier':
         return '<div class="qm-options">' + SYSTEM_TIERS.map(function (t) {
@@ -691,6 +855,7 @@
       if (field === 'zone' && form.zone !== value) form.state = '';
       if (field === 'propertyType') form.propertyTypes = [value];   // the API expects a list
       if (field === 'kva' && form.kva !== value) { form.systemTier = ''; form.budgetRange = ''; form.budgetInput = ''; }
+      if (field === 'kva') { form.track = 'custom'; form.shortlist = []; form.mismatch = null; }
       if (field === 'electricitySource' && !/generator/i.test(value)) form.generatorSize = '';
       form[field] = value;
       if (field === 'budgetRange' && budgetOut()) {
@@ -724,6 +889,29 @@
     }
     if (t.hasAttribute('data-ddpick')) { pickDd(t.getAttribute('data-ddpick'), t.getAttribute('data-value')); return; }
     if (t.hasAttribute('data-title')) { form.title = t.getAttribute('data-title'); render(); return; }
+    if (t.hasAttribute('data-unit')) {
+      var uid = t.getAttribute('data-unit'), max = (allInOne() && allInOne().config().maxShortlist) || 3;
+      if (form.track !== 'allinone' || form.mismatch) { form.track = 'allinone'; form.shortlist = []; form.mismatch = null; form.kva = ''; }
+      var at = form.shortlist.indexOf(uid);
+      if (at > -1) form.shortlist.splice(at, 1);
+      else if (form.shortlist.length < max) form.shortlist.push(uid);
+      render();
+      var again = body.querySelector('[data-unit="' + uid + '"]');
+      if (again) again.focus({ preventScroll: true });
+      return;
+    }
+    if (t.hasAttribute('data-anyway')) {
+      var aio = allInOne(), u = aio && aio.byId(t.getAttribute('data-anyway'));
+      if (!u) return;
+      var cov = aio.coverage(u, form.appliances);
+      form.track = 'allinone'; form.kva = ''; form.shortlist = [u.id];
+      // Stamped on the request so the installer opens with what this unit won't carry.
+      form.mismatch = { unit_id: u.id, reason: aio.reasonText(u, form.appliances, true), uncovered_appliances: cov.dropped.map(function (r) { return r.qty + ' x ' + appliance(r.id).name; }) };
+      render();
+      var sel = body.querySelector('[data-anyway="' + u.id + '"]');
+      if (sel) sel.focus({ preventScroll: true });
+      return;
+    }
     if (t.hasAttribute('data-draftqty')) {
       form.draft.qty = Math.max(1, Math.min(50, form.draft.qty + +t.getAttribute('data-draftqty')));
       render();
@@ -751,6 +939,15 @@
       case 'sendOtp': sendOtp(); break;
       case 'submit': if (canNext('otp')) submit(); break;
       case 'close': close(); break;
+      case 'toggleFits': fitsOpen = !fitsOpen; render(); var fb = body.querySelector('.qm-fits__btn'); if (fb) fb.focus({ preventScroll: true }); break;
+      case 'aioContinue': if (form.track === 'allinone' && form.shortlist.length) next(); break;
+      case 'anywayContinue': if (form.track === 'allinone' && form.mismatch) next(); break;
+      case 'essentials':
+        var ess = allInOne() && allInOne().essentialsOption(form.appliances);
+        if (!ess) break;
+        form.track = 'essentials'; form.kva = ''; form.shortlist = [ess.unit.id]; form.mismatch = null;
+        next();
+        break;
       case 'addAppliance':
         var d = form.draft;
         if (!d.id) break;
@@ -942,6 +1139,9 @@
     progressText = modal.querySelector('.qm-progress__text');
     reset();
     pageMode = modal.getAttribute('data-mode') === 'page';
+    var q = /[?&]unit=([a-z0-9-]+)/i.exec(location.search), qb = /[?&]brand=([a-z0-9-]+)/i.exec(location.search);
+    if (q && window.HBAllInOne && window.HBAllInOne.byId(q[1])) entryUnit = q[1];
+    if (qb) entryBrand = qb[1].toLowerCase();
     body.addEventListener('keydown', onDdKey);
     document.addEventListener('click', onDdOutside, true);
 

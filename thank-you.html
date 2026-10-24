@@ -6,11 +6,11 @@
   <title>Request received | Heliobond</title>
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#042439">
-  <link rel="icon" href="assets/img/heliobond-mark.png?v=202610231814" type="image/png">
+  <link rel="icon" href="assets/img/heliobond-mark.png?v=202610240723" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/css/styles.css?v=202610231814">
+  <link rel="stylesheet" href="assets/css/styles.css?v=202610240723">
 </head>
 <body class="quote-page">
   <svg width="0" height="0" class="visually-hidden" aria-hidden="true" focusable="false">
@@ -30,7 +30,7 @@
   <div class="qa ty2">
     <!-- What happens next (desktop) -->
     <aside class="qa-side" aria-label="What happens next">
-      <a href="index.html" class="qa-side__logo"><img src="assets/img/heliobond-logo-light.png?v=202610231814" alt="Heliobond home" width="720" height="123"></a>
+      <a href="index.html" class="qa-side__logo"><img src="assets/img/heliobond-logo-light.png?v=202610240723" alt="Heliobond home" width="720" height="123"></a>
 
       <div class="qa-side__intro">
         <p class="qa-kicker">Your solar journey</p>
@@ -51,7 +51,7 @@
 
     <main class="qa-main">
       <header class="qa-top">
-        <a href="index.html" class="qa-top__logo"><img src="assets/img/heliobond-logo.png?v=202610231814" alt="Heliobond home" width="720" height="123"></a>
+        <a href="index.html" class="qa-top__logo"><img src="assets/img/heliobond-logo.png?v=202610240723" alt="Heliobond home" width="720" height="123"></a>
         <a class="qm-close qa-exit" href="index.html"><span>Back to home</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </header>
 
@@ -189,7 +189,22 @@
         });
       }
 
-      if (d.kva) {
+      // All-in-one requests show the shortlisted units instead of a custom-build projection.
+      if (d.units && d.units.length) {
+        $('ty-est-title').textContent = d.track === 'essentials' ? 'Your essentials unit' : 'Your all-in-one shortlist';
+        $('ty-appl').textContent = d.units.length + (d.units.length === 1 ? ' unit' : ' units');
+        var listEl = document.createElement('ul');
+        listEl.className = 'ty2-units';
+        d.units.forEach(function (u) {
+          var li = document.createElement('li'), b = document.createElement('strong'), sp = document.createElement('span');
+          b.textContent = u.name; sp.textContent = u.spec + (u.price ? ' · ' + u.price : '');
+          li.appendChild(b); li.appendChild(sp); listEl.appendChild(li);
+        });
+        var calc = document.querySelector('#ty-estimate .ty2-calc');
+        calc.parentNode.replaceChild(listEl, calc);
+        document.querySelector('#ty-estimate .ty2-fine').textContent = 'Installers quote to supply and fit these units. Prices change between sellers, so your quotes confirm the final price, and you can pay 20% down with the rest in monthly instalments.';
+        $('ty-estimate').hidden = false;
+      } else if (d.kva) {
         $('ty-kva').textContent = d.kva === '30+' ? 'Over 30 kVA' : d.kva + ' kVA';
         $('ty-battery').textContent = d.batteryKwh ? d.batteryKwh + ' kWh' : 'Not needed';
         $('ty-spend').textContent = d.spend || '–';
